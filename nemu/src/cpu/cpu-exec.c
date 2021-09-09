@@ -73,6 +73,7 @@ void monitor_statistic() {
 }
 
 /* Simulate how the CPU works. */
+//真离谱，往unsigned里传-1得到无穷大
 void cpu_exec(uint64_t n) {
   g_print_step = (n < MAX_INSTR_TO_PRINT);
   switch (nemu_state.state) {
