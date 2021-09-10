@@ -63,7 +63,7 @@ static int cmd_x(char *args){
 
   for (int i = 0; i < n; ++i){
     if (i % 4 == 0){
-      printf ("\n\e[37%#x: \e[0m\t", base + i * 4);
+      printf ("\n\e[32%#x: \e[0m\t", base + i * 4);
     }
     for (int j = 0; j < 4; ++j){
       uint8_t* pos = guest_to_host(base + i * 4 + j);
