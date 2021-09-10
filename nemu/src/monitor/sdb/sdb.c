@@ -2,6 +2,7 @@
 #include <cpu/cpu.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <memory/paddr.h>
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -58,6 +59,11 @@ static int cmd_x(char *args){
   arg = args + strlen(arg) + 1;
   sscanf(arg, "%i", &base);
   printf("从%#x查看内存\n", base);
+
+  for (int i = 0; i < n; ++i){
+    uint8_t* pos = i + guest_to_host(base);
+    printf("%x ", *pos);
+  }
 
   return 0;
 }
