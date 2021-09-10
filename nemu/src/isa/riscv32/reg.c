@@ -16,12 +16,12 @@ void isa_reg_display() {
   printf("=========寄存器信息=========\n");
   for (i = 0; i + REGISTERS_PER_LINE < length; i+= REGISTERS_PER_LINE){
     for (int j = i; j < i + REGISTERS_PER_LINE; ++j){
-      printf("%s: %x \t\t", regs[j], cpu.gpr[j]._32);
+      printf("%s: 0x%12x\t", regs[j], cpu.gpr[j]._32);
     }
     printf("\n");
   }
   for (int j = i; j < length; ++j){
-      printf("%s: %x \t\t", regs[j], cpu.gpr[j]._32);
+      printf("%s: 0x%12x\t", regs[j], cpu.gpr[j]._32);
   }
   printf("\n");
 }
