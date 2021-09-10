@@ -27,11 +27,44 @@ static char* rl_gets() {
   return line_read;
 }
 
+static int cmd_si(char *args){
+  int n = 1;
+  if (args != NULL){
+    sscanf(args, "%d", &n);
+  }
+  cpu_exec(n);
+  return 0;
+}
+
+static int cmd_info(char *args){
+
+  return 0;
+}
+
+static int cmd_x(char *args){
+
+  return 0;
+}
+
+static int cmd_p(char *args){
+
+  return 0;
+}
+
+static int cmd_w(char *args){
+
+  return 0;
+}
+
+static int cmd_d(char *args){
+
+  return 0;
+}
+
 static int cmd_c(char *args) {
   cpu_exec(-1);
   return 0;
 }
-
 
 static int cmd_q(char *args) {
   return -1;
@@ -47,9 +80,12 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-
-  /* TODO: Add more commands */
-
+  { "si", "si [N] 让程序单步执行N条指令后暂停执行,当N没有给出时, 缺省为1", cmd_si},
+  { "info", "info r 打印寄存器状态, info w 打印监视点信息", cmd_info},
+  { "x", "x N EXPR 求出表达式EXPR的值, 将结果作为起始内存地址, 以十六进制形式输出连续的N个4字节", cmd_x},
+  { "p", "p EXPR 求出表达式EXPR的值", cmd_p},
+  { "w", "w EXPR 当表达式EXPR的值发生变化时, 暂停程序执行", cmd_w},
+  { "d", "d N 删除序号为N的监视点", cmd_d}
 };
 
 #define NR_CMD ARRLEN(cmd_table)
