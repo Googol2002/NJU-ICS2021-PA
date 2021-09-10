@@ -62,7 +62,7 @@ static int cmd_x(char *args){
   printf("从%#x查看内存", base);
 
   for (int i = 0; i < n; ++i){
-    if ((i + 1) % 4 == 0){
+    if (i % 4 == 0){
       printf ("\n%#x:\t", base + i * 4);
     }
     for (int j = 0; j < 4; ++j){
