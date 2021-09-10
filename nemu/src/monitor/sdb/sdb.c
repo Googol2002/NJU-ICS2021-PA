@@ -51,10 +51,12 @@ static int cmd_info(char *args){
 }
 
 static int cmd_x(char *args){
-  char *arg_n = strtok(NULL, " ");
+  char *arg = strtok(NULL, " ");
   int n = -1; 
-  sscanf(arg_n, "%d", &n);
+  sscanf(arg, "%d", &n);
   printf("查看%d个单位内存", n);
+  arg = strtok(NULL, " ");
+  printf("从%s查看内存", arg);
 
   return 0;
 }
