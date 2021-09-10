@@ -53,7 +53,8 @@ static int cmd_info(char *args){
 
 static int cmd_x(char *args){
   char *arg = strtok(NULL, " ");
-  int n = -1, base = -1; 
+  int n = -1;
+  paddr_t base = 0x80000000; 
   sscanf(arg, "%d", &n);
   printf("查看%d个单位内存\n", n);
   arg = args + strlen(arg) + 1;
@@ -61,8 +62,11 @@ static int cmd_x(char *args){
   printf("从%#x查看内存\n", base);
 
   for (int i = 0; i < n; ++i){
-    uint8_t* pos = i + guest_to_host(base);
-    printf("%x ", *pos);
+    for (int j = 0; j < 4; ++j){
+      uint8_t* pos = guest_to_host(base + i * 4 + j);
+      printf("%.2x", *pos);
+    }
+    printf(" ");
   }
 
   return 0;
