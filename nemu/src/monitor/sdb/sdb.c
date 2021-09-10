@@ -62,11 +62,15 @@ static int cmd_x(char *args){
   printf("从%#x查看内存\n", base);
 
   for (int i = 0; i < n; ++i){
+    printf ("%p:\t", guest_to_host(base + i * 4));
     for (int j = 0; j < 4; ++j){
       uint8_t* pos = guest_to_host(base + i * 4 + j);
       printf("%.2x", *pos);
     }
     printf(" ");
+    if ((i + 1) % 4 == 0){
+      printf("\n");
+    }
   }
 
   return 0;
