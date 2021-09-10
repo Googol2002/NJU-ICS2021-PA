@@ -9,21 +9,18 @@ const char *regs[] = {
 };
 
 #define REGISTERS_PER_LINE 4
+#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 void isa_reg_display() {
   int length = ARRLEN(regs);
   int i = 0;
   printf("=========寄存器信息=========\n");
-  for (i = 0; i + REGISTERS_PER_LINE < length; i+= REGISTERS_PER_LINE){
-    for (int j = i; j < i + REGISTERS_PER_LINE; ++j){
+  for (i = 0; i < length; i+= REGISTERS_PER_LINE){
+    for (int j = i; j < MIN(length, i + REGISTERS_PER_LINE); ++j){
       printf("%3s: %#12x | ", regs[j], cpu.gpr[j]._32);
     }
     printf("\n");
   }
-  for (int j = i; j < length; ++j){
-      printf("%3s: %#12x | ", regs[j], cpu.gpr[j]._32);
-  }
-  printf("\n");
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
