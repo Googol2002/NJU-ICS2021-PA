@@ -12,12 +12,13 @@ const char *regs[] = {
 
 void isa_reg_display() {
   int length = ARRLEN(regs);
+  int i = 0;
   printf("=========寄存器信息=========\n");
-  for (int i = 0; i + REGISTERS_PER_LINE < length; i+= REGISTERS_PER_LINE){
+  for (i = 0; i + REGISTERS_PER_LINE < length; i+= REGISTERS_PER_LINE){
     for (int j = i; j < i + REGISTERS_PER_LINE; ++j){
       printf("%s: %x \t", regs[j], cpu.gpr[j]._32);
     }
-    printf("\n")
+    printf("\n");
   }
   for (int j = i; j < length; ++j){
       printf("%s: %x \t", regs[j], cpu.gpr[j]._32);
