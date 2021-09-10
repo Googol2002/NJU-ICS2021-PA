@@ -71,7 +71,7 @@ static int cmd_x(char *args){
     }
     printf(" ");
   }
-
+  printf("\n");
   return 0;
 }
 
