@@ -8,7 +8,7 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
-#define REGISTERS_PER_LINE 4
+#define REGISTERS_PER_LINE 3
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
 
 void isa_reg_display() {
