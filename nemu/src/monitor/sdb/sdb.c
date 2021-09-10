@@ -67,9 +67,9 @@ static int cmd_x(char *args){
     }
     for (int j = 0; j < 4; ++j){
       uint8_t* pos = guest_to_host(base + i * 4 + j);
-      printf("%.2x", *pos);
+      printf("%.2x ", *pos);
     }
-    printf(" ");
+    printf("\t");
   }
   printf("\n");
   return 0;
