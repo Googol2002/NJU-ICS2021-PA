@@ -8,11 +8,19 @@ const char *regs[] = {
   "s8", "s9", "s10", "s11", "t3", "t4", "t5", "t6"
 };
 
+#define REGISTERS_PER_LINE 4
+
 void isa_reg_display() {
   int length = ARRLEN(regs);
-  printf("=========寄存器信息=========");
-  for (int i = 0; i < length; ++i){
-    printf("%s: %x", regs[i], cpu.gpr[i]._32);
+  printf("=========寄存器信息=========\n");
+  for (int i = 0; i + REGISTERS_PER_LINE < length; i+= REGISTERS_PER_LINE){
+    for (int j = i; j < i + REGISTERS_PER_LINE; ++j){
+      printf("%s: %x \t", regs[j], cpu.gpr[j]._32);
+    }
+    printf("\n")
+  }
+  for (int j = i; j < length; ++j){
+      printf("%s: %x \t", regs[j], cpu.gpr[j]._32);
   }
 }
 
