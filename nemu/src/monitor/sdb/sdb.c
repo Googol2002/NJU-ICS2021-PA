@@ -37,7 +37,9 @@ static int cmd_si(char *args){
 }
 
 static int cmd_info(char *args){
-  if (strcmp(args, "r") == 0){
+  if (args == NULL){
+    printf("缺少参数");
+  }else if (strcmp(args, "r") == 0){
     isa_reg_display();
   }else if (strcmp(args, "w") == 0){
     printf("暂未实现");
