@@ -56,10 +56,8 @@ static int cmd_x(char *args){
   int n = -1;
   paddr_t base = 0x80000000; 
   sscanf(arg, "%d", &n);
-  printf("查看%d个单位内存\n", n);
   arg = args + strlen(arg) + 1;
   sscanf(arg, "%i", &base);
-  printf("从%#x查看内存", base);
 
   for (int i = 0; i < n; ++i){
     if (i % 4 == 0){
