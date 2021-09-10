@@ -55,7 +55,7 @@ static int cmd_x(char *args){
   int n = -1; 
   sscanf(arg, "%d", &n);
   printf("查看%d个单位内存", n);
-  arg = strtok(NULL, " ");
+  arg = args + strlen(arg) + 1;
   printf("从%s查看内存", arg);
 
   return 0;
