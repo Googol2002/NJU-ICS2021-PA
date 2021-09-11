@@ -91,7 +91,7 @@ static bool make_token(char *e) {
           case NUM:
             memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
-            // IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
+            IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
           default: 
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
@@ -180,7 +180,7 @@ int eval(int p, int q, bool *success, int *position) {
      */
     int buffer = 0;
     sscanf(tokens[p].str, "%d", &buffer);
-    IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s", buffer, tokens[p].str));
+    IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
   }
   else if (check_parentheses(p, q, position) == true) {
