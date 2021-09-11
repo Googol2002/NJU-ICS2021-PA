@@ -187,6 +187,7 @@ int eval(int p, int q, bool *success, int *position) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
+    IFDEF(CONFIG_DEBUG, Log("解括号"));
     return eval(p + 1, q - 1, success, position);
   } else {
     if (*position != -1){
