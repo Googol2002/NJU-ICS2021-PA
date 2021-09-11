@@ -129,13 +129,13 @@ word_t expr(char *e, bool *success) {
 
 #define STACK_SIZE 32
 bool check_parentheses(int p, int q, int *position){
-  char *stack = calloc(STACK_SIZE, sizeof(char));
+  //char *stack = calloc(STACK_SIZE, sizeof(char));
+  char stack[STACK_SIZE];
   *position = -1;
   int top = -1, index = p;
   while (index <= q){
     if (tokens[index].type == '('){
-      stack[1 + top] = '(';
-      top ++;
+      stack[++top] = '(';
     }else if (tokens[index].type == ')'){
       if (top < 0 || stack[top] != ')'){
         *position = p;
@@ -149,7 +149,6 @@ bool check_parentheses(int p, int q, int *position){
     *position = p;
     return false;
   }
-  free (stack);
   return tokens[p].type == '(';
 }
 
