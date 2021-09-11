@@ -204,7 +204,7 @@ int eval(int p, int q, bool *success, int *position) {
 
     int val1 = eval(p, op - 1, success, position);
     int val2 = eval(op + 1, q, success, position);
-
+    IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
     switch (tokens[op].type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
