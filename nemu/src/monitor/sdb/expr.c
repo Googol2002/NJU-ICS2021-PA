@@ -153,6 +153,21 @@ bool check_parentheses(int p, int q, int *position){
   return tokens[p].type == '(';
 }
 
+int prio(char type){
+  switch (type)
+  {
+  case '+':
+  case '-':
+    return 1;
+  
+  case '*':
+  case '/':
+    return 2;
+
+  default:
+    return -1;
+  }
+}
 
 int eval(int p, int q, bool *success, int *position) {
   if (p > q) {
@@ -178,17 +193,25 @@ int eval(int p, int q, bool *success, int *position) {
       *success = false;
       return 0;
     }
-    // op = the position of 主运算符 in the token expression;
-    // val1 = eval(p, op - 1);
-    // val2 = eval(op + 1, q);
+    int op = -1;
+    for (int i = p; i <= q; ++i){
+      if (prio(tokens[i].type) >= 0){//说明是运算符
+        if (op == -1 || prio(tokens[i].type) <= prio(op)){
+          op = i;
+        }
+      }
+    }
 
-    // switch (op_type) {
-    //   case '+': return val1 + val2;
-    //   case '-': return val1 - val2;
-    //   case '*': return val1 * val2;
-    //   case '/': return val1 / val2;
-    //   default: assert(0);
-    // }
+    int val1 = eval(p, op - 1, success, position);
+    int val2 = eval(op + 1, q, success, position);
+
+    switch (tokens[op].type) {
+      case '+': return val1 + val2;
+      case '-': return val1 - val2;
+      case '*': return val1 * val2;
+      case '/': return val1 / val2;
+      default: assert(0);
+    }
   }
   return 0;
 }
