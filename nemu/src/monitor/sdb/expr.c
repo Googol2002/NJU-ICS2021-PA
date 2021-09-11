@@ -173,14 +173,13 @@ int eval(int p, int q, bool *success, int *position) {
   if (p > q) {
     *success = false;
     return 0;
-  }
-  else if (p == q) {
+  } else if (p == q) {
     /* Single token.
      * For now this token should be a number.
      * Return the value of the number.
      */
     int buffer = 0;
-    return sscanf(tokens[p].str, "%d", &buffer);
+    sscanf(tokens[p].str, "%d", &buffer);
     IFDEF(CONFIG_DEBUG, Log("读取数据 %d", buffer));
     return buffer;
   }
