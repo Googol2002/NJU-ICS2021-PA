@@ -89,7 +89,7 @@ static bool make_token(char *e) {
           case TK_NOTYPE:
             break;
           case NUM:
-            memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
+            memcpy(tokens[nr_token].str, e + position - substr_len, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
             IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
           default: 
