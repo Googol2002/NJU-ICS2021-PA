@@ -90,7 +90,7 @@ static bool make_token(char *e) {
             //TODO: substr_len 定义的对吗？
             memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
-            IFDEF(CONFIG_DEBUG, printf("[DEBUG ]读入了一个数字%s \n", tokens[nr_token].str));
+            IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
           default: 
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
