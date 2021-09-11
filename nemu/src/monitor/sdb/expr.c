@@ -181,6 +181,7 @@ int eval(int p, int q, bool *success, int *position) {
      */
     int buffer = 0;
     return sscanf(tokens[p].str, "%d", &buffer);
+    IFDEF(CONFIG_DEBUG, Log("读取数据 %d", buffer));
     return buffer;
   }
   else if (check_parentheses(p, q, position) == true) {
