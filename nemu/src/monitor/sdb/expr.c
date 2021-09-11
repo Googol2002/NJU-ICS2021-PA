@@ -136,7 +136,7 @@ bool check_parentheses(int p, int q, int *position){
     if (tokens[index].type == '('){
       stack[++top] = '(';
     }else if (tokens[index].type == ')'){
-      if (stack[top] != ')'){
+      if (top < 0 || stack[top] != ')'){
         *position = p;
         return false;
       }else {
