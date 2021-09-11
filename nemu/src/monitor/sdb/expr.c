@@ -136,6 +136,7 @@ bool check_parentheses(int p, int q, int *position){
   while (index <= q){
     if (tokens[index].type == '('){
       stack[++top] = '(';
+      printf("我执行了");
     }else if (tokens[index].type == ')'){
       if (top < 0 || stack[top] != ')'){
         *position = p;
