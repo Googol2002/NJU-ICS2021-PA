@@ -134,7 +134,8 @@ bool check_parentheses(int p, int q, int *position){
   int top = -1, index = p;
   while (index <= q){
     if (tokens[index].type == '('){
-      stack[++top] = '(';
+      stack[1 + top] = '(';
+      top ++;
     }else if (tokens[index].type == ')'){
       if (top < 0 || stack[top] != ')'){
         *position = p;
