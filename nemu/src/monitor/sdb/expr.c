@@ -4,6 +4,8 @@
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <regex.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ, NUM
@@ -87,10 +89,9 @@ static bool make_token(char *e) {
           case TK_NOTYPE:
             break;
           case NUM:
-            //TODO: substr_len 定义的对吗？
             memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
-            IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
+            // IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
           default: 
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
@@ -110,6 +111,7 @@ static bool make_token(char *e) {
   return true;
 }
 
+int eval(int p, int q, bool *success, *position);
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -117,8 +119,74 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
-  /* TODO: Insert codes to evaluate the expression. */
-  //TODO();
+  int position = 0;
+  int ans = eval(0, nr_token - 1, success, &position);
+  if (!success){
+    printf("some problem happens at position %d\n%s\n%*.s^\n", position, e, position, "");
+  }
+  return ans;
+}
 
-  return 0;
+#define STACK_SIZE 32
+bool check_parentheses(int p, int q, int *position){
+  char *stack = calloc(STACK_SIZE, sizeof(char));
+  *position = -1;
+  int top = -1, index = p;
+  while (index <= q){
+    if (tokens[index].type == '('){
+      stack[++top] = '(';
+    }else if (tokens[index].type == ')'){
+      if (stack[top] != ')'){
+        *position = p;
+        return false;
+      }else {
+        top--;
+      }
+    }
+  }
+  if (top != -1){ //栈空
+    *position = p;
+    return false;
+  }
+  free (stack);
+  return tokens[p] == '(';
+}
+
+
+int eval(int p, int q, bool *success, *position) {
+  if (p > q) {
+    *success = false;
+    return 0;
+  }
+  else if (p == q) {
+    /* Single token.
+     * For now this token should be a number.
+     * Return the value of the number.
+     */
+    int buffer = 0;
+    return sscanf(tokens[p], "%d", &buffer);
+    return buffer;
+  }
+  else if (check_parentheses(p, q, position) == true) {
+    /* The expression is surrounded by a matched pair of parentheses.
+     * If that is the case, just throw away the parentheses.
+     */
+    return eval(p + 1, q - 1);
+  } else {
+    if (*position != -1){
+      *success = false;
+      return 0;
+    }
+    // op = the position of 主运算符 in the token expression;
+    // val1 = eval(p, op - 1);
+    // val2 = eval(op + 1, q);
+
+    // switch (op_type) {
+    //   case '+': return val1 + val2;
+    //   case '-': return val1 - val2;
+    //   case '*': return val1 * val2;
+    //   case '/': return val1 / val2;
+    //   default: assert(0);
+    // }
+  }
 }
