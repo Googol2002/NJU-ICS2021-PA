@@ -111,7 +111,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-int eval(int p, int q, bool *success, *position);
+int eval(int p, int q, bool *success, int *position);
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
@@ -149,11 +149,11 @@ bool check_parentheses(int p, int q, int *position){
     return false;
   }
   free (stack);
-  return tokens[p] == '(';
+  return tokens[p].type == '(';
 }
 
 
-int eval(int p, int q, bool *success, *position) {
+int eval(int p, int q, bool *success, int *position) {
   if (p > q) {
     *success = false;
     return 0;
@@ -164,14 +164,14 @@ int eval(int p, int q, bool *success, *position) {
      * Return the value of the number.
      */
     int buffer = 0;
-    return sscanf(tokens[p], "%d", &buffer);
+    return sscanf(tokens[p].str, "%d", &buffer);
     return buffer;
   }
   else if (check_parentheses(p, q, position) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    return eval(p + 1, q - 1);
+    return eval(p + 1, q - 1, success, position);
   } else {
     if (*position != -1){
       *success = false;
@@ -189,4 +189,5 @@ int eval(int p, int q, bool *success, *position) {
     //   default: assert(0);
     // }
   }
+  return 0;
 }
