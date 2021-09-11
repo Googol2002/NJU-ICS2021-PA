@@ -6,23 +6,23 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ,
-
-  /* TODO: Add more token types */
-
+  TK_NOTYPE = 256, TK_EQ, NUM
+  // TK_PLUS, TK_SUB, TK_MUL, TK_DIV,
+  // TK_LP, TK_RP
 };
 
 static struct rule {
   const char *regex;
   int token_type;
 } rules[] = {
-
-  /* TODO: Add more rules.
-   * Pay attention to the precedence level of different rules.
-   */
-
-  {" +", TK_NOTYPE},    // spaces
+  {"\\d+",NUM},         // 数字
+  {"\\(", '('},         // 左括号
+  {"\\)", ')'},         // 右括号
   {"\\+", '+'},         // plus
+  {"\\-", '-'},         // sub
+  {"\\*", '*'},         // mul
+  {"\\/", '/'},         // divide
+  {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
 };
 
@@ -73,14 +73,22 @@ static bool make_token(char *e) {
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
 
         position += substr_len;
-
+        
         /* TODO: Now a new token is recognized with rules[i]. Add codes
          * to record the token in the array `tokens'. For certain types
          * of tokens, some extra actions should be performed.
          */
 
         switch (rules[i].token_type) {
-          default: TODO();
+          case NUM:
+            //TODO: substr_len 定义的对吗？
+            memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
+            tokens[nr_token].str[substr_len] = '\0';
+            IFDEF(CONFIG_DEBUG, printf("读入了一个数字%s", tokens[nr_token].str)
+          default: 
+            tokens[nr_token].type = rules[i].token_type;
+            nr_token++;
+            break;
         }
 
         break;
