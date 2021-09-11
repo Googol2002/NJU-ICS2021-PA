@@ -68,6 +68,10 @@ static bool make_token(char *e) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
+        
+        if (substr_len > 32){
+          assert(0);
+        }
 
         Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s",
             i, rules[i].regex, position, substr_len, substr_len, substr_start);
@@ -84,7 +88,7 @@ static bool make_token(char *e) {
             //TODO: substr_len 定义的对吗？
             memcpy(tokens[nr_token].str, e + position, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
-            IFDEF(CONFIG_DEBUG, printf("读入了一个数字%s", tokens[nr_token].str)
+            IFDEF(CONFIG_DEBUG, printf("读入了一个数字%s", tokens[nr_token].str));
           default: 
             tokens[nr_token].type = rules[i].token_type;
             nr_token++;
@@ -112,7 +116,7 @@ word_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  //TODO();
 
   return 0;
 }

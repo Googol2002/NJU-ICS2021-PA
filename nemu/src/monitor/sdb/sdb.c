@@ -3,6 +3,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <memory/paddr.h>
+
 #include "sdb.h"
 
 static int is_batch_mode = false;
@@ -74,7 +75,8 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
-
+  bool success;
+  expr(args, &success);
   return 0;
 }
 
