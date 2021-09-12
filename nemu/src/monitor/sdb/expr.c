@@ -205,7 +205,7 @@ int eval(int p, int q, bool *success, int *position) {
       } else if (tokens[i].type == ')'){
         level--;// 不再检查合法性，一定合法
       } else if (level == -1 && prio(tokens[i].type) >= 0){//说明层次不在括号里且是运算符
-        if (op == -1 || prio(tokens[i].type) <= prio(op)){
+        if (op == -1 || prio(tokens[i].type) <= prio(tokens[op].type)){
           op = i;
         }
       }
