@@ -210,6 +210,11 @@ int eval(int p, int q, bool *success, int *position) {
         }
       }
     }
+    if (op == -1){
+      *success = false;
+      *position = 0;
+      return 0;
+    }
 
     IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
     int val1 = eval(p, op - 1, success, position);
