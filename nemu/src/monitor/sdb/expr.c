@@ -150,7 +150,7 @@ bool check_parentheses(int p, int q, int *position){
     *position = p;
     return false;
   }
-  return tokens[p].type == '(' && tokens[p].type == ')';
+  return tokens[p].type == '(' && tokens[q].type == ')';
 }
 
 int prio(char type){
