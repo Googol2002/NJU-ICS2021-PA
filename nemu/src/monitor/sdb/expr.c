@@ -203,17 +203,17 @@ int eval(int p, int q, bool *success, int *position) {
       if (tokens[i].type == '('){
         level++;
       } else if (tokens[i].type == ')'){
-        level--;//不再检查合法性，一定合法
-      } else if (level == -1 && prio(tokens[i].type) >= 0){//说明不在括号里且是运算符
+        level--;// 不再检查合法性，一定合法
+      } else if (level == -1 && prio(tokens[i].type) >= 0){//说明层次不在括号里且是运算符
         if (op == -1 || prio(tokens[i].type) <= prio(op)){
           op = i;
         }
       }
     }
 
+    IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
     int val1 = eval(p, op - 1, success, position);
     int val2 = eval(op + 1, q, success, position);
-    IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
     switch (tokens[op].type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
