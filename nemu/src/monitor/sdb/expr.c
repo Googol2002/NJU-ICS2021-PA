@@ -119,6 +119,7 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
 
+  *success = true;
   int position = 0;
   int ans = eval(0, nr_token - 1, success, &position);
   if (!*success){
