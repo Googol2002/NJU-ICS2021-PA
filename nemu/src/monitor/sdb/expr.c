@@ -121,7 +121,7 @@ word_t expr(char *e, bool *success) {
 
   int position = 0;
   int ans = eval(0, nr_token - 1, success, &position);
-  if (!success){
+  if (!*success){
     printf("some problem happens at position %d\n%s\n%*.s^\n", position, e, position, "");
   }
   return ans;
