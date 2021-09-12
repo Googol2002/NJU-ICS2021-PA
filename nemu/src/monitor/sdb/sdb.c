@@ -77,7 +77,8 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool success;
   int v = expr(args, &success);
-  printf("%s = %d\n", args, v);
+  if (success)
+    printf("%s = %d\n", args, v);
   return 0;
 }
 
