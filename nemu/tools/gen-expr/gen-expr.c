@@ -46,12 +46,11 @@ void gen_rand_op(){
 void gen_num(){
   char num_buffer[1024];
   num_buffer[0] = '\0';
-  sprintf(num_buffer ,"%d", rand() % 10000);
+  sprintf(num_buffer ,"%d", rand() % 10000 + 1);
   strcat(buf, num_buffer);
 }
 
 static void gen_rand_expr() {
-  buf[0] = '\0';
   switch (choose(3)) {
     case 0: gen_num(); break;
     case 1: gen('('); gen_rand_expr(); gen(')'); break;
@@ -68,8 +67,8 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    buf[0] = '\0';
     gen_rand_expr();
-    printf("expr: %s \n", buf);
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
