@@ -194,9 +194,13 @@ int eval(int p, int q, bool *success, int *position) {
       *success = false;
       return 0;
     }
-    int op = -1;
+    int op = -1, level = -1;
     for (int i = p; i <= q; ++i){
-      if (prio(tokens[i].type) >= 0){//说明是运算符
+      if (tokens[i].type == '('){
+        level++;
+      } else if (tokens[i].type == ')'){
+        level--;//不再检查合法性，一定合法
+      } else if (level == -1 && prio(tokens[i].type) >= 0){//说明不在括号里且是运算符
         if (op == -1 || prio(tokens[i].type) <= prio(op)){
           op = i;
         }
