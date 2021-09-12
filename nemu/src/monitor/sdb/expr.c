@@ -146,7 +146,7 @@ bool check_parentheses(int p, int q, int *position){
       }
     }
     if (index < q)
-      is_parentheses = (top >= 0) || is_parentheses; // 永远都该有一个前括号
+      is_parentheses = (top >= 0) && is_parentheses; // 永远都该有一个前括号
     index++;
   }
   if (top != -1){ //栈空
