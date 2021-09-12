@@ -146,7 +146,7 @@ bool check_parentheses(int p, int q, int *position){
       }
     }
     if (index < q)
-      is_parentheses |= (top >= 0); // 永远都该有一个前括号
+      is_parentheses = (top >= 0) || is_parentheses; // 永远都该有一个前括号
     index++;
   }
   if (top != -1){ //栈空
@@ -193,6 +193,7 @@ int eval(int p, int q, bool *success, int *position) {
     IFDEF(CONFIG_DEBUG, Log("解括号"));
     return eval(p + 1, q - 1, success, position);
   } else {
+    IFDEF(CONFIG_DEBUG, Log("计算"));
     if (*position != -1){
       *success = false;
       return 0;
