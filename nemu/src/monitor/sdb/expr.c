@@ -133,6 +133,7 @@ bool check_parentheses(int p, int q, int *position){
   char stack[STACK_SIZE];
   *position = -1;
   int top = -1, index = p;
+  bool is_parentheses = tokens[p].type == '(';
   while (index <= q){
     if (tokens[index].type == '('){
       stack[++top] = '(';
@@ -144,13 +145,15 @@ bool check_parentheses(int p, int q, int *position){
         top--;
       }
     }
+    if (index < q)
+      is_parentheses |= (top >= 0); // 永远都该有一个前括号
     index++;
   }
   if (top != -1){ //栈空
     *position = p;
     return false;
   }
-  return tokens[p].type == '(' && tokens[q].type == ')';
+  return is_parentheses;
 }
 
 int prio(char type){
