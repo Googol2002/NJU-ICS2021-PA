@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
-  //test_cmd_p();
+  test_cmd_p();
 
   /* Start engine. */
   engine_start();
@@ -39,7 +39,7 @@ void test_cmd_p(){
     char* ans_text = strtok(input, " ");
     sscanf("%u", ans_text, &ans);
     expression = strtok(NULL, " ");
-    printf("This is %s \n", expression);
+    printf("This is %u %s \n", ans, expression);
     uint32_t result = expr(expression, &success);
     assert(result == ans);
     input = fgets(buffer, ARRLEN(buffer), fp);
