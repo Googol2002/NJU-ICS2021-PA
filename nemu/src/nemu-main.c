@@ -5,6 +5,8 @@ void am_init_monitor();
 void engine_start();
 int is_exit_status_bad();
 
+void test_cmd_p();
+
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
 #ifdef CONFIG_TARGET_AM
@@ -13,8 +15,31 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
+  //test_cmd_p();
+
   /* Start engine. */
   engine_start();
 
   return is_exit_status_bad();
 }
+
+word_t expr(char *e, bool *success);
+
+#define TEST_CMD_P_PATH "../testset/p.txt"
+// void test_cmd_p(){
+//   char buffer[65535];
+//   char expression[65535];
+//   FILE *fp = fopen(TEST_CMD_P_PATH, "r");
+//   assert(fp != NULL);
+
+//   char* input = fgets(buffer, ARRLEN(buffer), fp);
+//   while (res != NULL){
+//     uint32_t ans = 0;
+//     bool success = false;
+//     char* ans_text = strtok(input, " ");
+//     printf("This is %s \n", res);
+//     uint32_t result = expr(expression, &success);
+//     assert(result == ans);
+//     res = fgets(buffer, ARRLEN(buffer), fp);
+//   }
+// }
