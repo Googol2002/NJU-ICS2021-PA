@@ -184,17 +184,17 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
      */
     u_int32_t buffer = 0;
     sscanf(tokens[p].str, "%u", &buffer);
-    IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
+    // IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
   }
   else if (check_parentheses(p, q, position) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
-    IFDEF(CONFIG_DEBUG, Log("解括号"));
+    // IFDEF(CONFIG_DEBUG, Log("解括号"));
     return eval(p + 1, q - 1, success, position);
   } else {
-    IFDEF(CONFIG_DEBUG, Log("计算"));
+    // IFDEF(CONFIG_DEBUG, Log("计算"));
     if (*position != -1){
       *success = false;
       return 0;
@@ -217,7 +217,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
       return 0;
     }
 
-    IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
+    // IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
     u_int32_t val1 = eval(p, op - 1, success, position);
     u_int32_t val2 = eval(op + 1, q, success, position);
     switch (tokens[op].type) {
