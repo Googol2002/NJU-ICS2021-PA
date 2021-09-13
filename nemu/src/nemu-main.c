@@ -38,7 +38,7 @@ void test_cmd_p(){
     bool success = false;
     char* ans_text = strtok(input, " ");
     sscanf(ans_text, "%u", &ans);
-    expression = strtok(NULL, " ");
+    expression = input + strlen(ans_text) + 1;
     printf("This is %u %s \n", ans, expression);
     uint32_t result = expr(expression, &success);
     assert(result == ans);
