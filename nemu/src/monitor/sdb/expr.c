@@ -111,7 +111,7 @@ static bool make_token(char *e) {
   return true;
 }
 
-int eval(int p, int q, bool *success, int *position);
+uint32_t eval(int p, int q, bool *success, int *position);
 
 word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
