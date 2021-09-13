@@ -26,20 +26,22 @@ int main(int argc, char *argv[]) {
 word_t expr(char *e, bool *success);
 
 #define TEST_CMD_P_PATH "../testset/p.txt"
-// void test_cmd_p(){
-//   char buffer[65535];
-//   char expression[65535];
-//   FILE *fp = fopen(TEST_CMD_P_PATH, "r");
-//   assert(fp != NULL);
+void test_cmd_p(){
+  char buffer[65535];
+  char *expression;
+  FILE *fp = fopen(TEST_CMD_P_PATH, "r");
+  assert(fp != NULL);
 
-//   char* input = fgets(buffer, ARRLEN(buffer), fp);
-//   while (res != NULL){
-//     uint32_t ans = 0;
-//     bool success = false;
-//     char* ans_text = strtok(input, " ");
-//     printf("This is %s \n", res);
-//     uint32_t result = expr(expression, &success);
-//     assert(result == ans);
-//     res = fgets(buffer, ARRLEN(buffer), fp);
-//   }
-// }
+  char* input = fgets(buffer, ARRLEN(buffer), fp);
+  while (input != NULL){
+    uint32_t ans = 0;
+    bool success = false;
+    char* ans_text = strtok(input, " ");
+    sscanf("%u", ans_text, &ans);
+    expression = strtok(NULL, " ");
+    printf("This is %s \n", expression);
+    uint32_t result = expr(expression, &success);
+    assert(result == ans);
+    input = fgets(buffer, ARRLEN(buffer), fp);
+  }
+}
