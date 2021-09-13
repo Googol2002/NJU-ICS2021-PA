@@ -17,7 +17,7 @@ static char *code_format =
 "}";
 
 
-int choose(int n){
+int choose(uint32_t  n){
   return rand() % n;
 }
 
