@@ -54,7 +54,7 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[128] __attribute__((used)) = {};
+static Token tokens[2048] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -128,7 +128,7 @@ word_t expr(char *e, bool *success) {
   return ans;
 }
 
-#define STACK_SIZE 64
+#define STACK_SIZE 1024
 bool check_parentheses(int p, int q, int *position){
   //char *stack = calloc(STACK_SIZE, sizeof(char));
   char stack[STACK_SIZE];

@@ -34,7 +34,7 @@ void test_cmd_p(){
 
   char* input = fgets(buffer, ARRLEN(buffer), fp);
   while (input != NULL){
-    input[strlen(input) - 1] = '\0';
+    input[strlen(input) - 1] = '\0'; // 删去末尾'\n'
     uint32_t ans = 0;
     bool success = false;
     char* ans_text = strtok(input, " ");
