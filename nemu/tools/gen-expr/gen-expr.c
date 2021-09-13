@@ -127,10 +127,13 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr -w");
-    if (ret != 0) continue;
+    int ret = system("gcc /tmp/.code.c -o /tmp/.expr -Werror 2> /tmp/.error.txt");
+    if (ret != 0){ 
+      i--;
+      continue;
+    }
 
-    fp = popen("/tmp/.expr 2>/tmp/.error.txt", "r");
+    fp = popen("/tmp/.expr", "r");
     assert(fp != NULL);
 
     uint32_t result = 0u;
