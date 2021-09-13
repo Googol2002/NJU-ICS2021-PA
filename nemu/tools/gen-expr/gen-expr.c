@@ -144,8 +144,7 @@ int main(int argc, char *argv[]) {
       continue;
     }
 
-    printf("%s", output_buf);
-    printf(" %u\n", result);
+    printf("%u %s\n", result, output_buf);
   }
   return 0;
 }
