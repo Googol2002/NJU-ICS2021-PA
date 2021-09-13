@@ -173,7 +173,7 @@ int prio(char type){
   }
 }
 
-int eval(int p, int q, bool *success, int *position) {
+u_int32_t eval(int p, int q, bool *success, int *position) {
   if (p > q) {
     *success = false;
     return 0;
@@ -182,8 +182,8 @@ int eval(int p, int q, bool *success, int *position) {
      * For now this token should be a number.
      * Return the value of the number.
      */
-    int buffer = 0;
-    sscanf(tokens[p].str, "%d", &buffer);
+    u_int32_t buffer = 0;
+    sscanf(tokens[p].str, "%u", &buffer);
     IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
   }
@@ -218,8 +218,8 @@ int eval(int p, int q, bool *success, int *position) {
     }
 
     IFDEF(CONFIG_DEBUG, Log("主运算符 %c", tokens[op].type));
-    int val1 = eval(p, op - 1, success, position);
-    int val2 = eval(op + 1, q, success, position);
+    u_int32_t val1 = eval(p, op - 1, success, position);
+    u_int32_t val2 = eval(op + 1, q, success, position);
     switch (tokens[op].type) {
       case '+': return val1 + val2;
       case '-': return val1 - val2;
