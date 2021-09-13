@@ -41,7 +41,7 @@ void test_cmd_p(){
     char* ans_text = strtok(input, " ");
     sscanf(ans_text, "%u", &ans);
     expression = input + strlen(ans_text) + 1;
-    printf("This is %u %s \n", ans, expression);
+    IFDEF(CONFIG_DEBUG, Log("Testing %u %s \n", ans, expression));
     uint32_t result = expr(expression, &success);
     assert(result == ans);
     input = fgets(buffer, ARRLEN(buffer), fp);
