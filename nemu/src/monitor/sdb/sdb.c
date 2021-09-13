@@ -74,9 +74,17 @@ static int cmd_x(char *args){
   return 0;
 }
 
+static int cmd_pu(char *args){
+  bool success;
+  uint32_t v = expr(args, &success);
+  if (success)
+    printf("%s = %u\n", args, v);
+  return 0;
+}
+
 static int cmd_p(char *args){
   bool success;
-  int v = expr(args, &success);
+  uint32_t v = expr(args, &success);
   if (success)
     printf("%s = %d\n", args, v);
   return 0;
@@ -116,7 +124,8 @@ static struct {
   { "x", "x N EXPR 求出表达式EXPR的值, 将结果作为起始内存地址, 以十六进制形式输出连续的N个4字节", cmd_x},
   { "p", "p EXPR 求出表达式EXPR的值", cmd_p},
   { "w", "w EXPR 当表达式EXPR的值发生变化时, 暂停程序执行", cmd_w},
-  { "d", "d N 删除序号为N的监视点", cmd_d}
+  { "d", "d N 删除序号为N的监视点", cmd_d},
+  { "pu", "功能同p，但是可以调试uint32_t的情况", cmd_pu}
 };
 
 #define NR_CMD ARRLEN(cmd_table)
