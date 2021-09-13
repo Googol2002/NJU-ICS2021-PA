@@ -79,40 +79,36 @@ void generate_output(){
   output_buf[j] = '\0';
 }
 
-static uint32_t gen_rand_expr() {
-  if (strlen(buf) > 65536 - 1000){
+static void gen_rand_expr(int depth) {
+  if (strlen(buf) > 65536 - 10000 || depth > 15){
     gen('(');
-    uint32_t number = gen_num();
+    gen_num();
     gen(')');
-    return number;
+    return ;
   }
 
   switch (choose(3)) {
-    case 0: 
-      return gen_num();
+    case 0:
+      gen_num(); 
+      break;
+
     case 1: 
       gen('(');
-      uint32_t number = gen_rand_expr();
-      gen(')'); 
-      return number;
+      gen_rand_expr(depth + 1);
+      gen(')');
+      break; 
+      
     default: {
-      uint32_t n1 = gen_rand_expr();
-      char op = gen_rand_op();
-      int index = strlen(buf);
-      uint32_t n2 = gen_rand_expr();
-      if (op == '/'){
-        while (n2 == 0u){
-          buf[index] = '\0';
-          n2 = gen_rand_expr();
-        }
-      }
-    
-      return perform(n1, n2, op);
+      gen_rand_expr(depth + 1);
+      gen_rand_op();
+      gen_rand_expr(depth + 1);
+      break;
     }
   }
 }
 
 int main(int argc, char *argv[]) {
+  //stderr = NULL;
   int seed = time(0);
   srand(seed);
   int loop = 1;
@@ -122,28 +118,31 @@ int main(int argc, char *argv[]) {
   int i;
   for (i = 0; i < loop; i ++) {
     buf[0] = '\0';
-    gen_rand_expr();
+    gen_rand_expr(0);
+    generate_output();
+    
     sprintf(code_buf, code_format, buf);
-
     FILE *fp = fopen("/tmp/.code.c", "w");
     assert(fp != NULL);
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc /tmp/.code.c -o /tmp/.expr -w");
     if (ret != 0) continue;
 
-    fp = popen("/tmp/.expr", "r");
+    fp = popen("/tmp/.expr 2>/tmp/.error.txt", "r");
     assert(fp != NULL);
 
-    int result;
-    int b = fscanf(fp, "%d", &result);
+    uint32_t result = 0u;
+    int b = fscanf(fp, "%u", &result);
     pclose(fp);
-    if (b != 1)
+    if (b != 1){
+      i--;
       continue;
+    }
 
-    generate_output();
-    printf("%u %s\n", result, output_buf);
+    printf("%s", output_buf);
+    printf(" %u\n", result);
   }
   return 0;
 }
