@@ -15,7 +15,8 @@ int main(int argc, char *argv[]) {
   init_monitor(argc, argv);
 #endif
 
-  test_cmd_p();
+  IFDEF(CONFIG_DEBUG, test_cmd_p());
+  IFDEF(CONFIG_DEBUG, Log("通过200个测试样例"));
 
   /* Start engine. */
   engine_start();
