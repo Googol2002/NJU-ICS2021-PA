@@ -7,17 +7,33 @@
 
 // this should be enough
 static char buf[65536] = {};
+static char output_buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = %s; "
+"  unsigned result = (%s); "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
 
 
-int choose(uint32_t  n){
+uint32_t perform(uint32_t n1, uint32_t n2, char op){
+  switch (op){
+    case '+':
+      return n1 + n2;
+    case '-':
+      return n1 - n2;
+    case '*':
+      return n1 * n2;
+    case '/':
+      return n1 / n2;
+    default:
+      return 0;
+  }
+}
+
+uint32_t choose(uint32_t  n){
   return rand() % n;
 }
 
@@ -26,35 +42,73 @@ void gen(char c){
   strcat(buf, cha_buffer);
 }
 
-void gen_rand_op(){
+char gen_rand_op(){
   switch (choose(4)){
     case 0:
       gen('+');
-      break;
+      return '+';
     case 1:
       gen('-');
-      break;
+      return '-';
     case 2:
       gen('*');
-      break;
+      return '*';
     case 3:
       gen('/');
-      break;
+      return '/';
   }
+  return ' ';
 }
 
-void gen_num(){
+uint32_t gen_num(){
   char num_buffer[1024];
   num_buffer[0] = '\0';
-  sprintf(num_buffer ,"%d", rand() % 10000 + 1);
+  uint32_t number = rand() % 100 + 1;
+  sprintf(num_buffer ,"%du", number);
   strcat(buf, num_buffer);
+  return number;
 }
 
-static void gen_rand_expr() {
+void generate_output(){
+  int j = 0;
+  for (int i = 0; buf[i] != '\0'; ++i){
+    if (buf[i] != 'u'){
+      output_buf[j++] = buf[i];
+    }
+  }
+  output_buf[j] = '\0';
+}
+
+static uint32_t gen_rand_expr() {
+  if (strlen(buf) > 65536 - 1000){
+    gen('(');
+    uint32_t number = gen_num();
+    gen(')');
+    return number;
+  }
+
   switch (choose(3)) {
-    case 0: gen_num(); break;
-    case 1: gen('('); gen_rand_expr(); gen(')'); break;
-    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+    case 0: 
+      return gen_num();
+    case 1: 
+      gen('(');
+      uint32_t number = gen_rand_expr();
+      gen(')'); 
+      return number;
+    default: {
+      uint32_t n1 = gen_rand_expr();
+      char op = gen_rand_op();
+      int index = strlen(buf);
+      uint32_t n2 = gen_rand_expr();
+      if (op == '/'){
+        while (n2 == 0u){
+          buf[index] = '\0';
+          n2 = gen_rand_expr();
+        }
+      }
+    
+      return perform(n1, n2, op);
+    }
   }
 }
 
@@ -83,11 +137,13 @@ int main(int argc, char *argv[]) {
     assert(fp != NULL);
 
     int result;
-    if (fscanf(fp, "%d", &result) != 1)
-      assert(0);
+    int b = fscanf(fp, "%d", &result);
     pclose(fp);
+    if (b != 1)
+      continue;
 
-    printf("%u %s\n", result, buf);
+    generate_output();
+    printf("%u %s\n", result, output_buf);
   }
   return 0;
 }
