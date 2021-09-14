@@ -8,14 +8,14 @@
 #include <stdlib.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, 
+  TK_NOTYPE = 0x41, TK_EQ, 
   NUM, HEX, TK_UEQ
 };
 
 static struct rule {
   const char *regex;
   int token_type;
-} rules[] = {
+} rules[] = {//这里面不要有字符的type，因为标识从A开始
   {"0x[0-9A-F]+", HEX}, //16进制数字
   {"[0-9]+",NUM},       // 数字
   {"\\(", '('},         // 左括号
@@ -33,6 +33,8 @@ static struct rule {
 
 #define NR_REGEX ARRLEN(rules)
 
+
+
 static regex_t re[NR_REGEX] = {};
 
 /* Rules are used for many times.
@@ -42,6 +44,8 @@ void init_regex() {
   int i;
   char error_msg[128];
   int ret;
+  
+  assert(ARRLEN(rules) < 26);
 
   for (i = 0; i < NR_REGEX; i ++) {
     ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
@@ -161,16 +165,27 @@ bool check_parentheses(int p, int q, int *position){
   return is_parentheses;
 }
 
+#define PRIOROTY_BASE 16
+
 int prio(char type){
-  switch (type)
-  {
+  switch (type) {
+  case '|':
+    return PRIOROTY_BASE + 0;
+
+  case '&':
+    return PRIOROTY_BASE + 1;
+
+  case TK_EQ:
+  case TK_UEQ:
+    return PRIOROTY_BASE + 2;
+
   case '+':
   case '-':
-    return 1;
+    return PRIOROTY_BASE + 3;
   
   case '*':
   case '/':
-    return 2;
+    return PRIOROTY_BASE + 4;
 
   default:
     return -1;
@@ -240,6 +255,10 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_UEQ: return val1 != val2;
+      case '|': return val1 || val2;
+      case '&': return val1 && val2;
       default: assert(0);
     }
   }
