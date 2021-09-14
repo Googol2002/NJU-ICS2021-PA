@@ -8,16 +8,16 @@
 #include <stdlib.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, NUM
-  // TK_PLUS, TK_SUB, TK_MUL, TK_DIV,
-  // TK_LP, TK_RP
+  TK_NOTYPE = 256, TK_EQ, 
+  NUM, HEX, TK_UEQ
 };
 
 static struct rule {
   const char *regex;
   int token_type;
 } rules[] = {
-  {"[0-9]+",NUM},         // 数字
+  {"[0-9]+",NUM},       // 数字
+  {"0x[0-9A-F]+", HEX}, //16进制数字
   {"\\(", '('},         // 左括号
   {"\\)", ')'},         // 右括号
   {"\\+", '+'},         // plus
@@ -26,6 +26,9 @@ static struct rule {
   {"\\/", '/'},         // divide
   {" +", TK_NOTYPE},    // spaces
   {"==", TK_EQ},        // equal
+  {"!=", TK_UEQ},
+  {"&&", '&'},
+  {"||", '|'}
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -89,6 +92,7 @@ static bool make_token(char *e) {
           case TK_NOTYPE:
             break;
           case NUM:
+          case HEX:
             memcpy(tokens[nr_token].str, e + position - substr_len, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
             // IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
@@ -183,7 +187,18 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
      * Return the value of the number.
      */
     u_int32_t buffer = 0;
-    sscanf(tokens[p].str, "%u", &buffer);
+    switch (tokens[p].type){
+    case HEX:
+      sscanf(tokens[p].str, "%x", &buffer);
+      break;
+    
+    case NUM:
+      sscanf(tokens[p].str, "%u", &buffer);
+      break;
+
+    default:
+      assert(0);
+    }
     // IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
   }
