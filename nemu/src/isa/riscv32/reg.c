@@ -24,5 +24,18 @@ void isa_reg_display() {
 }
 
 word_t isa_reg_str2val(const char *s, bool *success) {
-  return 0;
+  *success = true;
+  if (strcmp(s, regs[0]) == 0){
+    return cpu.gpr[0]._32;
+  }
+
+  for (int i = 1; i < ARRLEN(regs); ++i){
+    if (strcmp(regs[i], s+1) == 0){//跳过$
+      *success = true;
+      return cpu.gpr[i]._32;
+    }
+  }
+
+  *success = false;
+  return -1;
 }

@@ -9,7 +9,7 @@
 
 enum {
   TK_NOTYPE = 0x41, TK_EQ, 
-  NUM, HEX, TK_UEQ
+  NUM, HEX, TK_UEQ, REG
 };
 
 static struct rule {
@@ -17,6 +17,7 @@ static struct rule {
   int token_type;
 } rules[] = {//这里面不要有字符的type，因为标识从A开始
   {"0x[0-9A-F]+", HEX}, //16进制数字
+  {"\\$[0-9a-z]+", REG},//寄存器
   {"[0-9]+",NUM},       // 数字
   {"\\(", '('},         // 左括号
   {"\\)", ')'},         // 右括号
@@ -97,6 +98,7 @@ static bool make_token(char *e) {
             break;
           case NUM:
           case HEX:
+          case REG:
             memcpy(tokens[nr_token].str, e + position - substr_len, (substr_len) * sizeof(char));
             tokens[nr_token].str[substr_len] = '\0';
             // IFDEF(CONFIG_DEBUG, Log("[DEBUG ]读入了一个数字%s", tokens[nr_token].str));
@@ -209,6 +211,14 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
     
     case NUM:
       sscanf(tokens[p].str, "%u", &buffer);
+      break;
+
+    case REG:
+      buffer = isa_reg_str2val(tokens[p].str, success);
+      if (!*success){
+        *position = p;
+        return 0;
+      }
       break;
 
     default:
