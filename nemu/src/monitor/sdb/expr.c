@@ -28,7 +28,7 @@ static struct rule {
   {"==", TK_EQ},        // equal
   {"!=", TK_UEQ},
   {"&&", '&'},
-  {"||", '|'}
+  {"\\|\\|", '|'}
 };
 
 #define NR_REGEX ARRLEN(rules)
