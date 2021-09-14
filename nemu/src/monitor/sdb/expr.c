@@ -16,8 +16,8 @@ static struct rule {
   const char *regex;
   int token_type;
 } rules[] = {
-  {"[0-9]+",NUM},       // 数字
   {"0x[0-9A-F]+", HEX}, //16进制数字
+  {"[0-9]+",NUM},       // 数字
   {"\\(", '('},         // 左括号
   {"\\)", ')'},         // 右括号
   {"\\+", '+'},         // plus
