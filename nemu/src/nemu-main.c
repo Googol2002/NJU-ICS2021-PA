@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
 #endif
 
   IFDEF(CONFIG_DEBUG, test_cmd_p());
-  IFDEF(CONFIG_DEBUG, Log("通过200个测试样例"));
 
   /* Start engine. */
   engine_start();
@@ -28,6 +27,7 @@ word_t expr(char *e, bool *success);
 
 #define TEST_CMD_P_PATH "../testset/p.txt"
 void test_cmd_p(){
+  int counter = 0;
   char buffer[65535];
   char *expression;
   FILE *fp = fopen(TEST_CMD_P_PATH, "r");
@@ -45,5 +45,8 @@ void test_cmd_p(){
     uint32_t result = expr(expression, &success);
     assert(result == ans);
     input = fgets(buffer, ARRLEN(buffer), fp);
+    ++counter;
   }
+
+  Log("通过%d个测试样例", counter);
 }
