@@ -98,7 +98,7 @@ static bool make_token(char *e) {
         switch (rules[i].token_type) {
           case '*':
           case '-':
-            if (i == 0 || tokens[i - 1].type == '(' || prio(tokens[i - 1].type) > 0){
+            if (nr_token == 0 || tokens[nr_token - 1].type == '(' || prio(tokens[nr_token - 1].type) > 0){
               switch (rules[i].token_type)
               {
               case '*':
@@ -108,8 +108,8 @@ static bool make_token(char *e) {
                 tokens[nr_token].type = MINUS;
                 break;
               }
-            }else if (tokens[i - 1].type == ')' 
-              || tokens[i - 1].type == NUM || tokens[i - 1].type == HEX){
+            }else if (tokens[nr_token - 1].type == ')' 
+              || tokens[nr_token - 1].type == NUM || tokens[nr_token - 1].type == HEX){
               tokens[nr_token].type = rules[i].token_type;
             }else {
               IFDEF(CONFIG_DEBUG, Log("遇到了%#x作为前缀", tokens[i - 1].type));
