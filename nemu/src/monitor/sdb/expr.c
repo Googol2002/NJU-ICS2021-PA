@@ -112,6 +112,7 @@ static bool make_token(char *e) {
               || tokens[i - 1].type == NUM || tokens[i - 1].type == HEX){
               tokens[nr_token].type = rules[i].token_type;
             }else {
+              IFDEF(CONFIG_DEBUG, Log("遇到了%#x作为前缀", tokens[i - 1].type));
               assert(0);
             }
             nr_token++;
