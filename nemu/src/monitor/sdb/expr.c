@@ -258,14 +258,14 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
     }
     // IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
-  }else if (q - p == 1){//长度为2的子表达式呈型于 -[NUM] *[NUM]
+  }else if (q - p == 1 || check_parentheses(p + 1, q, position) == true){//长度为2的子表达式呈型于 -[NUM] *[NUM]
     switch (tokens[p].type) {
     case DEREF:
-      return *((uint32_t *)guest_to_host(eval(q, q, success, position)));
+      return *((uint32_t *)guest_to_host(eval(p + 1, q, success, position)));
       break;
     
     case MINUS://取负
-      return -eval(q, q, success, position);
+      return -eval(p + 1, q, success, position);
     default:
       assert(0);
     }
