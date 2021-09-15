@@ -9,7 +9,7 @@
 
 enum {
   TK_NOTYPE = 0x41, TK_EQ, 
-  NUM, HEX, TK_UEQ, REG, DEREF
+  NUM, HEX, TK_UEQ, REG, DEREF, MINUS
 };
 
 static struct rule {
@@ -65,6 +65,8 @@ typedef struct token {
 static Token tokens[2048] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
+int prio(char type);
+
 static bool make_token(char *e) {
   int position = 0;
   int i;
@@ -94,6 +96,27 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+          case '*':
+          case '-':
+            if (i == 0 || tokens[i - 1].type == '(' || prio(tokens[i - 1].type) > 0){
+              switch (rules[i].token_type)
+              {
+              case '*':
+                tokens[nr_token].type = DEREF;
+                break;
+              case '-':
+                tokens[nr_token].type = MINUS;
+                break;
+              }
+            }else if (tokens[i - 1].type == ')' 
+              || tokens[i - 1].type == NUM || tokens[i - 1].type == HEX){
+              tokens[nr_token].type = rules[i].token_type;
+            }else {
+              assert(0);
+            }
+            nr_token++;
+            break;
+
           case TK_NOTYPE:
             break;
           case NUM:
@@ -226,8 +249,19 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
     }
     // IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
-  }
-  else if (check_parentheses(p, q, position) == true) {
+  }else if (q - p == 1){//长度为2的子表达式呈型于 -[NUM] *[NUM]
+    switch (tokens[q].type) {
+    case DEREF:
+      IFDEF(CONFIG_DEBUG, Log("未实现"));
+      assert(0);
+      break;
+    
+    case MINUS://取负
+      return -eval(q, q, success, position);
+    default:
+      assert(0);
+    }
+  } else if (check_parentheses(p, q, position) == true) {
     /* The expression is surrounded by a matched pair of parentheses.
      * If that is the case, just throw away the parentheses.
      */
