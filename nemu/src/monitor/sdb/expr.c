@@ -1,4 +1,6 @@
 #include <isa.h>
+#include <cpu/decode.h>
+#include <memory/paddr.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -6,6 +8,7 @@
 #include <regex.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 enum {
   TK_NOTYPE = 0x41, TK_EQ, 
@@ -218,6 +221,8 @@ int prio(char type){
   }
 }
 
+extern Decode s;
+
 u_int32_t eval(int p, int q, bool *success, int *position) {
   if (p > q) {
     *success = false;
@@ -238,7 +243,12 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
       break;
 
     case REG:
-      buffer = isa_reg_str2val(tokens[p].str, success);
+      if (strcmp(tokens[p].str, "$pc")){
+        buffer = (uint32_t)(s.pc);
+      }else {
+        buffer = isa_reg_str2val(tokens[p].str, success);
+      }
+
       if (!*success){
         *position = p;
         return 0;
@@ -253,8 +263,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
   }else if (q - p == 1){//长度为2的子表达式呈型于 -[NUM] *[NUM]
     switch (tokens[p].type) {
     case DEREF:
-      IFDEF(CONFIG_DEBUG, Log("未实现"));
-      assert(0);
+      return *((uint32_t *)guest_to_host(eval(q, q, success, position)));
       break;
     
     case MINUS://取负

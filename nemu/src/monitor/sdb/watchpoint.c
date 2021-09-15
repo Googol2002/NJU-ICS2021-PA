@@ -5,9 +5,7 @@
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
-
-  /* TODO: Add more members if necessary */
-
+  char condation[32];
 } WP;
 
 static WP wp_pool[NR_WP] = {};
@@ -25,5 +23,56 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
-/* TODO: Implement the functionality of watchpoint */
+static int number = 1;
 
+bool check_watchpoint(){
+  return false;
+}
+
+
+WP* new_wp(char *condation){
+  if (free_->next == NULL){
+    assert(0);
+  }
+  
+  WP* result = free_->next;
+  result->NO = number ++;
+  result->next = NULL;
+  strcpy(result->condation, condation);
+
+  free_->next = result->next;
+  
+  if (head == NULL){
+    head = result;
+  }else{
+    result->next = head->next;
+    head->next = result;
+  }
+
+  return result;
+}
+
+static void insert_free(WP *wp){
+  wp->next = free_->next;
+  free_->next = wp;
+}
+
+void free_wp(int NO){
+  if (head->NO == NO){
+    insert_free(head);
+    head = head->next;
+    return ;
+  }
+
+  WP* prev = head;
+  while (prev->next){
+    if (prev->next->NO == NO){
+      insert_free(prev->next);
+      prev->next = prev->next->next;
+      return ;
+    }
+    prev = prev->next;
+  }
+
+  printf("未找到NO: %d", NO);
+}
