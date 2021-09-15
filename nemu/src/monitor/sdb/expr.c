@@ -242,6 +242,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
     case REG:
       if (strcmp(tokens[p].str, "$pc")){
         buffer = cpu.pc;
+        *success = true;
       }else {
         buffer = isa_reg_str2val(tokens[p].str, success);
       }
