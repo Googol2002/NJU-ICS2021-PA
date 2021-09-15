@@ -55,10 +55,17 @@ static int cmd_info(char *args){
 static int cmd_x(char *args){
   char *arg = strtok(NULL, " ");
   int n = -1;
+  bool success = true;
   paddr_t base = 0x80000000; 
   sscanf(arg, "%d", &n);
   arg = args + strlen(arg) + 1;
-  sscanf(arg, "%i", &base);
+  //sscanf(arg, "%i", &base);
+  base = expr(arg, &success);
+  
+  if (!success) {
+    return 0;
+  }
+  
 
   for (int i = 0; i < n; ++i){
     if (i % 4 == 0){
