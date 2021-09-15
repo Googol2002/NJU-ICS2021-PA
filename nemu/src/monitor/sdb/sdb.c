@@ -57,11 +57,10 @@ static int cmd_x(char *args){
   int n = -1;
   bool success = true;
   paddr_t base = 0x80000000; 
-  sscanf(arg, "%d", &n);
+  sscanf(arg, "%d", &n); //对于n不支持表达式，只支持常量。
   arg = args + strlen(arg) + 1;
   //sscanf(arg, "%i", &base);
   base = expr(arg, &success);
-  
   if (!success) {
     return 0;
   }
