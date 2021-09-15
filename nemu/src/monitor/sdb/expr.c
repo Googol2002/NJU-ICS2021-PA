@@ -251,7 +251,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
     // IFDEF(CONFIG_DEBUG, Log("读取数据 %d %s %x", buffer, tokens[p].str, tokens[p].type));
     return buffer;
   }else if (q - p == 1){//长度为2的子表达式呈型于 -[NUM] *[NUM]
-    switch (tokens[q].type) {
+    switch (tokens[p].type) {
     case DEREF:
       IFDEF(CONFIG_DEBUG, Log("未实现"));
       assert(0);
