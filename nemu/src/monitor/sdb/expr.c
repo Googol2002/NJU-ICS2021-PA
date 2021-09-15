@@ -1,5 +1,4 @@
 #include <isa.h>
-#include <cpu/decode.h>
 #include <memory/paddr.h>
 
 /* We use the POSIX regex functions to process regular expressions.
@@ -221,8 +220,6 @@ int prio(char type){
   }
 }
 
-extern Decode s;
-
 u_int32_t eval(int p, int q, bool *success, int *position) {
   if (p > q) {
     *success = false;
@@ -244,7 +241,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
 
     case REG:
       if (strcmp(tokens[p].str, "$pc")){
-        buffer = (uint32_t)(s.pc);
+        buffer = cpu.pc;
       }else {
         buffer = isa_reg_str2val(tokens[p].str, success);
       }
