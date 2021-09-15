@@ -80,11 +80,11 @@ static int cmd_x(char *args){
   return 0;
 }
 
-static int cmd_pu(char *args){
+static int cmd_px(char *args){
   bool success;
   uint32_t v = expr(args, &success);
   if (success)
-    printf("%s = \e[1;36m%u\e[0m\n", args, v);
+    printf("%s = \e[1;36m%#x\e[0m\n", args, v);
   return 0;
 }
 
@@ -131,7 +131,7 @@ static struct {
   { "p", "p EXPR 求出表达式EXPR的值", cmd_p},
   { "w", "w EXPR 当表达式EXPR的值发生变化时, 暂停程序执行", cmd_w},
   { "d", "d N 删除序号为N的监视点", cmd_d},
-  { "pu", "功能同p，但是可以调试uint32_t的情况", cmd_pu}
+  { "px", "功能同p，但是以十六进制输出结果", cmd_px}
 };
 
 #define NR_CMD ARRLEN(cmd_table)
