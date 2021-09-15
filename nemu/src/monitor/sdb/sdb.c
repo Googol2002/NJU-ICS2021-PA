@@ -84,7 +84,7 @@ static int cmd_px(char *args){
   bool success;
   uint32_t v = expr(args, &success);
   if (success)
-    printf("%s = \e[1;36m%#8x\e[0m\n", args, v);
+    printf("%s = \e[1;36m%#.8x\e[0m\n", args, v);
   return 0;
 }
 
