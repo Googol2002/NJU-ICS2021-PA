@@ -240,7 +240,7 @@ u_int32_t eval(int p, int q, bool *success, int *position) {
       break;
 
     case REG:
-      if (strcmp(tokens[p].str, "$pc")){
+      if (strcmp(tokens[p].str, "$pc") == 0){
         buffer = cpu.pc;
         *success = true;
       }else {
