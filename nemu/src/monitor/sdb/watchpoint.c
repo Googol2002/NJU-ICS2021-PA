@@ -82,3 +82,12 @@ void free_wp(int NO){
 
   printf("未找到 \e[1;36mWatchPoint(NO.%d)\e[0m\n", NO);
 }
+
+void watchpoint_display(){
+  printf("NO.\t Condation");
+  WP* cur = head;
+  while (cur){
+    printf("\n\e[1;36m%d\e[0m\t%s", cur->NO, cur->condation);
+    cur = cur->next;
+  }
+}

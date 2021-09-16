@@ -44,7 +44,7 @@ static int cmd_info(char *args){
   }else if (strcmp(args, "r") == 0){
     isa_reg_display();
   }else if (strcmp(args, "w") == 0){
-    printf("暂未实现\n");
+    watchpoint_display();
   }else {
     printf("未知的参数 [%s] \n", args);
   }

@@ -17,4 +17,6 @@ WP* new_wp(const char *condation, bool *success);
 
 void free_wp(int NO);
 
+void watchpoint_display();
+
 #endif
