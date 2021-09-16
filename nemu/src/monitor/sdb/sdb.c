@@ -108,7 +108,9 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
-
+  int NO;
+  sscanf(args, "%d", &NO);
+  free_wp(NO);
   return 0;
 }
 
