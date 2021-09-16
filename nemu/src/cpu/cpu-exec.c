@@ -21,9 +21,17 @@ rtlreg_t tmp_reg[4];
 void device_update();
 
 #ifdef CONFIG_DEBUG
+
+#include "../monitor/sdb/sdb.h"
+
 static void debug_hook(vaddr_t pc, const char *asmbuf) {
   log_write("%s\n", asmbuf);
   if (g_print_step) { puts(asmbuf); }
+  WP* point = NULL;
+  if (check_watchpoint(&point)){
+    printf("WatchPoint %d: %s", point->NO, point->condation);
+    nemu_state.state = NEMU_STOP;
+  }
 }
 #endif
 

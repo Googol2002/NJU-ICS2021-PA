@@ -2,12 +2,6 @@
 
 #define NR_WP 32
 
-typedef struct watchpoint {
-  int NO;
-  struct watchpoint *next;
-  char condation[32];
-} WP;
-
 static WP wp_pool[NR_WP] = {};
 static WP *head = NULL, *free_ = NULL;
 
@@ -25,7 +19,16 @@ void init_wp_pool() {
 
 static int number = 1;
 
-bool check_watchpoint(){
+bool check_watchpoint(WP **point){
+  WP *cur = head;
+  bool success = true;
+  while (cur){
+    if (expr(cur->condation, &success)){
+      *point = cur;
+      return true;
+    }
+    cur = cur->next;
+  }
   return false;
 }
 
