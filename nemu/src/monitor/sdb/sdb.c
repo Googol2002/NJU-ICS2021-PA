@@ -97,7 +97,13 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char *args){
-
+  bool success = true;
+  WP *point = new_wp(args, &success);
+  if (!success){
+    printf("Some thing wrong happend");
+  }else {
+    printf("Created a breakpoint(NO.: %d ): %s", point->NO, point->condation);
+  }
   return 0;
 }
 
