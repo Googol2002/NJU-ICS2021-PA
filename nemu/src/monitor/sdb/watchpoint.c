@@ -63,20 +63,22 @@ static void insert_free(WP *wp){
 
 void free_wp(int NO){
   if (head->NO == NO){
+    WP* buffer = head->next;
     insert_free(head);
-    head = head->next;
+    head = buffer;
     return ;
   }
 
   WP* prev = head;
   while (prev->next){
     if (prev->next->NO == NO){
+      WP* buffer = prev->next->next;
       insert_free(prev->next);
-      prev->next = prev->next->next;
+      prev->next = buffer;
       return ;
     }
     prev = prev->next;
   }
 
-  printf("未找到NO: %d", NO);
+  printf("未找到 \e[1;36mWatchPoint(NO.%d)\e[0m\n", NO);
 }
