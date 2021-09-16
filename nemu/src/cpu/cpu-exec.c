@@ -29,7 +29,7 @@ static void debug_hook(vaddr_t pc, const char *asmbuf) {
   if (g_print_step) { puts(asmbuf); }
   WP* point = NULL;
   if (check_watchpoint(&point)){
-    printf("WatchPoint %d: %s", point->NO, point->condation);
+    printf("Stoped at \e[1;36mWatchPoint(NO.%d)\e[0m: %s \n", point->NO, point->condation);
     nemu_state.state = NEMU_STOP;
   }
 }

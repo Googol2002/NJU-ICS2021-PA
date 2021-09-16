@@ -100,9 +100,9 @@ static int cmd_w(char *args){
   bool success = true;
   WP *point = new_wp(args, &success);
   if (!success){
-    printf("Some thing wrong happend");
+    printf("Some thing wrong happend.\n");
   }else {
-    printf("Created a breakpoint(NO.: %d ): %s", point->NO, point->condation);
+    printf("Created a \e[1;36mWatchPoint(NO.%d)\e[0m: %s \n", point->NO, point->condation);
   }
   return 0;
 }
