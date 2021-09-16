@@ -84,10 +84,10 @@ void free_wp(int NO){
 }
 
 void watchpoint_display(){
-  printf("NO.\t Condation");
+  printf("NO.\tCondation\n");
   WP* cur = head;
   while (cur){
-    printf("\n\e[1;36m%d\e[0m\t%s", cur->NO, cur->condation);
+    printf("\e[1;36m%d\e[0m\t%s\n", cur->NO, cur->condation);
     cur = cur->next;
   }
 }
