@@ -25,7 +25,7 @@ bool check_watchpoint(WP **point){
   while (cur){
     if (expr(cur->condation, &success)){
       *point = cur;
-      IFDEF(CONFIG_DEBUG, Log("Break"));
+      //IFDEF(CONFIG_DEBUG, Log("Break"));
       return true;
     }
     cur = cur->next;
@@ -34,18 +34,17 @@ bool check_watchpoint(WP **point){
 }
 
 
-WP* new_wp(char *condation, bool *success){
+WP* new_wp(const char *condation, bool *success){
   if (free_->next == NULL){
     assert(0);
   }
   
   WP* result = free_->next;
   result->NO = number ++;
+  free_->next = result->next;
   result->next = NULL;
   expr(condation, success);
   strcpy(result->condation, condation);
-
-  free_->next = result->next;
   
   if (head == NULL){
     head = result;

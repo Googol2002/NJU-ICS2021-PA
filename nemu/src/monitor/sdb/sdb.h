@@ -13,7 +13,7 @@ typedef struct watchpoint {
 
 bool check_watchpoint(WP **point);
 
-WP* new_wp(char *condation, bool *success);
+WP* new_wp(const char *condation, bool *success);
 
 void free_wp(int NO);
 
