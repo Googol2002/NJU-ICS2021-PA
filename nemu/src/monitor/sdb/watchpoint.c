@@ -25,6 +25,7 @@ bool check_watchpoint(WP **point){
   while (cur){
     if (expr(cur->condation, &success)){
       *point = cur;
+      IFDEF(CONFIG_DEBUG, Log("Break"));
       return true;
     }
     cur = cur->next;
