@@ -79,28 +79,60 @@ void generate_output(){
   output_buf[j] = '\0';
 }
 
+#define INSERT_BLANK
+
+
+static void gen_rand_blank(){
+  #ifdef INSERT_BLANK
+  switch (choose(7))
+  {
+  case 0:
+  case 1:
+  case 2:
+  case 3:
+    break;
+  
+  case 4:
+  case 5:
+    strcat(buf, " ");
+    break;
+
+  case 6:
+    strcat(buf, "  ");
+    break;
+  }
+  #endif
+}
+
 static void gen_rand_expr(int depth) {
   if (strlen(buf) > 65536 - 10000 || depth > 15){
     gen('(');
+    gen_rand_blank();
     gen_num();
+    gen_rand_blank();
     gen(')');
     return ;
   }
 
   switch (choose(3)) {
     case 0:
-      gen_num(); 
+      gen_num();
+      gen_rand_blank(); 
       break;
 
     case 1: 
       gen('(');
+      gen_rand_blank();
       gen_rand_expr(depth + 1);
+      gen_rand_blank();
       gen(')');
       break; 
       
     default: {
       gen_rand_expr(depth + 1);
+      gen_rand_blank();
       gen_rand_op();
+      gen_rand_blank();
       gen_rand_expr(depth + 1);
       break;
     }
