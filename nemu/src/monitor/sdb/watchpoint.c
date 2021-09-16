@@ -33,7 +33,7 @@ bool check_watchpoint(WP **point){
 }
 
 
-WP* new_wp(char *condation){
+WP* new_wp(char *condation, bool *success){
   if (free_->next == NULL){
     assert(0);
   }
@@ -41,6 +41,7 @@ WP* new_wp(char *condation){
   WP* result = free_->next;
   result->NO = number ++;
   result->next = NULL;
+  expr(condation, success);
   strcpy(result->condation, condation);
 
   free_->next = result->next;

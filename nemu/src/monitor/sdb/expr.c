@@ -69,7 +69,7 @@ static int nr_token __attribute__((used))  = 0;
 
 int prio(char type);
 
-static bool make_token(char *e) {
+static bool make_token(const char *e) {
   int position = 0;
   int i;
   regmatch_t pmatch;
@@ -80,7 +80,7 @@ static bool make_token(char *e) {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
-        char *substr_start = e + position;
+        const char *substr_start = e + position;
         int substr_len = pmatch.rm_eo;
         
         if (substr_len > 32){
@@ -149,7 +149,7 @@ static bool make_token(char *e) {
 
 uint32_t eval(int p, int q, bool *success, int *position);
 
-word_t expr(char *e, bool *success) {
+word_t expr(const char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;

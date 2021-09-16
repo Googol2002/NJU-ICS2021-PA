@@ -3,7 +3,7 @@
 
 #include <common.h>
 
-word_t expr(char *e, bool *success);
+word_t expr(const char *e, bool *success);
 
 typedef struct watchpoint {
   int NO;
