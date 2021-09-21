@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
 word_t expr(char *e, bool *success);
 
-#define TEST_CMD_P_PATH "src/testset/p.txt"
+#define TEST_CMD_P_PATH "./src/testset/p.txt"
 void test_cmd_p(){
   int counter = 0;
   char buffer[65535];
