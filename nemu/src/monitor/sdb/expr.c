@@ -111,7 +111,8 @@ static bool make_token(const char *e) {
                 break;
               }
             }else if (tokens[nr_token - 1].type == ')' 
-              || tokens[nr_token - 1].type == NUM || tokens[nr_token - 1].type == HEX){
+              || tokens[nr_token - 1].type == NUM || tokens[nr_token - 1].type == HEX
+              || tokens[nr_token - 1].type == REG){
               tokens[nr_token].type = rules[i].token_type;
             }else {
               IFDEF(CONFIG_DEBUG, Log("遇到了%#x作为前缀", tokens[i - 1].type));
