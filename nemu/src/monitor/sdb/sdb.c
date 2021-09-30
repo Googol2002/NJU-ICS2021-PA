@@ -93,7 +93,7 @@ static int cmd_p(char *args){
   bool success;
   uint32_t v = expr(args, &success);
   if (success)
-    printf("%s = \e[1;36m%d\e[0m\n", args, v);
+    printf("%s = \e[1;36m%u\e[0m\n", args, v);
   return 0;
 }
 
