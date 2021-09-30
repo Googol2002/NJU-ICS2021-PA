@@ -18,7 +18,7 @@ static struct rule {
   const char *regex;
   int token_type;
 } rules[] = {//这里面不要有字符的type，因为标识从A开始
-  {"0x[0-9A-F]+", HEX}, //16进制数字
+  {"0x[0-9A-Fa-f]+", HEX}, //16进制数字
   {"\\$[0-9a-z]+", REG},//寄存器
   {"[0-9]+",NUM},       // 数字
   {"\\(", '('},         // 左括号
