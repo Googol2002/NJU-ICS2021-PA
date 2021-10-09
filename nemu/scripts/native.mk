@@ -26,6 +26,11 @@ gdb: run-env
 	$(call git_commit, "gdb")
 	gdb -s $(BINARY) --args $(NEMU_EXEC)
 
+img: run-env
+	$(call git_commit, "gdb")
+	override ARGS += ~/PA/ics2021/am-kernels/tests/cpu-tests/build/dummy-riscv32-nemu.bin
+	$(NEMU_EXEC)
+
 clean-tools = $(dir $(shell find ./tools -name "Makefile"))
 $(clean-tools):
 	-@$(MAKE) -s -C $@ clean
