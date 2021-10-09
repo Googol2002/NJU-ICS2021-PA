@@ -3,9 +3,10 @@ def_EHelper(lui) {
 }
 
 def_EHelper(addi) {
+  Log("执行addi");
   rtl_addi(s, ddest, dsrc1, id_src1->imm);
 }
 
 def_EHelper(auipc) {
-  rtl_li(s, &s->dnpc, id_src1->imm);
+  rtl_addi(s, ddest, &s->pc, id_src1->imm);
 }
