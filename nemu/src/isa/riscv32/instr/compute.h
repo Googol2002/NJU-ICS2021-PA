@@ -13,5 +13,6 @@ def_EHelper(auipc) {
 
 def_EHelper(jal) {
   rtl_addi(s, ddest, &s->pc, 4);
+  Log("imm: %x", id_src1->imm);
   rtl_addi(s, &s->dnpc, &s->pc, id_src1->imm);
 }
