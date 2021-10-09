@@ -24,7 +24,6 @@ run: run-env
 
 img: run-env
 	$(call git_commit, "run")
-	ARGS += ~/PA/ics2021/am-kernels/tests/cpu-tests/build/dummy-riscv32-nemu.bin
 	$(NEMU_EXEC)
 
 gdb: run-env
