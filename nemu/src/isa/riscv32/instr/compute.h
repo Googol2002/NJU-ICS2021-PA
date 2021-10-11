@@ -26,6 +26,12 @@ def_EHelper(beq) {
   }
 }
 
+def_EHelper(bne) {
+  if (*dsrc1 != *ddest){
+    rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
+  }
+}
+
 def_EHelper(sltiu) {
   rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->imm);
 }
