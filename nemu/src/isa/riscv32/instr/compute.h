@@ -5,8 +5,12 @@ def_EHelper(lui) {
 }
 
 def_EHelper(addi) {
-  Log("执行addi");
   rtl_addi(s, ddest, dsrc1, id_src2->imm);
+}
+
+def_EHelper(add) {
+  Log("执行add");
+  rtl_add(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(auipc) {
