@@ -9,8 +9,15 @@ def_EHelper(addi) {
 }
 
 def_EHelper(add) {
-  Log("执行add");
   rtl_add(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(sub) {
+  rtl_sub(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(mul) {
+  rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
 }
 
 def_EHelper(beq) {
