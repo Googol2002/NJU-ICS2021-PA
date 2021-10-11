@@ -18,7 +18,7 @@ static def_DopHelper(i) {
 
 static def_DopHelper(j) {
   op->imm = 0;
-  op->imm |= s->isa.instr.j.imm20 << 20;
+  op->imm |= s->isa.instr.j.simm20 << 20;
   op->imm |= s->isa.instr.j.imm19_12 << 12;
   op->imm |= s->isa.instr.j.imm11 << 11;
   op->imm |= s->isa.instr.j.imm10_1 << 1;
