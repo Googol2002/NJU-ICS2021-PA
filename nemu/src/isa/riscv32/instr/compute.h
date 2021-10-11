@@ -14,8 +14,8 @@ def_EHelper(add) {
 }
 
 def_EHelper(beq) {
-  if (*dsrc1 == *dsrc2){
-    rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
+  if (*dsrc1 == *ddest){
+    rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
   }
 }
 
