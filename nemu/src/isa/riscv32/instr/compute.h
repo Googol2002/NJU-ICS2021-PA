@@ -26,6 +26,10 @@ def_EHelper(beq) {
   }
 }
 
+def_EHelper(sltiu) {
+  rtl_setrelopi(s, RELOP_LTU, ddest, dsrc1, id_src2->imm);
+}
+
 def_EHelper(auipc) {
   rtl_addi(s, ddest, &s->pc, id_src1->imm);
 }
