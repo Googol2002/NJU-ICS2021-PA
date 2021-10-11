@@ -13,6 +13,12 @@ def_EHelper(add) {
   rtl_add(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(beq) {
+  if (*dsrc1 == *dsrc2){
+    rtl_addi(s, &s->dnpc, &s->pc, id_dest->imm);
+  }
+}
+
 def_EHelper(auipc) {
   rtl_addi(s, ddest, &s->pc, id_src1->imm);
 }
