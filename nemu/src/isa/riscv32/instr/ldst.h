@@ -8,5 +8,5 @@ def_EHelper(sw) {
 
 
 def_EHelper(sb) {
-  rtl_sm(s, ddest, dsrc1, id_src2->imm, 4);
+  rtl_sm(s, ddest, dsrc1, id_src2->imm, 1);
 }
