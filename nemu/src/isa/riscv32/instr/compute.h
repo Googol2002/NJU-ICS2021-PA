@@ -24,6 +24,14 @@ def_EHelper(sltu) {
   rtl_setrelop(s, RELOP_LTU, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(xor) {
+  rtl_xor(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(or) {
+  rtl_or(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(beq) {
   if (*dsrc1 == *ddest){
     rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
