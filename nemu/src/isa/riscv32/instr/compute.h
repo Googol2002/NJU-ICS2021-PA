@@ -40,8 +40,16 @@ def_EHelper(sra) {
   rtl_sra(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(srai) {
+  rtl_srai(s, ddest, dsrc1, id_src2->imm & 0b111111u);
+}
+
 def_EHelper(srl) {
   rtl_srl(s, ddest, dsrc1, dsrc2);
+}
+
+def_EHelper(srli) {
+  rtl_srli(s, ddest, dsrc1, id_src2->imm & 0b111111u);
 }
 
 def_EHelper(beq) {
