@@ -89,13 +89,13 @@ def_EHelper(bne) {
 }
 
 def_EHelper(bge) {
-  if ((sword_t)*dsrc1 >= (sword_t)*ddest){
+  if ((sword_t)(*dsrc1) >= (sword_t)(*ddest)){
     rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
   }
 }
 
 def_EHelper(blt) {
-  if ((sword_t)*dsrc1 < (sword_t)*ddest){
+  if ((sword_t)(*dsrc1) < (sword_t)(*ddest)){
     rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
   }
 }
