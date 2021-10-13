@@ -114,6 +114,7 @@ def_EHelper(jal) {
 }
 
 def_EHelper(jalr) {
+  Log("jalr");
   rtl_addi(s, s0, &s->pc, 4);
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->imm);
   rtl_andi(s, &s->dnpc, &s->dnpc, ~1);
