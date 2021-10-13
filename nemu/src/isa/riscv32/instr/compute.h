@@ -32,6 +32,10 @@ def_EHelper(mul) {
   rtl_mulu_lo(s, ddest, dsrc1, dsrc2);
 }
 
+def_EHelper(mulh) {//TODO
+  rtl_muls_hi(s, ddest, dsrc1, dsrc2);
+}
+
 def_EHelper(sltu) {
   rtl_setrelop(s, RELOP_LTU, ddest, dsrc1, dsrc2);
 }
