@@ -23,6 +23,6 @@ def_EHelper(sb) {
 }
 
 def_EHelper(sh) {
-  //dest中存放源，src1中存放
+  //dest中存放rs2，src1中存放rs1，src2中存放offset
   rtl_sm(s, ddest, dsrc1, id_src2->imm, 2);
 }
