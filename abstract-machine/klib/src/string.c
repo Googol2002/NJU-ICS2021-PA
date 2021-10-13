@@ -1,6 +1,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 #include <stdint.h>
+#include <stddef.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
@@ -73,7 +74,11 @@ int strncmp(const char *s1, const char *s2, size_t n) {
 }
 
 void *memset(void *s, int c, size_t n) {
-  panic("Not implemented");
+  unsigned char* target = (unsigned char*)s;
+  for (int i = 0; i < n; ++i){
+    target[i] = (unsigned char)c;
+  }
+  return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) {
