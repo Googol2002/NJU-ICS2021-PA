@@ -45,13 +45,13 @@ def_rtl_compute_reg_imm(sraw)
 
 static inline def_rtl(setrelop, uint32_t relop, rtlreg_t *dest,
     const rtlreg_t *src1, const rtlreg_t *src2) {
-      Log("setrelop %d", interpret_relop(relop, *src1, *src2));
+      // Log("setrelop %d", interpret_relop(relop, *src1, *src2));
   *dest = interpret_relop(relop, *src1, *src2);
 }
 
 static inline def_rtl(setrelopi, uint32_t relop, rtlreg_t *dest,
     const rtlreg_t *src1, sword_t imm) {
-      Log("setrelopi %d", interpret_relop(relop, *src1, imm));
+      // Log("setrelopi %d", interpret_relop(relop, *src1, imm));
   *dest = interpret_relop(relop, *src1, imm);
 }
 
