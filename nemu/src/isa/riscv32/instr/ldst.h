@@ -23,5 +23,6 @@ def_EHelper(sb) {
 }
 
 def_EHelper(sh) {
+  //dest中存放源，src1中存放
   rtl_sm(s, ddest, dsrc1, id_src2->imm, 2);
 }
