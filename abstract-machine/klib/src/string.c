@@ -39,7 +39,7 @@ char *strncpy(char *dst, const char *src, size_t n) {
 char *strcat(char *dst, const char *src) {
   int i, j;
   for (i = 0; dst[i] != '\0'; ++i){}
-  for (j = 0; src[j] != '\0'; ++j){
+  for (j = 0; src[j] != '\0'; ++j, ++i){
     dst[i] = src[j];//追加
   }
   dst[i] = '\0';
