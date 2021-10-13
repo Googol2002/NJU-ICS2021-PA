@@ -76,6 +76,10 @@ def_EHelper(srli) {
   rtl_srli(s, ddest, dsrc1, id_src2->imm & 0b111111u);
 }
 
+def_EHelper(slli) {
+  rtl_slli(s, ddest, dsrc1, id_src2->imm & 0b111111u);
+}
+
 def_EHelper(beq) {
   if (*dsrc1 == *ddest){
     rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
