@@ -70,6 +70,8 @@ int strncmp(const char *s1, const char *s2, size_t n) {
   //case s1先结束，0-x < 0
   //case s2先结束，x-0 > 0
   //case 到达n，返回0
+  if (i == n)
+    return 0;
   return (int)(s1[i]) - (int)(s2[i]);
 }
 
@@ -104,7 +106,8 @@ int memcmp(const void *s1, const void *s2, size_t n) {
     if (char_s1[i] != char_s2[i])
       return (int)(char_s1[i]) - (int)(char_s2[i]);
   }
-
+  if (i == n)
+    return 0;
   return (int)(char_s1[i]) - (int)(char_s2[i]);
 }
 
