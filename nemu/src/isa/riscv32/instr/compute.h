@@ -114,7 +114,7 @@ def_EHelper(jal) {
 }
 
 def_EHelper(jalr) {
-  Log("jalr %d %d", *dsrc1, id_src2->imm);
+  Log("jalr %x %d", *dsrc1, id_src2->imm);
   // word_t buffer = s->pc + 4;
   rtl_addi(s, s0, &s->pc, 4);
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->imm);
