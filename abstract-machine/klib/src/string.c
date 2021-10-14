@@ -83,8 +83,22 @@ void *memset(void *s, int c, size_t n) {
   return s;
 }
 
+// 如果目标区域和源区域有重叠的话，
+// memmove() 能够保证源串在被覆盖之前将重叠区域的字节拷贝到目标区域中，
+// 复制后源区域的内容会被更改。
 void *memmove(void *dst, const void *src, size_t n) {
-  panic("Not implemented");
+  char *char_dst = (char *)dst;
+  char *char_src = (char *)src;
+
+  if (dst < src){
+    for (int i = 0; i < n; ++i)
+      char_dst[i] = char_src[i];
+  }else if(dst > src){
+    for (int i = n-1; i >= 0; --i)
+      char_dst[i] = char_src[i];
+  }//else 不需要复制
+
+  return dst;
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
