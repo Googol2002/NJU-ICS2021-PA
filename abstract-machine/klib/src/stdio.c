@@ -43,7 +43,7 @@ int sprintf(char *out, const char *fmt, ...) {
       case 'd':
         num = va_arg(valist, int);
         for (len = 0; num ; num /= 10, ++len)
-          buffer[len] = num % 10;//逆序的
+          buffer[len] = num % 10 - '0';//逆序的
         for (int k = len - 1; k >= 0; --k)
           out[j++] = buffer[k];
         break;
