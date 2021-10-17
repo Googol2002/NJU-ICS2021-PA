@@ -54,11 +54,11 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
 }
 
 static void print_instr_ringbuf(){
-  printf(ASNI_FMT("====== The nearest %d instructions ======", ASNI_FG_BLUE), RINGBUF_LINES);
+  printf(ASNI_FMT("====== The nearest %d instructions ======\n", ASNI_FG_BLUE), RINGBUF_LINES);
   for(int i = ringbuf_end >= RINGBUF_LENGTH ? ringbuf_end : 0; 
     i < ringbuf_end + (ringbuf_end >= RINGBUF_LENGTH ? RINGBUF_LINES : 0);
     ++i){
-    puts(RINGBUF_ELEMENT(i));
+    printf(ASNI_FMT("%s\n", ASNI_FG_MAGENTA), RINGBUF_ELEMENT(i));
   }
 }
 
