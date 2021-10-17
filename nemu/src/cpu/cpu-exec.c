@@ -58,7 +58,7 @@ static void print_instr_ringbuf(){
   for(int i = ringbuf_end >= RINGBUF_LENGTH ? ringbuf_end : 0; 
     i < ringbuf_end + (ringbuf_end >= RINGBUF_LENGTH ? RINGBUF_LINES : 0);
     ++i){
-    printf(ASNI_FMT("%s\n", ASNI_BG_CYAN), RINGBUF_ELEMENT(i));
+    printf(ASNI_FMT("%s\n", ASNI_FG_CYAN), RINGBUF_ELEMENT(i));
   }
 }
 
