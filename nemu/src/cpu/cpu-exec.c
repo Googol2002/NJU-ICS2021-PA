@@ -37,7 +37,7 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
   #ifdef CONFIG_ITRACE_COND
     if (ITRACE_COND) log_write("%s\n", _this->logbuf);
 
-    strncpy(instr_ringbuf[ringbuf_end], _this->logbuf, RINGBUF_LENGTH);
+    strncpy(RINGBUF_ELEMENT(ringbuf_end), _this->logbuf, RINGBUF_LENGTH);
     ringbuf_end++;
   
   #endif
@@ -57,7 +57,7 @@ static void print_instr_ringbuf(){
   for(int i = ringbuf_end >= RINGBUF_LENGTH ? ringbuf_end : 0; 
     i < ringbuf_end + (ringbuf_end >= RINGBUF_LENGTH ? RINGBUF_LINES : 0);
     ++i){
-    puts(instr_ringbuf[i]);
+    puts(RINGBUF_ELEMENT(i));
   }
 }
 
