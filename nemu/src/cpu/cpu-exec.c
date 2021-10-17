@@ -21,6 +21,16 @@ rtlreg_t tmp_reg[4];
 void device_update();
 void fetch_decode(Decode *s, vaddr_t pc);
 
+#ifdef CONFIG_ITRACE_COND
+
+#define RINGBUF_LINES 32
+#define RINGBUF_LENGTH 128
+char instr_ringbuf[RINGBUF_LINES][RINGBUF_LENGTH];
+long ringbuf_end = 0;
+#define RINGBUF_ELEMENT(index) (instr_ringbuf[index % RINGBUF_LINES])
+
+#endif
+
 #include "../monitor/sdb/sdb.h"
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
