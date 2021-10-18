@@ -23,7 +23,7 @@ void fetch_decode(Decode *s, vaddr_t pc);
 
 #ifdef CONFIG_ITRACE_COND
 
-#define RINGBUF_LINES 3
+#define RINGBUF_LINES 12
 #define RINGBUF_LENGTH 128
 char instr_ringbuf[RINGBUF_LINES][RINGBUF_LENGTH];
 long ringbuf_end = 0;
@@ -53,6 +53,8 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
     
 }
 
+#ifdef CONFIG_ITRACE_COND
+
 static void print_instr_ringbuf(){
   printf(ASNI_FMT("====== The nearest %d instructions ======\n", ASNI_FG_BLUE), RINGBUF_LINES);
   for(int i = ringbuf_end >= RINGBUF_LINES ? ringbuf_end : 0; 
@@ -61,6 +63,7 @@ static void print_instr_ringbuf(){
     printf(ASNI_FMT("%s\n", ASNI_FG_CYAN), RINGBUF_ELEMENT(i));
   }
 }
+#endif
 
 #include <isa-exec.h>
 
@@ -146,7 +149,9 @@ void cpu_exec(uint64_t n) {
     case NEMU_RUNNING: nemu_state.state = NEMU_STOP; break;
 
     case NEMU_END: case NEMU_ABORT:
-      print_instr_ringbuf();
+      #ifdef CONFIG_ITRACE_COND
+        print_instr_ringbuf();
+      #endif
       Log("nemu: %s at pc = " FMT_WORD,
           (nemu_state.state == NEMU_ABORT ? ASNI_FMT("ABORT", ASNI_FG_RED) :
            (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) :
