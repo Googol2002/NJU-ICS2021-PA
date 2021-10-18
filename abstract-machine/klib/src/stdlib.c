@@ -29,11 +29,11 @@ int atoi(const char* nptr) {
   return x;
 }
 
-void *malloc(size_t size) {
-  panic("Not implemented");
-}
+// void *malloc(size_t size) {
+//   panic("Not implemented");
+// }
 
-void free(void *ptr) {
-}
+// void free(void *ptr) {
+// }
 
 #endif
