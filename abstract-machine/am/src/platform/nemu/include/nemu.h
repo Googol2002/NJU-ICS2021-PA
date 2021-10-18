@@ -7,7 +7,7 @@
                // it will be expanded as "x86/x86.h", "mips/mips32.h", ...
 
 #if defined(__ISA_X86__)
-# define nemu_trap(code) asm volatile (".byte 0xd6" : :"a"(code))
+//# define nemu_trap(code) asm volatile (".byte 0xd6" : :"a"(code))
 #elif defined(__ISA_MIPS32__)
 # define nemu_trap(code) asm volatile ("move $v0, %0; .word 0xf0000000" : :"r"(code))
 #elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
