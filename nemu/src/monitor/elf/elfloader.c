@@ -15,6 +15,6 @@ void init_elf(const char* path){
     Elf32_Ehdr elf_header;
     read_from_file(elf, 0, sizeof elf_header, &elf_header);
 
-    printf("e_shoff: %x", elf_header.e_shoff);
-    printf("e_shentsize: %d\t e_shnum: %d", elf_header.e_shentsize, elf_header.e_shnum);
+    printf("e_shoff: %x \n", elf_header.e_shoff);
+    printf("e_shentsize: %d\t e_shnum: %d \n", elf_header.e_shentsize, elf_header.e_shnum);
 }
