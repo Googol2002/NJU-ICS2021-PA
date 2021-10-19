@@ -116,7 +116,9 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
 
+  #ifdef CONFIG_DEBUG
   init_elf(elf_file);
+  #endif
 
   /* Initialize the simple debugger. */
   init_sdb();
