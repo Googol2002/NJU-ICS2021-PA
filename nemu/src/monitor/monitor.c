@@ -1,6 +1,6 @@
 #include <isa.h>
 #include <memory/paddr.h>
-#include "elf/elfloader.h"
+#include "ftrace/elfloader.h"
 
 void init_rand();
 void init_log(const char *log_file);
@@ -115,10 +115,8 @@ void init_monitor(int argc, char *argv[]) {
 
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
-
-  #ifdef CONFIG_DEBUG
+ 
   init_elf(elf_file);
-  #endif
 
   /* Initialize the simple debugger. */
   init_sdb();
