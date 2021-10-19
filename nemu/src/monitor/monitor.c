@@ -73,7 +73,10 @@ static int parse_args(int argc, char *argv[]) {
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
       case 'e': elf_file = optarg; break;
-      case 1: img_file = optarg; return optind - 1;
+      case 1:
+      img_file = optarg;
+      Log("img_file: %s", img_file); 
+      return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
         printf("\t-b,--batch              run with batch mode\n");
