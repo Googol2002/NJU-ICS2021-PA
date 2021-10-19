@@ -7,6 +7,7 @@
 // typedef Elf32_Shdr Elf_Shdr;
 // typedef Elf32_Ehdr Elf_Ehdr;
 
+FUNC_INFO elf_funcs[256];
 
 static void read_from_file(FILE *elf, size_t offset, size_t size, void* dest){
     fseek(elf, offset, SEEK_SET);
