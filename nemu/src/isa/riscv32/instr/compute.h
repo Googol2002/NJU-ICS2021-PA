@@ -1,4 +1,6 @@
 #include <../include/rtl/rtl.h>
+#include "../../../monitor/ftrace/ftracer.h"
+#include "../local-include/reg.h"
 
 def_EHelper(lui) {
   rtl_li(s, ddest, id_src1->imm);
@@ -125,13 +127,17 @@ def_EHelper(auipc) {
 def_EHelper(jal) {
   rtl_addi(s, ddest, &s->pc, 4);
   rtl_addi(s, &s->dnpc, &s->pc, id_src1->imm);
+  stack_call(s->dnpc);
 }
 
 def_EHelper(jalr) {
-  // Log("jalr %x %d", *dsrc1, id_src2->imm);
-  // word_t buffer = s->pc + 4;
   rtl_addi(s, s0, &s->pc, 4);
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->imm);
   rtl_andi(s, &s->dnpc, &s->dnpc, ~1);
   rtl_addi(s, ddest, s0, 0);
+  if (ddest == &gpr(8)){
+    stack_return();
+  }else{
+    stack_call(s->dnpc);
+  }
 }

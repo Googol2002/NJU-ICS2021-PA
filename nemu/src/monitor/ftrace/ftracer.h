@@ -10,6 +10,9 @@ typedef struct __STACK_ENTRY_{
 
 void init_ftracer();
 
+void stack_return();
+
+void stack_call(paddr_t addr);
 
 
 #endif
