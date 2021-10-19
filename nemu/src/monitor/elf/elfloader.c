@@ -43,11 +43,13 @@ void init_elf(const char* path){
             break;
 
             case SHT_STRTAB:
-                sh_string_table_offset = section_entry.sh_offset;
+                if (i == elf_header.e_shstrndx)
+                    sh_string_table_offset = section_entry.sh_offset;
+                else
+                    string_table_offset = section_entry.sh_offset;
             break;
         }
     }
-    string_table_offset = elf_header.e_shstrndx;
 
     printf("String Table Offset: %#x\n", string_table_offset);
     printf("shstr  Table Offset: %#x\n", sh_string_table_offset);
