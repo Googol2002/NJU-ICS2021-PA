@@ -85,7 +85,7 @@ void init_elf(const char* path){
             get_str_from_file(elf, string_table_offset + symbol_section_entry.st_name, 
                 sizeof(function_name), function_name);
             append(function_name, symbol_section_entry.st_value, symbol_section_entry.st_size);
-            printf("Func: %8s | Start: %#x | Size: %#x\n", function_name, 
+            printf("Func: %12s | Start: %#x | Size: %#x\n", function_name, 
                 symbol_section_entry.st_value, symbol_section_entry.st_size);
             break;
         }
