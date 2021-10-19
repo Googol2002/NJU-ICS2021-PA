@@ -88,7 +88,7 @@ void init_elf(const char* path){
             break;
         }
     }
-    printf("====== String Table ======\n");
+    printf("====== Symbol Table ======\n");
     for (int i = 0; i < end; ++i){
         FUNC_INFO *info = &elf_funcs[i];
         printf("Func: %12s | Start: %#x | Size: %ld\n", info->func_name, 
