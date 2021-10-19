@@ -7,7 +7,7 @@
 // typedef Elf32_Shdr Elf_Shdr;
 // typedef Elf32_Ehdr Elf_Ehdr;
 
-FUNC_INFO elf_funcs[256];
+static FUNC_INFO elf_funcs[256];
 
 static void read_from_file(FILE *elf, size_t offset, size_t size, void* dest){
     fseek(elf, offset, SEEK_SET);
@@ -84,11 +84,16 @@ void init_elf(const char* path){
             case STT_FUNC:
             get_str_from_file(elf, string_table_offset + symbol_section_entry.st_name, 
                 sizeof(function_name), function_name);
-            append(function_name, symbol_section_entry.st_value, symbol_section_entry.st_size);
-            printf("Func: %12s | Start: %#x | Size: %d\n", function_name, 
-                symbol_section_entry.st_value, symbol_section_entry.st_size);
+            append(function_name, symbol_section_entry.st_value, symbol_section_entry.st_size);  
             break;
         }
     }
+    printf("====== String Table ======\n");
+    for (int i = 0; i < end; ++i){
+        FUNC_INFO *info = &elf_funcs[i];
+        printf("Func: %12s | Start: %#x | Size: %ld\n", info->func_name, 
+            info->start, info->size);
+    }
+
 
 }
