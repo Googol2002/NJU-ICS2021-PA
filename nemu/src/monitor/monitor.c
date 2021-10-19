@@ -75,7 +75,6 @@ static int parse_args(int argc, char *argv[]) {
       case 'e': elf_file = optarg; break;
       case 1:
       img_file = optarg;
-      Log("img_file: %s", img_file); 
       return optind - 1;
       default:
         printf("Usage: %s [OPTION...] IMAGE [args]\n\n", argv[0]);
