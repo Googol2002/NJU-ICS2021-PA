@@ -12,4 +12,6 @@ typedef struct __FUNC_INFO{
 
 void init_elf(const char* path);
 
+FUNC_INFO elf_funcs[256];
+
 #endif
