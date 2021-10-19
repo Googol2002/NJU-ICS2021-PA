@@ -47,8 +47,8 @@ void init_elf(const char* path){
             break;
         }
     }
-    printf("String Table Offset: %8d\n", string_table_offset);
-    printf("Symbol Table Offset: %8d\n", symbol_table_offset);
+    printf("String Table Offset: %#x\n", string_table_offset);
+    printf("Symbol Table Offset: %#x\n", symbol_table_offset);
     
 
 }
