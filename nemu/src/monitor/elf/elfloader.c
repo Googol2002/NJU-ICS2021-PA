@@ -15,7 +15,11 @@ void init_elf(const char* path){
     Elf32_Ehdr elf_header;
     read_from_file(elf, 0, sizeof elf_header, &elf_header);
 
+    Elf32_Off selection_header_offset = elf_header.e_shoff;
+    size_t headers_entry_size = elf_header.e_shentsize;
+    int headers_entry_num = elf_header.e_shnum;
+
     printf("====== Reading ELF File ======\n");
-    printf("e_shoff: %d \n", elf_header.e_shoff);
-    printf("e_shentsize: %d\t e_shnum: %d \n", elf_header.e_shentsize, elf_header.e_shnum);
+    printf("e_shoff: %d \n", selection_header_offset);
+    printf("e_shentsize: %ld\t e_shnum: %d \n", headers_entry_size, headers_entry_num);
 }
