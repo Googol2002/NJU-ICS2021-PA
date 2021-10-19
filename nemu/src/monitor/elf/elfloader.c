@@ -32,7 +32,7 @@ void init_elf(const char* path){
     
     printf("====== Selection Headers ======\n");
     
-    Elf32_Off string_table_offset, symbol_table_offset;
+    Elf32_Off sh_string_table_offset, symbol_table_offset, string_table_offset;
     for (int i = 0; i < headers_entry_num; ++i){
         Elf32_Shdr section_entry;
         read_from_file(elf, i * headers_entry_size + section_header_offset,
@@ -43,11 +43,14 @@ void init_elf(const char* path){
             break;
 
             case SHT_STRTAB:
-                string_table_offset = section_entry.sh_offset;
+                sh_string_table_offset = section_entry.sh_offset;
             break;
         }
     }
+    string_table_offset = elf_header.e_shstrndx;
+
     printf("String Table Offset: %#x\n", string_table_offset);
+    printf("shstr  Table Offset: %#x\n", sh_string_table_offset);
     printf("Symbol Table Offset: %#x\n", symbol_table_offset);
     
 
