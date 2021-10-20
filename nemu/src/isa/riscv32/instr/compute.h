@@ -135,7 +135,7 @@ def_EHelper(jalr) {
   rtl_addi(s, &s->dnpc, dsrc1, id_src2->imm);
   rtl_andi(s, &s->dnpc, &s->dnpc, ~1);
   rtl_addi(s, ddest, s0, 0);
-  if (ddest == &gpr(0)){//指向x0
+  if (s->isa.instr.i.rd == 0){//指向x0
     stack_return();
   }else{
     stack_call(s->dnpc);
