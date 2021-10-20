@@ -33,6 +33,6 @@ static void travel(STACK_ENTRY *r, int depth){
 }
 
 void print_stack_trace(){
-    printf(ASNI_FMT("====== Call Stack ======\n", ASNI_FG_BLUE));
+    printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
     travel(header.next, 0);
 }
