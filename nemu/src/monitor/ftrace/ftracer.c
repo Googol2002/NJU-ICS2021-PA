@@ -26,7 +26,7 @@ void stack_return(){
 static void travel(STACK_ENTRY *r, int depth){
     if (r != NULL){
         travel(r->next, depth + 1);
-        printf("%s at %#x \n", r->info->func_name, r->info->start);
+        printf("At <%#x>\t%s  \n",  r->info->start, r->info->func_name);
     }
 }
 
