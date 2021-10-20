@@ -9,6 +9,7 @@
 typedef struct __STACK_ENTRY_{
     FUNC_INFO* cur_info;
     FUNC_INFO* des_info;
+    paddr_t addr;
     int type;
     struct __STACK_ENTRY_ *next;
 }STACK_ENTRY;

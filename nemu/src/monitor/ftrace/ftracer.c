@@ -12,12 +12,14 @@ void init_ftracer(const char* elf_file){
     header.des_info = NULL;
     header.cur_info = NULL;
     header.next = NULL;
+    header.addr = 0;
 }
 
 static void append(paddr_t cur, paddr_t des, int type){
     STACK_ENTRY *node = malloc(sizeof(STACK_ENTRY));
     end->next = node;
     node->next = NULL;
+    node->addr = cur;
     node->cur_info = check_func(cur);
     node->des_info = check_func(des);
     node->type = type;
@@ -48,6 +50,7 @@ void print_stack_trace(){
     printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
     for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
         STACK_ENTRY* r = cur->next;
-        printf(ASNI_FMT("<%#x>", ASNI_FG_WHITE) ASNI_FMT("(%s)  \n", ASNI_FG_BLUE) ASNI_FMT("\t\t<%#x>  \n", ASNI_FG_YELLOW),  r->cur_info->start, r->cur_info->func_name, r->des_info->start);
+        printf(ASNI_FMT("<%#x>", ASNI_FG_WHITE) ASNI_FMT("(%16s)  \n", ASNI_FG_BLUE) ASNI_FMT("\t\t<%#x>  \n", ASNI_FG_YELLOW),  r->addr, 
+            r->cur_info ? r->cur_info->func_name : "", r->des_info->start);
     }
 }
