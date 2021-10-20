@@ -110,7 +110,7 @@ void difftest_step(vaddr_t pc, vaddr_t npc) {
   ref_difftest_exec(1);
   ref_difftest_regcpy(&ref_r, DIFFTEST_TO_DUT);
 
-  //TODO: 这里npc原先是pc的，但是实在不正确
+  //TODO: 这里npc原先是pc的，但是看起来实在不正确
   checkregs(&ref_r, npc);
 }
 #else
