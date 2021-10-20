@@ -28,6 +28,8 @@ void stack_return(){
 static void travel(STACK_ENTRY *r, int depth){
     if (r != NULL){
         travel(r->next, depth + 1);
+        for (int i = 0; i < depth; i++)
+            printf("  ");
         printf("At " ASNI_FMT("<%#x>", ASNI_FG_YELLOW) ASNI_FMT("\t%s  \n", ASNI_FG_BLUE),  r->info->start, r->info->func_name);
     }
 }
