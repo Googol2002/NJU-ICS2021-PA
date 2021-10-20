@@ -24,9 +24,10 @@ void stack_return(){
 }
 
 static void travel(STACK_ENTRY *r, int depth){
-    if (r->next != NULL)
+    if (r != NULL){
         travel(r->next, depth + 1);
-    printf("%s at %#x \n", r->info->func_name, r->info->start);
+        printf("%s at %#x \n", r->info->func_name, r->info->start);
+    }
 }
 
 void print_stack_trace(){
