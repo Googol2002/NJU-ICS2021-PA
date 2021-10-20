@@ -50,7 +50,7 @@ void print_stack_trace(){
     printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
     for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
         STACK_ENTRY* r = cur->next;
-        printf(ASNI_FMT("<%#x>", ASNI_FG_WHITE) ASNI_FMT("(%12s) ", ASNI_FG_BLUE) ASNI_FMT("%s", ASNI_FG_WHITE) ASNI_FMT("\t<%#x>  \n", ASNI_FG_YELLOW),  r->addr, 
+        printf("<%#x>" ASNI_FMT("(%12s) ", ASNI_FG_BLUE) ASNI_FMT("%s", ASNI_FG_WHITE) ASNI_FMT("\t<%#x>  \n", ASNI_FG_YELLOW),  r->addr, 
             r->cur_info ? r->cur_info->func_name : "", action_name[r->type],r->des_info->start);
     }
 }
