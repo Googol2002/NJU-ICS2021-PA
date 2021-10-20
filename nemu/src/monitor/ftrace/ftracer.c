@@ -1,6 +1,8 @@
 #include "ftracer.h"
 
+#include <utils.h>
 #include <stdlib.h>
+
 
 STACK_ENTRY header;
 
@@ -26,7 +28,7 @@ void stack_return(){
 static void travel(STACK_ENTRY *r, int depth){
     if (r != NULL){
         travel(r->next, depth + 1);
-        printf("At <%#x>\t%s  \n",  r->info->start, r->info->func_name);
+        printf("At "ASNI_FMT("<%#x>", ASNI_FG_YELLOW)"\t%s  \n",  r->info->start, r->info->func_name);
     }
 }
 
