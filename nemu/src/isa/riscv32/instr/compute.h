@@ -127,7 +127,7 @@ def_EHelper(auipc) {
 def_EHelper(jal) {
   rtl_addi(s, ddest, &s->pc, 4);
   rtl_addi(s, &s->dnpc, &s->pc, id_src1->imm);
-  stack_call(s->dnpc);
+  stack_call(s->pc, s->dnpc);
 }
 
 def_EHelper(jalr) {
@@ -136,8 +136,8 @@ def_EHelper(jalr) {
   rtl_andi(s, &s->dnpc, &s->dnpc, ~1);
   rtl_addi(s, ddest, s0, 0);
   if (s->isa.instr.i.rd == 0){//指向x0，所以为ret指令
-    stack_return();
+    stack_return(s->pc, s->dnpc);
   }else{
-    stack_call(s->dnpc);
+    stack_call(s->pc, s->dnpc);
   }
 }

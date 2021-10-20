@@ -5,36 +5,49 @@
 
 
 STACK_ENTRY header;
+STACK_ENTRY *end = &header;
 
 void init_ftracer(const char* elf_file){
     init_elf(elf_file);
-    header.info = NULL;
+    header.des_info = NULL;
+    header.cur_info = NULL;
     header.next = NULL;
 }
 
-void stack_call(paddr_t addr){
+static void append(paddr_t cur, paddr_t des, int type){
     STACK_ENTRY *node = malloc(sizeof(STACK_ENTRY));
-    node->next = header.next;
-    node->info = check_func(addr);
-    header.next = node;
+    end->next = node;
+    node->next = NULL;
+    node->cur_info = check_func(cur);
+    node->des_info = check_func(des);
+    node->type = type;
+
+    end = node;
 }
 
-void stack_return(){
-    STACK_ENTRY *node = header.next;
-    header.next = node->next;
-    free(node);
+void stack_call(paddr_t cur, paddr_t des){
+    append(cur, des, FT_CALL);
 }
 
-static void travel(STACK_ENTRY *r, int depth){
-    if (r != NULL){
-        travel(r->next, depth + 1);
-        // for (int i = 0; i < depth; i++)
-        //     printf("  ");
-        printf("At " ASNI_FMT("<%#x>", ASNI_FG_YELLOW) ASNI_FMT("\t%s  \n", ASNI_FG_BLUE),  r->info->start, r->info->func_name);
-    }
+void stack_return(paddr_t cur, paddr_t des){
+    append(cur, des, FT_RET);
 }
+
+//static char *action_name[] = {"Call", "Ret"};
+
+// static void travel(STACK_ENTRY *r, int depth){
+//     if (r != NULL){
+//         travel(r->next, depth + 1);
+//         // for (int i = 0; i < depth; i++)
+//         //     printf("  ");
+//         printf("At " ASNI_FMT("<%#x>", ASNI_FG_YELLOW) ASNI_FMT("\t%s  \n", ASNI_FG_BLUE),  r->info->start, r->info->func_name);
+//     }
+// }
 
 void print_stack_trace(){
     printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
-    travel(header.next, 0);
+    for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
+        STACK_ENTRY* r = cur->next;
+        printf("At " ASNI_FMT("<%#x>", ASNI_FG_YELLOW) ASNI_FMT("\t%s  \n", ASNI_FG_BLUE),  r->des_info->start, r->des_info->func_name);
+    }
 }

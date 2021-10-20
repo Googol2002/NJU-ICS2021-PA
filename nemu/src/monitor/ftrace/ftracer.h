@@ -3,16 +3,21 @@
 
 #include "elfloader.h"
 
+#define FT_CALL 0
+#define FT_RET 1
+
 typedef struct __STACK_ENTRY_{
-    FUNC_INFO* info;
+    FUNC_INFO* cur_info;
+    FUNC_INFO* des_info;
+    int type;
     struct __STACK_ENTRY_ *next;
 }STACK_ENTRY;
 
 void init_ftracer();
 
-void stack_return();
+void stack_return(paddr_t cur, paddr_t des);
 
-void stack_call(paddr_t addr);
+void stack_call(paddr_t cur, paddr_t des);
 
 void print_stack_trace();
 
