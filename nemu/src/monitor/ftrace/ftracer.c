@@ -33,5 +33,6 @@ static void travel(STACK_ENTRY *r, int depth){
 }
 
 void print_stack_trace(){
+    printf("==== Call Stack =====");
     travel(header.next, 0);
 }
