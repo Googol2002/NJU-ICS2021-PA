@@ -14,5 +14,6 @@ void stack_return();
 
 void stack_call(paddr_t addr);
 
+void print_stack_trace();
 
 #endif
