@@ -51,7 +51,7 @@ void print_stack_trace(){
     for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
         STACK_ENTRY* r = cur->next;
         printf("<%#x>" ASNI_FMT("%-12s ", ASNI_FG_BLUE) ASNI_FMT("%s", ASNI_FG_WHITE)  
-            ASNI_FMT("\t<%#x>  \n", ASNI_FG_YELLOW) ASNI_FMT("%-12s ", ASNI_FG_BLUE),  
+            ASNI_FMT("\t<%#x> ", ASNI_FG_YELLOW) ASNI_FMT("%-12s \n", ASNI_FG_BLUE),  
             r->addr, r->cur_info ? r->cur_info->func_name : "", action_name[r->type],r->des_info->start, 
             r->des_info->func_name);
     }
