@@ -1,4 +1,5 @@
 #include <am.h>
+#include <klib.h>
 #include <nemu.h>
 
 #include "../../../riscv/riscv.h"
@@ -6,6 +7,7 @@
 void __am_timer_init() {}
 
 void __am_timer_uptime(AM_TIMER_UPTIME_T *uptime) {
+  printf("%d \n", RTC_ADDR);
   uptime->us = (uint64_t)inl(RTC_ADDR) | ((uint64_t)inl(RTC_ADDR + 4) << 32);
 }
 
