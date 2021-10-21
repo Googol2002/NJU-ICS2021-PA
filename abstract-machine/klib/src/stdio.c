@@ -21,7 +21,7 @@ int printf(const char *fmt, ...) {
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   char buffer[128];
-  char *txt;
+  char *txt, cha;
   int num, len;
   
   int state = 0, i, j;//模仿一个状态机
@@ -51,9 +51,18 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         for (int k = len - 1; k >= 0; --k)
           out[j++] = buffer[k];
         break;
+      
+      case 'c':
+        cha = (char)va_arg(ap, int);
+        out[j++] = cha;
+        break;
+
+      default:
+        assert(0);
       }
       state = 0;
       break;
+      
     }
   }
 
