@@ -108,6 +108,12 @@ def_EHelper(bge) {
   }
 }
 
+def_EHelper(bgeu) {
+  if ((*dsrc1) >= (*ddest)){
+    rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
+  }
+}
+
 def_EHelper(blt) {
   if ((sword_t)(*dsrc1) < (sword_t)(*ddest)){
     rtl_addi(s, &s->dnpc, &s->pc, id_src2->imm);
