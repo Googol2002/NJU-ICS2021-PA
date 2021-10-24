@@ -40,6 +40,9 @@ void init_map() {
 }
 
 word_t map_read(paddr_t addr, int len, IOMap *map) {
+  #ifdef CONFIG_DTRACE
+    Log("%#x\t for len=%d at %s", addr, len, map ? map->name : "No device");
+  #endif
   assert(len >= 1 && len <= 8);
   check_bound(map, addr);
   paddr_t offset = addr - map->low;

@@ -149,6 +149,11 @@ config MTRACE
   bool "Enable memory tracer"
   default y
 
+config DTRACE
+  depends on TRACE
+  bool "Enable device tracer"
+  default y
+
 config DIFFTEST
   depends on TARGET_NATIVE_ELF
   bool "Enable differential testing"
