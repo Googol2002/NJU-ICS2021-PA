@@ -18,7 +18,8 @@ void __am_gpu_init() {
 }
 
 void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
-  uint16_t height = inw(VGACTL_ADDR), width = inw(VGACTL_ADDR + 2);
+  uint32_t info = inl(VGACTL_ADDR);
+  uint16_t height = (uint16_t)info, width = (uint16_t)(info >> 16);
   *cfg = (AM_GPU_CONFIG_T) {
     .present = true, .has_accel = false,
     .width = width, .height = height,
