@@ -28,6 +28,14 @@ void __am_gpu_config(AM_GPU_CONFIG_T *cfg) {
 }
 
 void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
+  int win_weight = io_read(AM_GPU_CONFIG).width;  // TODO: get the correct width
+
+  for (int i = 0; i < ctl->h; ++i){
+    for (int j = 0; j < ctl->w; ++j){
+      outl(FB_ADDR + ctl->y * win_weight + i * win_weight + ctl->x, ((uint32_t *)(ctl->pixels))[i * (ctl->w) + j]);
+    }
+  }
+  
   if (ctl->sync) {
     outl(SYNC_ADDR, 1);
   }
