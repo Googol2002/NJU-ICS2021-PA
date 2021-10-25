@@ -63,7 +63,6 @@ void vga_update_screen() {
 }
 
 static void vga_ctl_io_handler(uint32_t offset, int len, bool is_write) {
-  Log("Offset: %d", offset);
   assert(offset == 0 || offset == 4);
   if (is_write && offset == 4) {
     if (vgactl_port_base[1] & 0x1){
