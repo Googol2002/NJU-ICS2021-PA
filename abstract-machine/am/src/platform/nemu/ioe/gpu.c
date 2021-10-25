@@ -37,9 +37,9 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   // printf("(x:%d, y:%d) w=%d, h=%d", ctl->x, ctl->y, ctl->w, ctl->h);
   for (int i = 0; i < ctl->h; ++i){
     for (int j = 0; j < ctl->w; ++j){
-      //fb[(ctl->y) * win_weight + i * win_weight + ctl->x + j] = pi[i * (ctl->w) + j];
+      fb[(ctl->y) * win_weight + i * win_weight + ctl->x + j] = pi[i * (ctl->w) + j];
       //真t娘的奇怪
-      outl((uint32_t)(fb + ctl->y * win_weight + i * win_weight + ctl->x + j), pi[i * (ctl->w) + j]);
+      //outl((uint32_t)(fb + ctl->y * win_weight + i * win_weight + ctl->x + j), pi[i * (ctl->w) + j]);
     }
   }
   

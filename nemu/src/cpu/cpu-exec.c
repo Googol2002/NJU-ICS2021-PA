@@ -44,13 +44,14 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
   if (g_print_step) { IFDEF(CONFIG_ITRACE, puts(_this->logbuf)); }
   IFDEF(CONFIG_DIFFTEST, difftest_step(_this->pc, dnpc));
   
-  WP* point = NULL;
-  if (check_watchpoint(&point)){
-    printf("Stoped at \e[1;36mWatchPoint(NO.%d)\e[0m: %s \n", point->NO, point->condation);
-    puts(_this->logbuf);
-    nemu_state.state = NEMU_STOP;
-  }
-    
+  #ifdef CONFIG_ITRACE
+    WP* point = NULL;
+    if (check_watchpoint(&point)){
+      printf("Stoped at \e[1;36mWatchPoint(NO.%d)\e[0m: %s \n", point->NO, point->condation);
+      puts(_this->logbuf);
+      nemu_state.state = NEMU_STOP;
+    }
+  #endif
 }
 
 #ifdef CONFIG_ITRACE_COND
