@@ -13,7 +13,7 @@ void __am_gpu_init() {
   int w = io_read(AM_GPU_CONFIG).width;  // TODO: get the correct width
   int h = io_read(AM_GPU_CONFIG).height;  // TODO: get the correct height
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
+  for (i = 0; i < w * h; i ++) fb[i] = 0x00FF0000;
   outl(SYNC_ADDR, 1);
 }
 
