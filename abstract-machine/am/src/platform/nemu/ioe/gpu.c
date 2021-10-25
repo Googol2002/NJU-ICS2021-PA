@@ -14,7 +14,7 @@ void __am_gpu_init() {
   int h = io_read(AM_GPU_CONFIG).height;  // TODO: get the correct height
   printf("%d, %d", w, h);
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-  for (i = 0; i < w * h; i ++) fb[i] = i;
+  for (i = 0; i < w * h; i ++) fb[i] = i % 3 == 1 ? 0x00FF00FF : 0x0000FF00;
   outl(SYNC_ADDR, 1);
 }
 
