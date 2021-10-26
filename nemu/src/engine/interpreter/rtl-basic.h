@@ -7,7 +7,7 @@
 /* RTL basic instructions */
 
 #define def_rtl_compute_reg(name) \
-  inline def_rtl(name, rtlreg_t* dest, const rtlreg_t* src1, const rtlreg_t* src2) { \
+   def_rtl(name, rtlreg_t* dest, const rtlreg_t* src1, const rtlreg_t* src2) { \
     *dest = concat(c_, name) (*src1, *src2); \
   }
 
