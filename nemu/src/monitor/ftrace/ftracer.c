@@ -15,6 +15,7 @@ void init_ftracer(const char* elf_file){
     header.addr = 0;
 }
 
+#ifdef CONFIG_FTRACE
 static void append(paddr_t cur, paddr_t des, int type){
     STACK_ENTRY *node = malloc(sizeof(STACK_ENTRY));
     end->next = node;
@@ -26,16 +27,23 @@ static void append(paddr_t cur, paddr_t des, int type){
 
     end = node;
 }
+#endif
 
 void stack_call(paddr_t cur, paddr_t des){
+  #ifdef CONFIG_FTRACE
     append(cur, des, FT_CALL);
+  #endif
 }
 
 void stack_return(paddr_t cur, paddr_t des){
+  #ifdef CONFIG_FTRACE
     append(cur, des, FT_RET);
+  #endif
 }
 
-static char *action_name[] = {"Call", "Ret"};
+#ifdef CONFIG_FTRACE
+    static char *action_name[] = {"Call", "Ret"};
+#endif
 
 // static void travel(STACK_ENTRY *r, int depth){
 //     if (r != NULL){
@@ -47,6 +55,7 @@ static char *action_name[] = {"Call", "Ret"};
 // }
 
 void print_stack_trace(){
+  #ifdef CONFIG_FTRACE
     printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
     for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
         STACK_ENTRY* r = cur->next;
@@ -55,4 +64,5 @@ void print_stack_trace(){
             r->addr, r->cur_info ? r->cur_info->func_name : "", action_name[r->type], 
             r->des_info ? r->des_info->start : 0, r->des_info ? r->des_info->func_name : "");
     }
+  #endif
 }
