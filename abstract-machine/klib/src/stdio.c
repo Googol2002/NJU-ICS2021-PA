@@ -16,6 +16,7 @@ int printf(const char *fmt, ...) {
 
   putstr(buffer);
 
+  va_end(arg);
   return done;
 }
 
