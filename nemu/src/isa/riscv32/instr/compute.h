@@ -18,6 +18,11 @@ def_EHelper(xori) {
   rtl_xori(s, ddest, dsrc1, id_src2->imm);
 }
 
+def_EHelper(ori) {
+  rtl_ori(s, ddest, dsrc1, id_src2->imm);
+}
+
+
 def_EHelper(sll) {
   rtl_sll(s, ddest, dsrc1, dsrc2);
 }
