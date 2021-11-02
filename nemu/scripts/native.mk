@@ -14,7 +14,7 @@ override ARGS += $(ARGS_DIFF)
 
 # Command to execute NEMU
 IMG ?= ~/PA/ics2021/am-kernels/tests/cpu-tests/build/recursion-riscv32-nemu.bin
-ELF ?= --elf=/home/shihy/PA/ics2021/am-kernels/tests/cpu-tests/build/recursion-riscv32-nemu.elf
+# ELF ?= --elf=/home/shihy/PA/ics2021/am-kernels/tests/cpu-tests/build/recursion-riscv32-nemu.elf
 NEMU_EXEC := $(BINARY) $(ARGS) $(ELF) $(IMG)
 
 run-env: $(BINARY) $(DIFF_REF_SO)
