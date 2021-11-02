@@ -30,7 +30,7 @@ static void append(char* func_name, paddr_t start, size_t size){
 }
 
 void init_elf(const char* elf_file){
-    printf("Loading from %s\n", elf_file);
+    // printf("Loading from %s\n", elf_file);
     FILE *elf = fopen(elf_file, "rb");
     assert(elf != NULL);
     Elf32_Ehdr elf_header;
@@ -40,13 +40,13 @@ void init_elf(const char* elf_file){
     size_t headers_entry_size = elf_header.e_shentsize;
     int headers_entry_num = elf_header.e_shnum;
 
-    printf("====== Reading ELF File ======\n");
-    printf("e_shoff: %d \n", section_header_offset);
-    printf("e_shentsize: %ld\t e_shnum: %d \n", headers_entry_size, headers_entry_num);
+    // printf("====== Reading ELF File ======\n");
+    // printf("e_shoff: %d \n", section_header_offset);
+    // printf("e_shentsize: %ld\t e_shnum: %d \n", headers_entry_size, headers_entry_num);
     
     assert(sizeof(Elf32_Shdr) == headers_entry_size);
     
-    printf("====== Selection Headers ======\n");
+    // printf("====== Selection Headers ======\n");
 
     Elf32_Off symbol_table_offset = 0, string_table_offset = 0;
     size_t symbol_table_total_size = 0;
@@ -72,8 +72,8 @@ void init_elf(const char* elf_file){
         }
     }
 
-    printf("String Table Offset: %#x\n", string_table_offset);
-    printf("Symbol Table Offset: %#x\n", symbol_table_offset);
+    // printf("String Table Offset: %#x\n", string_table_offset);
+    // printf("Symbol Table Offset: %#x\n", symbol_table_offset);
     
     char function_name[64];
     assert(symbol_table_entry_size == sizeof(Elf32_Sym));
@@ -89,12 +89,12 @@ void init_elf(const char* elf_file){
             break;
         }
     }
-    printf("====== Symbol Table ======\n");
-    for (int i = 0; i < end; ++i){
-        FUNC_INFO *info = &elf_funcs[i];
-        printf("Func: %12s | Start: %#x | Size: %ld\n", info->func_name, 
-            info->start, info->size);
-    }
+    // printf("====== Symbol Table ======\n");
+    // for (int i = 0; i < end; ++i){
+    //     FUNC_INFO *info = &elf_funcs[i];
+    //     printf("Func: %12s | Start: %#x | Size: %ld\n", info->func_name, 
+    //         info->start, info->size);
+    // }
 }
 
 FUNC_INFO* check_func(paddr_t addr){
