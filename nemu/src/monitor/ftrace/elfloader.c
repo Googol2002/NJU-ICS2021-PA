@@ -35,7 +35,7 @@ void init_elf(const char* elf_file){
     assert(elf != NULL);
     Elf32_Ehdr elf_header;
     read_from_file(elf, 0, sizeof elf_header, &elf_header);
-
+    
     Elf32_Off section_header_offset = elf_header.e_shoff;
     size_t headers_entry_size = elf_header.e_shentsize;
     int headers_entry_num = elf_header.e_shnum;
