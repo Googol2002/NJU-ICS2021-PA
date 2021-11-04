@@ -21,13 +21,13 @@ int printf(const char *fmt, ...) {
 }
 
 static char HEX_CHARACTERS[] = "0123456789ABCDEF";
-#define BIT_WIDE_HEX 16
+#define BIT_WIDE_HEX 8
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
   char buffer[128];
   char *txt, cha;
   int num, len;
-  uint64_t pointer;
+  uint32_t pointer;
   
   
   int state = 0, i, j;//模仿一个状态机

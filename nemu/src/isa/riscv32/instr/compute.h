@@ -168,3 +168,7 @@ def_EHelper(jalr) {
     stack_call(s->pc, s->dnpc);
   }
 }
+
+def_EHelper(csrrw) {
+  
+}
