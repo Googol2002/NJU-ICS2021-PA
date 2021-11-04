@@ -20,10 +20,15 @@ int printf(const char *fmt, ...) {
   return done;
 }
 
+static char HEX_CHARACTERS[] = "0123456789ABCDEF";
+#define BIT_WIDE_HEX 16
+
 int vsprintf(char *out, const char *fmt, va_list ap) {
   char buffer[128];
   char *txt, cha;
   int num, len;
+  uint64_t pointer;
+  
   
   int state = 0, i, j;//模仿一个状态机
   for (i = 0, j = 0; fmt[i] != '\0'; ++i){
@@ -60,6 +65,17 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'c':
         cha = (char)va_arg(ap, int);
         out[j++] = cha;
+        break;
+
+      case 'p':
+        pointer = va_arg(ap, uint64_t);
+        for (len = 0; pointer ; pointer /= 16, ++len)
+          buffer[len] = HEX_CHARACTERS[num % 16];//逆序的
+        for (int k = 0; k < BIT_WIDE_HEX - len; ++k)
+          out[j++] = '0';
+
+        for (int k = len - 1; k >= 0; --k)
+          out[j++] = buffer[k];
         break;
 
       default:
