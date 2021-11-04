@@ -13,7 +13,7 @@ override ARGS ?= --log=$(BUILD_DIR)/nemu-log.txt
 override ARGS += $(ARGS_DIFF)
 
 # Command to execute NEMU
-IMG ?= ~/home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.bin
+IMG ?= ~/home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu
 ELF ?= --elf=/home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.elf
 NEMU_EXEC := $(BINARY) $(ARGS) $(ELF) $(IMG)
 
