@@ -8,7 +8,7 @@
 int vsprintf(char *out, const char *fmt, va_list ap);
 
 int printf(const char *fmt, ...) {
-  char buffer[1024];
+  char buffer[4096];
   va_list arg;
   va_start (arg, fmt);
   
