@@ -27,3 +27,8 @@ def_EHelper(csrrw) {
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
   rtl_mv(s, ddest, s0);
 }
+
+def_EHelper(ecall) {
+  rtl_mv(s, &(csr.mepc), &s->pc);
+  rtl_mv(s, &s->dnpc, &(csr.mtvec));
+}
