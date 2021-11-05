@@ -18,7 +18,7 @@ rtlreg_t* decode_csr_no(int csr_no){
             return &(csr.mcause);
 
         default:
-            panic();
+            panic("csr_no: %x", csr_no);
     }
 }
 
