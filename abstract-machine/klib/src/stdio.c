@@ -68,7 +68,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
 
       case 'p':
-        pointer = va_arg(ap, uint64_t);
+        pointer = va_arg(ap, uint32_t);
         for (len = 0; pointer ; pointer /= 16, ++len)
           buffer[len] = HEX_CHARACTERS[pointer % 16];//逆序的
         for (int k = 0; k < BIT_WIDE_HEX - len; ++k)
