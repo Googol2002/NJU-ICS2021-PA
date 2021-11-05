@@ -29,8 +29,7 @@ def_EHelper(csrrw) {
 }
 
 def_EHelper(ecall) {
-  rtl_mv(s, &(csr.mepc), &s->pc);
-
+  isa_raise_intr(0, s->pc);
   rtl_mv(s, &s->dnpc, &(csr.mtvec));
 }
 
