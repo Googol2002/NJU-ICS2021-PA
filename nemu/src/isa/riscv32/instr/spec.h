@@ -30,5 +30,12 @@ def_EHelper(csrrw) {
 
 def_EHelper(ecall) {
   rtl_mv(s, &(csr.mepc), &s->pc);
+
   rtl_mv(s, &s->dnpc, &(csr.mtvec));
+}
+
+def_EHelper(csrrs) {
+  rtl_mv(s, s0, decode_csr_no(id_src2->imm));
+  rtl_or(s, decode_csr_no(id_src2->imm), dsrc1, s0);
+  rtl_mv(s, ddest, s0);
 }
