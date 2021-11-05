@@ -78,6 +78,19 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           out[j++] = buffer[k];
         break;
 
+      case 'x':
+        num = va_arg(ap, int);
+        if(num == 0){
+          out[j++] = '0';
+          break;
+        }
+        for (len = 0; num ; num /= 16, ++len)
+          buffer[len] = HEX_CHARACTERS[num % 16];//逆序的
+
+        for (int k = len - 1; k >= 0; --k)
+          out[j++] = buffer[k];
+        break;  
+
       default:
         assert(0);
       }
