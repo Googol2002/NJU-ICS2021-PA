@@ -8,7 +8,7 @@ rtlreg_t* decode_csr_no(int csr_no){
         case 0x300:
             return &(csr.mstatus);
 
-        case 0x301:
+        case 0x305:
             return &(csr.mtvec);
 
         case 0x341:
@@ -18,7 +18,7 @@ rtlreg_t* decode_csr_no(int csr_no){
             return &(csr.mcause);
 
         default:
-            panic("csr_no: %x", csr_no);
+            assert(0);
     }
 }
 
