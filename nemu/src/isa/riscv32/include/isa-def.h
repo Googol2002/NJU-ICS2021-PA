@@ -13,6 +13,7 @@ typedef struct {
 
 typedef struct { // 自行添加，但并不知道是否会引起问题
   rtlreg_t mepc;
+  rtlreg_t mtvec;
   rtlreg_t mstatus;
   rtlreg_t mcause; 
 } riscv32_CSR_state;
