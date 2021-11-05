@@ -18,7 +18,7 @@ static bool g_print_step = false;
 const rtlreg_t rzero = 0;
 rtlreg_t tmp_reg[4];
 
-CRS_state crs = {};
+CSR_state crs = {};
 
 void device_update();
 void fetch_decode(Decode *s, vaddr_t pc);
