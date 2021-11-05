@@ -9,8 +9,13 @@ typedef struct {
   } gpr[32];
 
   vaddr_t pc;
-  //rtlreg_t mepc, mstatus, mcause; // 自行添加，但并不知道是否会引起问题
 } riscv32_CPU_state;
+
+typedef struct { // 自行添加，但并不知道是否会引起问题
+  rtlreg_t mepc;
+  rtlreg_t mstatus;
+  rtlreg_t mcause; 
+} riscv32_CSR_state;
 
 // decode
 typedef struct {
