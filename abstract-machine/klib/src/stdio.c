@@ -27,6 +27,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   char buffer[128];
   char *txt, cha;
   int num, len;
+  unsigned int unum;
   uint32_t pointer;
   
   
@@ -56,6 +57,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           out[j++] = '0';
           break;
         }
+        if (num < 0){
+          out[j++] = '-';
+        }
         for (len = 0; num ; num /= 10, ++len)
           buffer[len] = num % 10 + '0';//逆序的
         for (int k = len - 1; k >= 0; --k)
@@ -79,13 +83,13 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
 
       case 'x':
-        num = va_arg(ap, int);
-        if(num == 0){
+        unum = va_arg(ap, int);
+        if(unum == 0){
           out[j++] = '0';
           break;
         }
-        for (len = 0; num ; num /= 16, ++len)
-          buffer[len] = HEX_CHARACTERS[num % 16];//逆序的
+        for (len = 0; unum ; unum /= 16, ++len)
+          buffer[len] = HEX_CHARACTERS[unum % 16];//逆序的
 
         for (int k = len - 1; k >= 0; --k)
           out[j++] = buffer[k];
