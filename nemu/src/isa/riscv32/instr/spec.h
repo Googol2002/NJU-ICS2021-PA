@@ -28,9 +28,15 @@ def_EHelper(csrrw) {
   rtl_mv(s, ddest, s0);
 }
 
+#define Machine_Software_Interrupt (1 << 31 | 3)
+
 def_EHelper(ecall) {
-  isa_raise_intr(0, s->pc);
+  isa_raise_intr(Machine_Software_Interrupt, s->pc);
   rtl_mv(s, &s->dnpc, &(csr.mtvec));
+}
+
+def_EHelper(mret) {
+  rtl_mv(s, &s->dnpc, &(csr.mepc));
 }
 
 def_EHelper(csrrs) {
