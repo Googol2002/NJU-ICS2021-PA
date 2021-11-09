@@ -61,7 +61,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           out[j++] = '-';
         }
         for (len = 0; num ; num /= 10, ++len)
-          buffer[len] = num % 10 + '0';//逆序的
+          //buffer[len] = num % 10 + '0';//逆序的
+          buffer[len] = HEX_CHARACTERS[num % 10];//逆序的
         for (int k = len - 1; k >= 0; --k)
           out[j++] = buffer[k];
         break;
