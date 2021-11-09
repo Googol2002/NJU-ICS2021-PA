@@ -59,6 +59,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         }
         if (num < 0){
           out[j++] = '-';
+          num = 0 - num;
         }
         for (len = 0; num ; num /= 10, ++len)
           //buffer[len] = num % 10 + '0';//逆序的
@@ -84,7 +85,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         break;
 
       case 'x':
-        unum = va_arg(ap, int);
+        unum = va_arg(ap, unsigned int);
         if(unum == 0){
           out[j++] = '0';
           break;
