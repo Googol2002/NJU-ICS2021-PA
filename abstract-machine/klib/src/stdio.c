@@ -88,8 +88,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           out[j++] = '0';
           break;
         }
-        for (len = 0; unum ; unum /= 16, ++len)
-          buffer[len] = HEX_CHARACTERS[unum % 16];//逆序的
+        for (len = 0; unum ; unum >>= 4, ++len)
+          buffer[len] = HEX_CHARACTERS[unum & 0xF];//逆序的
 
         for (int k = len - 1; k >= 0; --k)
           out[j++] = buffer[k];
