@@ -36,7 +36,8 @@ def_EHelper(ecall) {
 }
 
 def_EHelper(mret) {
-  rtl_mv(s, &s->dnpc, &(csr.mepc));
+  rtl_addi(s, s0, &(csr.mepc), 4);
+  rtl_mv(s, &s->dnpc, s0);
 }
 
 def_EHelper(csrrs) {
