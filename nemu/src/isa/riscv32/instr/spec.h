@@ -6,7 +6,7 @@ extern CSR_state csr;
 rtlreg_t* decode_csr_no(int csr_no){
     switch(csr_no){
         case 0x300://不支持被软件显示改变
-            return (rtlreg_t*)&(csr.mstatus);
+            return (rtlreg_t*)&(csr.mstatus.value);
 
         case 0x305:
             return &(csr.mtvec);
