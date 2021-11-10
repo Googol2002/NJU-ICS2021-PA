@@ -23,7 +23,7 @@ rtlreg_t* decode_csr_no(int csr_no){
 }
 
 def_EHelper(csrrw) {
-  IFDEF(CONFIG_ETRACE, "etrace: cssrw");
+  IFDEF(CONFIG_ETRACE, Log("etrace: cssrw"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
   rtl_mv(s, ddest, s0);
@@ -32,13 +32,13 @@ def_EHelper(csrrw) {
 #define Machine_Software_Interrupt (1 << 31 | 3)
 
 def_EHelper(ecall) {
-  IFDEF(CONFIG_ETRACE, "etrace: ecall");
+  IFDEF(CONFIG_ETRACE, Log("etrace: ecall"));
   isa_raise_intr(Machine_Software_Interrupt, s->pc);
   rtl_mv(s, &s->dnpc, &(csr.mtvec));
 }
 
 def_EHelper(mret) {
-  IFDEF(CONFIG_ETRACE, "etrace: mret");
+  IFDEF(CONFIG_ETRACE, Log("etrace: mret"));
   rtl_addi(s, s0, &(csr.mepc), 4);
   rtl_mv(s, &s->dnpc, s0);
   csr.mstatus.m.MIE = csr.mstatus.m.MPIE;
@@ -47,7 +47,7 @@ def_EHelper(mret) {
 }
 
 def_EHelper(csrrs) {
-  IFDEF(CONFIG_ETRACE, "etrace: csrrs");
+  IFDEF(CONFIG_ETRACE, Log("etrace: csrrs"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_or(s, decode_csr_no(id_src2->imm), dsrc1, s0);
   rtl_mv(s, ddest, s0);
