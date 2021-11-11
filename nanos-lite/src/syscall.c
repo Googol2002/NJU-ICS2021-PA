@@ -1,6 +1,8 @@
 #include <common.h>
 #include "syscall.h"
 
+#define STRACE 1
+
 void sys_yield(Context *c){
   yield();
   c->GPRx = 0;
@@ -16,8 +18,8 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
 
-  #ifdef CONFIG_STRACE
-    Log("System call trace");
+  #ifdef STRACE
+    Log("System call trace\n mcause\tGPR1\tGPR2\tGPR3 \n%x %d %x %x", c->mcause, c->GPR1, c->GPR2, c->GPR3);
   #endif
 
   switch (a[0]) {
