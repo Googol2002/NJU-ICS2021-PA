@@ -9,11 +9,15 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
-    Event ev = {0};//
+    Event ev = {0};
     printf("%d %x %p \n", c->mcause, c->mstatus, c->mepc);
     switch (c->mcause) {
       case Machine_Software_Interrupt:
-        ev.event = EVENT_YIELD;
+        if (c->GPR1 < 0){ // 特指-1
+          ev.event = EVENT_YIELD;
+        }else {
+          ev.event = EVENT_SYSCALL;
+        }
         break;
 
       default: ev.event = EVENT_ERROR; break;
