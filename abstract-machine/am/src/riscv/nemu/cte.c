@@ -16,7 +16,7 @@ Context* __am_irq_handle(Context *c) {
     switch (c->mcause) {
       case Machine_Software_Interrupt:
         printf("c->GPR1 = %d \n", c->GPR1);
-        if (c->GPR1 < 0){ // 特指-1
+        if (c->GPR1 == -1){ // 特指-1
           ev.event = EVENT_YIELD;
         }else {
           ev.event = EVENT_SYSCALL;
