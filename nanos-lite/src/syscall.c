@@ -13,6 +13,16 @@ void sys_exit(Context *c){
   c->GPRx = 0;
 }
 
+void sys_write(Context *c){
+  if (c->GPR2 == 1 || c->GPR2 == 2){
+    for (int i = 0; i < c->GPR4; ++i){
+      putch(*(((char *)c->GPR3) + i));
+    }
+    c->GPRx = c->GPR4;
+  }else {  
+    c->GPRx = -1;
+  }
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -30,6 +40,10 @@ void do_syscall(Context *c) {
 
     case SYS_exit:
       sys_exit(c);
+      break;
+
+    case SYS_write:
+      sys_write(c);
       break;
     
     default: panic("Unhandled syscall ID = %d", a[0]);
