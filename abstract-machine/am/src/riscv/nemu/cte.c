@@ -1,6 +1,7 @@
 #include <am.h>
 #include <riscv/riscv.h>
 #include <klib.h>
+#include <arch/riscv32-nemu.h>
 
 #define Machine_Software_Interrupt (1 << 31 | 3)
 
@@ -14,8 +15,8 @@ Context* __am_irq_handle(Context *c) {
     // printf("%d %x %p \n", c->mcause, c->mstatus, c->mepc);
     switch (c->mcause) {
       case Machine_Software_Interrupt:
-          printf("ev.event = EVENT_YIELD \n");
         if (c->GPR1 < 0){ // 特指-1
+          printf("ev.event = EVENT_YIELD \n");
           ev.event = EVENT_YIELD;
         }else {
           ev.event = EVENT_SYSCALL;
