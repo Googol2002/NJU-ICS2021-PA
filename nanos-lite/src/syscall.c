@@ -19,7 +19,7 @@ void do_syscall(Context *c) {
   a[0] = c->GPR1;
 
   #ifdef STRACE
-    Log("System call trace\n mcause\t\tGPR1\t\tGPR2\t\tGPR3 \n%x\t\t%d\t\t%x\t\t%x", c->mcause, c->GPR1, c->GPR2, c->GPR3);
+    Log("System call trace\n mcause\t\tGPR1\t\tGPR2\t\tGPR3 \n%x\t%d\t\t%x\t\t%x", c->mcause, c->GPR1, c->GPR2, c->GPR3);
   #endif
 
   switch (a[0]) {
