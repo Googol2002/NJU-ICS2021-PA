@@ -16,6 +16,10 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
 
+  #ifdef CONFIG_STRACE
+    Log("System call trace");
+  #endif
+
   switch (a[0]) {
     case SYS_yield:
       sys_yield(c);
