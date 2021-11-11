@@ -10,7 +10,8 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 Context* __am_irq_handle(Context *c) {
   if (user_handler) {
     Event ev = {0};
-    printf("%d %x %p \n", c->mcause, c->mstatus, c->mepc);
+    
+    // printf("%d %x %p \n", c->mcause, c->mstatus, c->mepc);
     switch (c->mcause) {
       case Machine_Software_Interrupt:
         if (c->GPR1 < 0){ // 特指-1
