@@ -2,6 +2,8 @@
 #include <assert.h>
 
 int main() {
+  printf("Doing File Test...\n");
+
   FILE *fp = fopen("/share/files/num", "r+");
   assert(fp);
 
