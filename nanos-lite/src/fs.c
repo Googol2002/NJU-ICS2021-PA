@@ -45,6 +45,7 @@ void init_fs() {
   for (int i = 3; i < sizeof(file_table) / sizeof(Finfo); ++i){
     file_table[i].open_offset = 0;
     file_table[i].write = ramdisk_write;
+    file_table[i].read = ramdisk_read;
   }
 }
 
@@ -65,7 +66,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 
   size_t real_len = info->open_offset + len <= info->size ?
    len : info->size - info->open_offset;
-  ramdisk_read(buf, info->disk_offset + info->open_offset, real_len);
+  info->read(buf, info->disk_offset + info->open_offset, real_len);
   info->open_offset += real_len;
 
   return real_len;
