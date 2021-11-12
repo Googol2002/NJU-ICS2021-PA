@@ -10,7 +10,7 @@ void sys_yield(Context *c){
 }
 
 void sys_exit(Context *c){
-  halt(c->GPR1);
+  halt(c->GPR2);
   c->GPRx = 0;
 }
 
