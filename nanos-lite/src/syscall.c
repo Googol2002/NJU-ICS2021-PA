@@ -80,6 +80,10 @@ void do_syscall(Context *c) {
       sys_open(c);
       break;
 
+    case SYS_close:
+      sys_close(c);
+      break;
+
     case SYS_read:
       sys_read(c);
       break;
