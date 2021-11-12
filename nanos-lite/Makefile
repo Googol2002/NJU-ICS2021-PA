@@ -1,4 +1,4 @@
-#HAS_NAVY = 1
+HAS_NAVY = 1
 RAMDISK_FILE = build/ramdisk.img
 
 NAME = nanos-lite
