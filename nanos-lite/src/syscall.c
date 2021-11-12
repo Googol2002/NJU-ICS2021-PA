@@ -50,14 +50,19 @@ void sys_lseek(Context *c){
   c->GPRx = ret;
 }
 
+static void strace(Context *c){
+  #ifdef STRACE
+    //TODO: 缺一个trace
+    Log("System call trace\nmcause\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
+      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
+  #endif
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
 
-  #ifdef STRACE
-    Log("System call trace\nmcause\t\tGPR1\t\tGPR2\t\tGPR3\t\tGPR4 \n0x%x\t%d\t\t0x%x\t\t0x%x\t\t0x%x",
-      c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
-  #endif
+  strace(c);
 
   switch (a[0]) {
     case SYS_yield:
