@@ -65,6 +65,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
+  //TODO: STDOUT添加支持
   Finfo *info = &file_table[fd];
   assert(info->open_offset + len <= info->size);
 

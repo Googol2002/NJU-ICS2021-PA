@@ -6,11 +6,12 @@ int main() {
   FILE *fp = fopen("/share/files/num", "r+");
   assert(fp);
 
+  printf("Doing File Test...\n");
+  
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
   assert(size == 5000);
 
-  printf("Doing File Test...\n");
   fseek(fp, 500 * 5, SEEK_SET);
   int i, n;
   for (i = 500; i < 1000; i ++) {
