@@ -43,6 +43,7 @@ void init_fs() {
   // TODO: initialize the size of /dev/fb
 
   for (int i = 3; i < sizeof(file_table) / sizeof(Finfo); ++i){
+    // 会自动刷为0
     // file_table[i].open_offset = 0;
     // file_table[i].write = NULL;
     // file_table[i].read = NULL;
