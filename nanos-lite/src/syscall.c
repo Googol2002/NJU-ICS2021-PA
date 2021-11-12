@@ -1,5 +1,6 @@
 #include <common.h>
 #include "syscall.h"
+#include "fs.h"
 
 #define STRACE 1
 
@@ -20,7 +21,8 @@ void sys_write(Context *c){
     }
     c->GPRx = c->GPR4;
   }else {  
-    c->GPRx = -1;
+    int ret = fs_write(c->GPR1, (void *)c->GPR2, c->GPR3);
+    c->GPRx = ret;
   }
 }
 
