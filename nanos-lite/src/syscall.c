@@ -54,8 +54,9 @@ void sys_lseek(Context *c){
 
 void sys_gettimeofday(Context *c){
   struct timeval *tv = (struct timeval *)c->GPR2;
-  tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
-  tv->tv_sec = tv->tv_usec / 1000000;
+  tv->tv_usec = 100L;
+  //tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
+  //tv->tv_sec = tv->tv_usec / 1000000;
   printf("0x%p %x\n", tv, tv->tv_usec);
   c->GPRx = 0;
 }
