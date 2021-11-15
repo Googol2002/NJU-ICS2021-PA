@@ -9,10 +9,6 @@ static int evtdev = -1;
 static int fbdev = -1;
 static int screen_w = 0, screen_h = 0;
 
-int gettimeofday(struct timeval *__restrict __p, void *__restrict __tz){
-  return _gettimeofday(__p, __tz);
-}
-
 uint32_t NDL_GetTicks() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
