@@ -11,6 +11,7 @@ int main(){
   while (1) {
     gettimeofday(&tv, NULL);
     while(tv.tv_usec / 1000000 < sec) {
+      printf("%d \n", tv.tv_usec);
       gettimeofday(&tv, NULL);
     };
     //rtc = io_read(AM_TIMER_RTC);
