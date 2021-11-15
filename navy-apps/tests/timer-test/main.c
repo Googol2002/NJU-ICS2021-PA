@@ -10,8 +10,8 @@ int main(){
   //NDL_Init(0);
   
   int sec = 1;
-  printf("Hello.\n");
   struct timeval tv;
+  printf("Hello. %d\n", sizeof(struct timeval));
   while (1) {
     gettimeofday(&tv, NULL);
     while(tv.tv_usec / 1000000 < sec) {
