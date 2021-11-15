@@ -4,6 +4,7 @@
 #include "fs.h"
 
 #define STRACE 1
+#undef STRACE
 
 void sys_yield(Context *c){
   yield();
