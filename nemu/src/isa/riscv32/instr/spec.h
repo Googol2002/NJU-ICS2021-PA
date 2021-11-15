@@ -29,7 +29,7 @@ def_EHelper(csrrw) {
   rtl_mv(s, ddest, s0);
 }
 
-#define Machine_Software_Interrupt (1 << 31 | 3)
+#define Machine_Software_Interrupt (11)
 
 def_EHelper(ecall) {
   IFDEF(CONFIG_ETRACE, Log("etrace: ecall"));

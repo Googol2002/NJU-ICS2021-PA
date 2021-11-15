@@ -3,7 +3,7 @@
 #include <klib.h>
 #include <arch/riscv32-nemu.h>
 
-#define Machine_Software_Interrupt (1 << 31 | 3)
+#define Machine_Software_Interrupt (11)
 
 
 static Context* (*user_handler)(Event, Context*) = NULL;
