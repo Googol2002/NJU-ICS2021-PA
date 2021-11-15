@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <assert.h>
-#include <NDL.h>
+#include "../../../libs/libndl/include/NDL.h"
 
 int main(){
-    int sec = 1;
+  NDL_Init(0);
+  
+  int sec = 1;
   printf("Hello.\n");
   while (1) {
     while(NDL_GetTicks() / 1000000 < sec) {};
@@ -17,4 +19,7 @@ int main(){
     }
     sec ++;
   }
+
+  
+  NDL_Quit();
 }
