@@ -1,4 +1,5 @@
 #include <common.h>
+#include <sys/time.h>
 #include "syscall.h"
 #include "fs.h"
 
@@ -50,6 +51,13 @@ void sys_lseek(Context *c){
   c->GPRx = ret;
 }
 
+void sys_gettimeofday(Context *c){
+  struct timeval *tv = (struct timeval *)c->GPR2;
+  tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
+  tv->tv_sec = io_read(AM_TIMER_UPTIME).us / 1000;
+  c->GPRx = 0;
+}
+
 static void strace(Context *c){
   #ifdef STRACE
     //TODO: 缺一个trace
@@ -96,6 +104,9 @@ void do_syscall(Context *c) {
     case SYS_lseek:
       sys_lseek(c);
       break;
+
+    case SYS_gettimeofday:
+      sys_gettimeofday(c);
 
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
