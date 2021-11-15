@@ -39,7 +39,8 @@ def_EHelper(ecall) {
 
 def_EHelper(mret) {
   IFDEF(CONFIG_ETRACE, Log("etrace: mret"));
-  rtl_addi(s, s0, &(csr.mepc), 4);
+  //在__am_irq_handle中处理
+  //rtl_addi(s, s0, &(csr.mepc), 4);
   rtl_mv(s, &s->dnpc, s0);
   csr.mstatus.m.MIE = csr.mstatus.m.MPIE;
   csr.mstatus.m.MPIE = 1;
