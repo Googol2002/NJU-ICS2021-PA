@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <setjmp.h>
 #include <sys/time.h>
@@ -97,7 +98,7 @@ off_t _lseek(int fd, off_t offset, int whence) {
 int _gettimeofday(struct timeval *tv, struct timezone *tz) {
   tv->tv_usec = 1L;
   int ret = _syscall_(SYS_gettimeofday, (intptr_t)tv, (intptr_t)tz, 0);
-  printf("%p %x\n", tv, tv->tv_usec);
+  printf("%p %lx\n", tv, tv->tv_usec);
   assert(tv->tv_usec != 1L);
   return ret;
 }
