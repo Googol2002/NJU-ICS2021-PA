@@ -30,24 +30,26 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t serial_write(const void *buf, size_t offset, size_t len);
+size_t events_read(void *buf, size_t offset, size_t len);
 
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
   [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"/dev/events", 0, 0, events_read, invalid_write},
 #include "files.h"
 };
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 
-  for (int i = 3; i < sizeof(file_table) / sizeof(Finfo); ++i){
-    // 我不确定会不会自动刷为0，不如再做一次
-    file_table[i].open_offset = 0;
-    file_table[i].write = NULL;
-    file_table[i].read = NULL;
-  }
+  // for (int i = 4; i < sizeof(file_table) / sizeof(Finfo); ++i){
+  //   // 我不确定会不会自动刷为0，不如再做一次
+  //   file_table[i].open_offset = 0;
+  //   file_table[i].write = NULL;
+  //   file_table[i].read = NULL;
+  // }
 }
 
 //flag, mode 被忽视
@@ -64,13 +66,16 @@ size_t fs_read(int fd, void *buf, size_t len){
   Finfo *info = &file_table[fd];
   
   //assert(info->open_offset + len <= info->size);
+  if (info->read){
+    return info->read(buf, info->open_offset, len);
+  }else {
+    size_t real_len = info->open_offset + len <= info->size ?
+    len : info->size - info->open_offset;
+    ramdisk_read(buf, info->disk_offset + info->open_offset, real_len);
+    info->open_offset += real_len;
+    return real_len;
+  }
 
-  size_t real_len = info->open_offset + len <= info->size ?
-   len : info->size - info->open_offset;
-  ramdisk_read(buf, info->disk_offset + info->open_offset, real_len);
-  info->open_offset += real_len;
-
-  return real_len;
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
