@@ -18,7 +18,7 @@ int main(){
     //rtc = io_read(AM_TIMER_RTC);
     //printf("%d-%d-%d %02d:%02d:%02d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
     
-    printf("又流失了0.5s的时间。");
+    printf("Oh, 0.5s have been lost...\n");
     usec += 500000;
   }
 
