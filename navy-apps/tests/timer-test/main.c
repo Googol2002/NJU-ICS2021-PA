@@ -8,25 +8,22 @@
 
 int main(){
   //NDL_Init(0);
-  
-  int sec = 1;
+  __uint64_t time;
+  __uint64_t usec = 500000;
   struct timeval tv;
   printf("Hello. %d\n", sizeof(struct timeval));
   while (1) {
     gettimeofday(&tv, NULL);
-    while(tv.tv_usec / 1000000 < sec) {
-      printf("%d \n", tv.tv_usec);
+    time = tv.tv_sec * 1000000 + tv.tv_usec;
+    while(time < usec) {
       gettimeofday(&tv, NULL);
+      time = tv.tv_sec * 1000000 + tv.tv_usec;
     };
     //rtc = io_read(AM_TIMER_RTC);
     //printf("%d-%d-%d %02d:%02d:%02d GMT (", rtc.year, rtc.month, rtc.day, rtc.hour, rtc.minute, rtc.second);
     
-    if (sec == 1) {
-      printf("%d second).\n", sec);
-    } else {
-      printf("%d seconds).\n", sec);
-    }
-    sec ++;
+    printf("又流失了0.5s的时间。");
+    usec += 500000;
   }
 
   
