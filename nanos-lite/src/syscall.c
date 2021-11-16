@@ -52,13 +52,18 @@ void sys_lseek(Context *c){
   c->GPRx = ret;
 }
 
+struct __temp{
+  __uint32_t sec;
+  __uint32_t usec;
+};
+
 void sys_gettimeofday(Context *c){
-  struct timeval *tv = (struct timeval *)c->GPR2;
-  tv->tv_usec = 100L;
-  //tv->tv_usec = io_read(AM_TIMER_UPTIME).us;
-  //tv->tv_sec = tv->tv_usec / 1000000;
-  printf("%d\n", sizeof(struct timeval));
-  printf("0x%p %x\n", &tv->tv_usec, tv->tv_usec);
+  struct __temp *tv = (struct __temp *)c->GPR2;
+  __uint64_t time = io_read(AM_TIMER_UPTIME).us;
+  tv->usec = (__uint32_t)(time % 1000000);
+  tv->sec = (__uint32_t)(time / 1000000);
+  // printf("%d\n", sizeof(struct timeval));
+  // printf("0x%p %x\n", &tv->tv_usec, tv->tv_usec);
   c->GPRx = 0;
 }
 
