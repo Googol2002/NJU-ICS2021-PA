@@ -37,7 +37,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   }
   real_length += strlen(keyname[ev.keycode]);
   if (real_length <= len){
-    strcat(buf, tag);
+    strcat(buf, keyname[ev.keycode]);
   }else {
     return 0;
   }
