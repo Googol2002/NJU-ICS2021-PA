@@ -62,8 +62,6 @@ void sys_gettimeofday(Context *c){
   __uint64_t time = io_read(AM_TIMER_UPTIME).us;
   tv->usec = (__uint32_t)(time % 1000000);
   tv->sec = (__uint32_t)(time / 1000000);
-  // printf("%d\n", sizeof(struct timeval));
-  // printf("0x%p %x\n", &tv->tv_usec, tv->tv_usec);
   c->GPRx = 0;
 }
 

@@ -2,10 +2,6 @@
 #include <assert.h>
 #include <sys/time.h>
 
-// int gettimeofday(struct timeval *__restrict __p, void *__restrict __tz){
-//   return _gettimeofday(__p, __tz);
-// }
-
 int main(){
   //NDL_Init(0);
   __uint64_t time;
