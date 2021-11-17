@@ -80,8 +80,8 @@ size_t fb_write(const void *buf, size_t offset, size_t len) {
   const uint32_t *src = (uint32_t *)buf;
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR; //字节编址
 
-  for (int i = offset; i < len; ++i){
-    fb[i] = src[i - offset];
+  for (int i = 0; i < len; ++i){
+    fb[offset + i] = src[i];
   }
 
   io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true);
