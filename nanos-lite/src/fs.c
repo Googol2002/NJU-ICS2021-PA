@@ -1,5 +1,6 @@
 #include <fs.h>
 #include <string.h>
+#include <stdint.h>
 
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
@@ -49,7 +50,7 @@ static Finfo file_table[] __attribute__((used)) = {
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   AM_GPU_CONFIG_T config = io_read(AM_GPU_CONFIG);
-  file_table[FD_FB].size = config.width * config.height;
+  file_table[FD_FB].size = config.width * config.height * sizeof(uint32_t);
 
   // for (int i = 5; i < sizeof(file_table) / sizeof(Finfo); ++i){
   //   // 我不确定会不会自动刷为0，不如再做一次
