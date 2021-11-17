@@ -46,12 +46,12 @@ static Finfo file_table[] __attribute__((used)) = {
 void init_fs() {
   // TODO: initialize the size of /dev/fb
 
-  // for (int i = 4; i < sizeof(file_table) / sizeof(Finfo); ++i){
-  //   // 我不确定会不会自动刷为0，不如再做一次
-  //   file_table[i].open_offset = 0;
-  //   file_table[i].write = NULL;
-  //   file_table[i].read = NULL;
-  // }
+  for (int i = 5; i < sizeof(file_table) / sizeof(Finfo); ++i){
+    // 我不确定会不会自动刷为0，不如再做一次
+    file_table[i].open_offset = 0;
+    file_table[i].write = NULL;
+    file_table[i].read = NULL;
+  }
 }
 
 //flag, mode 被忽视
