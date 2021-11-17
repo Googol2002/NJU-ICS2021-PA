@@ -76,6 +76,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //TODO: 奇怪的操作
+  Log("write");
   const uint8_t *src = (uint8_t *)buf;
   uint8_t *fb = (uint8_t *)(uintptr_t)FB_ADDR; //字节编址
 
