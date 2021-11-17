@@ -29,6 +29,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
 // }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
+  Log("here");
   int fd = fs_open(filename, 0, 0);
   
   Elf_Ehdr elf_header;
