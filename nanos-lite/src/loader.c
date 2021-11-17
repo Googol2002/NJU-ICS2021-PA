@@ -33,7 +33,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   
   Elf_Ehdr elf_header;
   read(fd, &elf_header, 0, sizeof(elf_header));
-  Log("here");
   //根据小端法 0x7F E L F
   assert(*(uint32_t *)elf_header.e_ident == 0x464c457f);
   
