@@ -75,7 +75,7 @@ int NDL_Init(uint32_t flags) {
    
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
-      sscanf(token, "%[a-zA-Z]%*[ ^:]:%*[ ^0-9]%d", key, &value);
+      sscanf(token, "%[a-zA-Z]%*[^:]:%*[^0-9]%d", key, &value);
       printf("%s = %d\n", key, value);
 
       if(strcmp(key, "WIDTH") == 0){
