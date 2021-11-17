@@ -62,7 +62,7 @@ int NDL_QueryAudio() {
 static void read_key_value(char *str, char *key, int* value){
   char buffer[128];
   int len = 0;
-  for (char* c = str; c; ++c){
+  for (char* c = str; *c; ++c){
     if(*c != ' '){
       buffer[len++] = *c;
     }
@@ -91,7 +91,7 @@ int NDL_Init(uint32_t flags) {
       
       //printf("%s = %d\n", key, value);
       read_key_value(token, key, &value);
-      
+
       if(strcmp(key, "WIDTH") == 0){
         screen_w = value;
       }else if(strcmp(key, "HEIGHT") == 0) {
