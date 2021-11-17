@@ -63,6 +63,29 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
+
+  char info[128], key[64];
+  int value;
+
+  FILE *dispinfo = fopen("/proc/dispinfo", "r");
+  fread(info, sizeof(char), sizeof(buf) / sizeof(char), dispinfo);
+
+  /* 获取第一个子字符串 */
+  char *token = strtok(info, '\n');
+   
+   /* 继续获取其他的子字符串 */
+   while( token != NULL ) {
+      sscanf(token, "%s : %d", key, &value);
+
+      if(strcmp(key, "WIDTH") == 0){
+        screen_w = value;
+      }else if(strcmp(key, "HEIGHT") == 0) {
+        screen_h = value;
+      }
+
+      token = strtok(NULL, info);
+   }
+
   return 0;
 }
 
