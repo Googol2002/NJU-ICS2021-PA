@@ -70,6 +70,7 @@ int NDL_Init(uint32_t flags) {
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
   fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
 
+  printf("%s\n", info);
   /* 获取第一个子字符串 */
   char *token = strtok(info, "\n");
    
