@@ -14,7 +14,7 @@ int main() {
   h = 128;
   uint32_t *bmp = malloc(w * h * sizeof(uint32_t));
   for (int i = 0; i < w * h; ++i){
-    bmp[i] = 0x00FF0000;
+    bmp[i] = 0x00FF00FF;
   }
   assert(bmp);
   NDL_OpenCanvas(&w, &h);
