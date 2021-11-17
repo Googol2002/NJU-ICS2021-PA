@@ -84,7 +84,7 @@ int NDL_Init(uint32_t flags) {
         screen_h = value;
       }
 
-      token = strtok(NULL, info);
+      token = strtok(NULL, "\n");
   }
 
   printf("With width = %d, height = %d.\n", screen_w, screen_h);
