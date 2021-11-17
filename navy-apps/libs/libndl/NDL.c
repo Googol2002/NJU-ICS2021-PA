@@ -68,10 +68,10 @@ int NDL_Init(uint32_t flags) {
   int value;
 
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
-  fread(info, sizeof(char), sizeof(buf) / sizeof(char), dispinfo);
+  fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
 
   /* 获取第一个子字符串 */
-  char *token = strtok(info, '\n');
+  char *token = strtok(info, "\n");
    
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
