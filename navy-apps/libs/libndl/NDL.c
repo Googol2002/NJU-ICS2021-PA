@@ -22,14 +22,25 @@ int NDL_PollEvent(char *buf, int len) {
   return fread(buf, sizeof(char), len, fp);
 }
 
+static int canvas_w, canvas_h;
+
 void NDL_OpenCanvas(int *w, int *h) {
+  if (*w == 0){
+    *w = screen_w;
+  }else if(*w > screen_w){
+    assert(0);
+  }
+  if (*h == 0){
+    *h = screen_h;
+  }else if(*h > screen_h){
+    assert(0);
+  }
+  canvas_w = *w;
+  canvas_h = *h;
+
   if (getenv("NWM_APP")) {
     int fbctl = 4;
     fbdev = 5;
-    printf("NWM_APP\n");
-    // if (*w > screen_w || *h > screen_h){
-    //   assert(0);
-    // }
     screen_w = *w; screen_h = *h;
     char buf[64];
     int len = sprintf(buf, "%d %d", screen_w, screen_h);
@@ -47,6 +58,7 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
+  
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {
