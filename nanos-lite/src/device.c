@@ -60,6 +60,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
     assert(0);
   }
 
+  Log("%s", buf);
   return ret;
 }
 
