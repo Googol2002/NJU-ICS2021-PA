@@ -49,8 +49,14 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   return real_length;
 }
 
+static int dispinfo_state = 0;
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   //Log("I'm reading");
+  if (dispinfo_state){
+    dispinfo_state = !dispinfo_state;
+    return 0;
+  }
+
   int w = io_read(AM_GPU_CONFIG).width;
   int h = io_read(AM_GPU_CONFIG).height;
 
@@ -60,7 +66,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
     assert(0);
   }
 
-  Log("lla %s", buf);
+  dispinfo_state = !dispinfo_state;
   return ret;
 }
 
