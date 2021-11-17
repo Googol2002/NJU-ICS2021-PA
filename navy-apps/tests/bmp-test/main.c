@@ -15,7 +15,7 @@ int main() {
   uint32_t *bmp = malloc(w * h * sizeof(uint32_t));
   for (int i = 0; i < h; ++i){
     for (int j = 0; j < w / 2; ++j){
-      bmp[i * w + j] = 0x00FF00FF;
+      bmp[i * w + j] = 0x0000FF00;
     }
     for (int j = w / 2; j < w; ++j){
       bmp[i * w + j] = 0x00000FF;
