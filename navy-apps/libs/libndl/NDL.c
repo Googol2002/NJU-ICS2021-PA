@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include <assert.h>
 
 static int evtdev = -1;
 static int fbdev = -1;
@@ -22,7 +23,7 @@ int NDL_PollEvent(char *buf, int len) {
   return fread(buf, sizeof(char), len, fp);
 }
 
-static int canvas_w, canvas_h;
+static int canvas_w, canvas_h, canvas_x = 0, canvas_y = 0;
 
 void NDL_OpenCanvas(int *w, int *h) {
   if (*w == 0){
@@ -58,7 +59,12 @@ void NDL_OpenCanvas(int *w, int *h) {
 }
 
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  
+  FILE *graphics = fopen("/dev/fb", "w");
+  for (int i = 0; i < h; ++i){
+    fseek(graphics, (canvas_y + y) * screen_w + (canvas_x + x), SEEK_SET);
+    fwrite(pixels + w * i, w, 1, graphics);
+  }
+  fclose(graphics);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

@@ -1,6 +1,7 @@
 #include <common.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #if defined(MULTIPROGRAM) && !defined(TIME_SHARING)
 # define MULTIPROGRAM_YIELD() yield()
@@ -70,8 +71,21 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   return ret;
 }
 
+#define MMIO_BASE 0xa0000000
+#define FB_ADDR (MMIO_BASE   + 0x1000000)
+
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  return 0;
+  //TODO: 奇怪的操作
+  const uint8_t *src = (uint8_t *)buf;
+  uint8_t *fb = (uint8_t *)(uintptr_t)FB_ADDR; //字节编址
+
+  for (int i = offset; i < len; ++i){
+    fb[i] = src[i - offset];
+  }
+
+  //io_write(AM_GPU_FBDRAW, offset / w, offset % w, buf, len, 1, true);
+  
+  return len;
 }
 
 void init_device() {
