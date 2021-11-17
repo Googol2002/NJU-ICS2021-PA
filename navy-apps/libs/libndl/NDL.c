@@ -59,6 +59,19 @@ int NDL_QueryAudio() {
   return 0;
 }
 
+static void read_key_value(char *str, char *key, int* value){
+  char buffer[128];
+  int len = 0;
+  for (char* c = str; c; ++c){
+    if(*c != ' '){
+      buffer[len++] = *c;
+    }
+  }
+  buffer[len] = '\0';
+
+  sscanf(buffer, "%[a-zA-Z]:%d", key, value);
+}
+
 int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
@@ -75,9 +88,10 @@ int NDL_Init(uint32_t flags) {
    
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
-      sscanf(token, "%[a-zA-Z]%*[^:]:%*[^0-9]%d", key, &value);
-      printf("%s = %d\n", key, value);
-
+      
+      //printf("%s = %d\n", key, value);
+      read_key_value(token, key, &value);
+      
       if(strcmp(key, "WIDTH") == 0){
         screen_w = value;
       }else if(strcmp(key, "HEIGHT") == 0) {
