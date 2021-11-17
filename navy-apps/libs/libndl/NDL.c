@@ -76,7 +76,7 @@ int NDL_Init(uint32_t flags) {
    
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
-      printf("%s\n", token);
+      //printf("%s\n", token);
       sscanf(token, "%s : %d", key, &value);
 
       if(strcmp(key, "WIDTH") == 0){
