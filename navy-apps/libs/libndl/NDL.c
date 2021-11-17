@@ -84,7 +84,9 @@ int NDL_Init(uint32_t flags) {
       }
 
       token = strtok(NULL, info);
-   }
+  }
+
+  Log("With width = %d, height = %d.\n", screen_w, screen_h);
 
   return 0;
 }
