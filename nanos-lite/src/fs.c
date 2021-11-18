@@ -92,6 +92,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   
   if (info->write){
     info->write(buf, info->open_offset, len);
+    info->open_offset += len;
   }else {
     assert(info->open_offset + len <= info->size);
     ramdisk_write(buf, info->disk_offset + info->open_offset, len);
