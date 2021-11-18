@@ -9,7 +9,7 @@ int main() {
   printf("Doing bmp-test...\n");
   NDL_Init(0);
   int w, h;
-  void *bmp = BMP_Load("/share/pictures/projectn.bmp", &w, &h);
+  void *bmp = BMP_Load("/share/pictures/test.bmp", &w, &h);
   // w = 128;
   // h = 128;
   // uint32_t *bmp = malloc(w * h * sizeof(uint32_t));
