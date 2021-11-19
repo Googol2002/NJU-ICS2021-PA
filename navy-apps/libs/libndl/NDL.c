@@ -95,9 +95,9 @@ static void read_key_value(char *str, char *key, int* value){
 }
 
 int NDL_Init(uint32_t flags) {
-  if (getenv("NWM_APP")) {
-    evtdev = 3;
-  }
+  // if (getenv("NWM_APP")) {
+  //   evtdev = 3;
+  // }
 
   char info[128], key[64];
   int value;
