@@ -8,9 +8,20 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
   assert(dst && src);
   assert(dst->format->BitsPerPixel == src->format->BitsPerPixel);
 
-  int rect_w = srcrect->w, rect_h = srcrect->h, 
-    src_x = srcrect->x, src_y = srcrect->y, 
+  
+  int rect_w, rect_h, src_x, src_y, dst_x, dst_y;
+  if (srcrect){
+    rect_w = srcrect->w; rect_h = srcrect->h;
+    src_x = srcrect->x; src_y = srcrect->y; 
+  }else {
+    rect_w = src->w; rect_h = src->h;
+    src_x = 0; src_y = 0;
+  }
+  if (dstrect){
     dst_x = dstrect->x, dst_y = dstrect->y;
+  }else {
+    dst_x = 0; dst_y = 0;
+  }
   
   for (int i = 0; i < rect_h; ++i){
     for (int j = 0; j < rect_w; ++j){
