@@ -73,34 +73,38 @@ int fs_open(const char *pathname, int flags, int mode){
 
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *info = &file_table[fd];
+  size_t real_len;
   
   //assert(info->open_offset + len <= info->size);
   if (info->read){
-    return info->read(buf, info->open_offset, len);
+    real_len = info->read(buf, info->open_offset, len);
+    info->open_offset += real_len;
   }else {
-    size_t real_len = info->open_offset + len <= info->size ?
+    real_len = info->open_offset + len <= info->size ?
     len : info->size - info->open_offset;
     ramdisk_read(buf, info->disk_offset + info->open_offset, real_len);
     info->open_offset += real_len;
-    return real_len;
   }
 
+  return real_len;
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
   //TODO: STDOUT添加支持
   Finfo *info = &file_table[fd];
+  size_t real_len;
   
   if (info->write){
-    info->write(buf, info->open_offset, len);
-    info->open_offset += len;
+    real_len = info->write(buf, info->open_offset, len);
+    info->open_offset += real_len;
   }else {
     assert(info->open_offset + len <= info->size);
     ramdisk_write(buf, info->disk_offset + info->open_offset, len);
+    real_len = len;
     info->open_offset += len;
   }
 
-  return len;
+  return real_len;
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
