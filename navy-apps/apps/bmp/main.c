@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
-#include <NDL.h>
 #include <SDL.h>
-#include <BMP.h>
+#include <SDL_bmp.h>
 #include <string.h>
 
 int main() {
