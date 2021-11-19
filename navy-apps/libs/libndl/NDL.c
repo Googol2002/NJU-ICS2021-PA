@@ -104,13 +104,14 @@ int NDL_Init(uint32_t flags) {
 
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
   fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
-  printf("NDL.c 105\n");
+
   /* 获取第一个子字符串 */
   char *token = strtok(info, "\n");
    
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
       
+      printf("NDL.c 105\n");
       //printf("%s = %d\n", key, value);
       read_key_value(token, key, &value);
 
