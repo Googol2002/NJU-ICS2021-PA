@@ -103,6 +103,7 @@ int NDL_Init(uint32_t flags) {
   char info[128], key[64];
   int value;
 
+  memset(info, 0, 128);
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
   fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
 
