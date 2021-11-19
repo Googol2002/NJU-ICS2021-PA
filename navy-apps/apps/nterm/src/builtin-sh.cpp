@@ -28,7 +28,7 @@ static void sh_handle_cmd(const char *cmd) {
   exe_path[strlen(exe_path) - 1] = '\0';//把'\n'搞掉
 
   printf("%s\n", exe_path);
-  execve(exe_path, NULL, NULL);
+  execvp(exe_path, NULL, NULL);
 }
 
 void builtin_sh_run() {
