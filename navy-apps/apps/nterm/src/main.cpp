@@ -11,7 +11,8 @@ void builtin_sh_run();
 void extern_app_run(const char *app_path);
 
 int main(int argc, char *argv[]) {
-  printf("我在执行!\n");
+  int i = 0;
+  i = i+1;
   SDL_Init(0);
   font = new BDF_Font(font_fname);
 
