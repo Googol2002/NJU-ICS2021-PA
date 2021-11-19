@@ -6,7 +6,7 @@
 #include <string.h>
 
 int main() {
-  printf("Doing bmp-test...\n");
+  //printf("Doing bmp-test...\n");
   NDL_Init(0);
   int w, h;
   void *bmp = BMP_Load("/share/pictures/test.bmp", &w, &h);
