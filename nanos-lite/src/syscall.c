@@ -15,7 +15,7 @@ void sys_yield(Context *c){
 void naive_uload(PCB *pcb, const char *filename);
 
 void sys_exit(Context *c){
-  naive_uload(NULL, "/bin/nterm");
+  naive_uload(NULL, "/bin/nslider");
   c->GPRx = 0;
 }
 
