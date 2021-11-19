@@ -111,7 +111,7 @@ int NDL_Init(uint32_t flags) {
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
       
-      printf("NDL.c 105\n");
+      printf("NDL.c 105 %s \n", info);
       //printf("%s = %d\n", key, value);
       read_key_value(token, key, &value);
 
