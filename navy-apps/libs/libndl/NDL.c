@@ -92,7 +92,7 @@ static void read_key_value(char *str, char *key, int* value){
   buffer[len] = '\0';
 
   sscanf(buffer, "%[a-zA-Z]:%d", key, value);
-  printf("read_key_value\n");
+  // printf("read_key_value\n");
 }
 
 int NDL_Init(uint32_t flags) {
@@ -107,7 +107,7 @@ int NDL_Init(uint32_t flags) {
   FILE *dispinfo = fopen("/proc/dispinfo", "r");
   fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
 
-  printf("%s \n", info);
+  // printf("%s \n", info);
 
   /* 获取第一个子字符串 */
   char *token = strtok(info, "\n");
@@ -115,7 +115,7 @@ int NDL_Init(uint32_t flags) {
    /* 继续获取其他的子字符串 */
    while( token != NULL ) {
       
-      printf("while begin 105 %s \n", info);
+      // printf("while begin 105 %s \n", info);
       //printf("%s = %d\n", key, value);
       read_key_value(token, key, &value);
 
@@ -125,9 +125,9 @@ int NDL_Init(uint32_t flags) {
         screen_h = value;
       }
 
-      printf("while middle 105 %s \n", info);
+      // printf("while middle 105 %s \n", info);
       token = strtok(NULL, "\n");
-      printf("while end 105 %s \n", info);
+      // printf("while end 105 %s \n", info);
   }
 
   printf("With width = %d, height = %d.\n", screen_w, screen_h);
