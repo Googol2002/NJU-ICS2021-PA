@@ -21,10 +21,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 int SDL_WaitEvent(SDL_Event *event) {
   char buf[64], action[8], key[32];
   
-  printf("SDL_WAITING...\n");
-  while (!NDL_PollEvent(buf, sizeof(buf))) {
-    printf("waiting...\n");
-  }
+  while (!NDL_PollEvent(buf, sizeof(buf))) {}
   
   sscanf(buf, "%s %s", action, key);
   
