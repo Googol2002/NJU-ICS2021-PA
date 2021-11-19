@@ -1,6 +1,7 @@
 #include <NDL.h>
 #include <SDL.h>
 #include <string.h>
+#include <assert.h>
 
 #define keyname(k) #k,
 
