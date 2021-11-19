@@ -92,6 +92,7 @@ static void read_key_value(char *str, char *key, int* value){
   buffer[len] = '\0';
 
   sscanf(buffer, "%[a-zA-Z]:%d", key, value);
+  printf("read_key_value\n");
 }
 
 int NDL_Init(uint32_t flags) {
