@@ -15,7 +15,7 @@ void sys_yield(Context *c){
 void naive_uload(PCB *pcb, const char *filename);
 
 void sys_exit(Context *c){
-  naive_uload(NULL, "/bin/menu");
+  naive_uload(NULL, "/bin/nterm");
   c->GPRx = 0;
 }
 
