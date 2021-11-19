@@ -12,12 +12,12 @@ void sys_yield(Context *c){
   c->GPRx = 0;
 }
 
+void naive_uload(PCB *pcb, const char *filename);
+
 void sys_exit(Context *c){
-  halt(c->GPR2);
+  naive_uload(NULL, "/bin/menu");
   c->GPRx = 0;
 }
-
-void naive_uload(PCB *pcb, const char *filename);
 
 void sys_execve(Context *c){
   const char *fname = (const char *)c->GPR2;
