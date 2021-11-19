@@ -23,6 +23,7 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
+  printf(cmd);
   execve(cmd, NULL, NULL);
 }
 
@@ -30,7 +31,7 @@ void builtin_sh_run() {
   sh_banner();
   sh_prompt();
 
-  //setenv("PATH", "/bin", 0);
+  setenv("PATH", "/bin", 0);
   while (1) {
     SDL_Event ev;
     if (SDL_PollEvent(&ev)) {
