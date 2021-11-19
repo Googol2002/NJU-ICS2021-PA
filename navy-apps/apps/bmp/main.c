@@ -6,7 +6,6 @@
 #include <string.h>
 
 int main() {
-  //printf("Doing bmp-test...\n");
   SDL_Init(0);
   SDL_Surface *screen = SDL_SetVideoMode(400, 300, 32, SDL_HWSURFACE);
   int w, h;
