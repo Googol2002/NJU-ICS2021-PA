@@ -23,8 +23,12 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  printf("%s\n", cmd);
-  execve(cmd, NULL, NULL);
+  char exe_path[64];
+  strcpy(exe_path, cmd);
+  exe_path[strlen(exe_path) - 2] = '\0';//把'\n'搞掉
+
+  printf("%s\n", exe_path);
+  execve(exe_path, NULL, NULL);
 }
 
 void builtin_sh_run() {
