@@ -121,6 +121,7 @@ int NDL_Init(uint32_t flags) {
         screen_h = value;
       }
 
+      printf("while middle 105 %s \n", info);
       token = strtok(NULL, "\n");
       printf("while end 105 %s \n", info);
   }
