@@ -66,7 +66,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
     assert(0);
   }
 
-  return ret;
+  return ret + 1;
 }
 
 #define MMIO_BASE 0xa0000000
