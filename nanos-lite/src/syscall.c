@@ -2,6 +2,7 @@
 #include <sys/time.h>
 #include "syscall.h"
 #include "fs.h"
+#include <proc.h>
 
 #define STRACE 1
 #undef STRACE
@@ -13,6 +14,14 @@ void sys_yield(Context *c){
 
 void sys_exit(Context *c){
   halt(c->GPR2);
+  c->GPRx = 0;
+}
+
+void naive_uload(PCB *pcb, const char *filename);
+
+void sys_execve(Context *c){
+  const char *fname = (const char *)c->GPR2;
+  naive_uload(NULL, fname);
   c->GPRx = 0;
 }
 
@@ -114,6 +123,10 @@ void do_syscall(Context *c) {
 
     case SYS_gettimeofday:
       sys_gettimeofday(c);
+      break;
+
+    case SYS_execve:
+      sys_execve(c);
       break;
 
     default: panic("Unhandled syscall ID = %d", a[0]);
