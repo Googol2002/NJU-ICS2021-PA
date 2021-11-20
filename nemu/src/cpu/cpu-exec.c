@@ -92,7 +92,9 @@ static void statistic() {
 
 void assert_fail_msg() {
   error_finfo();
-  print_instr_ringbuf();
+  #ifdef CONFIG_ITRACE_COND
+    print_instr_ringbuf();
+  #endif
   isa_reg_display();
   statistic();
 }
