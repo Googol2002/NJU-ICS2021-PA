@@ -3,21 +3,34 @@
 #include <utils.h>
 #include <stdlib.h>
 
+#ifdef CONFIG_FTRACE
+typedef struct {
+  char *name;
+  size_t size;
+  size_t disk_offset;
+} Finfo;
+
+static Finfo file_table[] __attribute__((used)) = {
+#include "files.h"
+};
+
+#endif
 
 STACK_ENTRY header;
 STACK_ENTRY *end = &header;
 
 void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *app_offset){
+  #ifdef CONFIG_FTRACE
     if(elf_file){
       init_elf(elf_file, 0);
-    }
-    if(ramdisk_file && app_offset){
+    }if(ramdisk_file && app_offset){
       init_elf(ramdisk_file, atoi(app_offset));
     }
     header.des_info = NULL;
     header.cur_info = NULL;
     header.next = NULL;
     header.addr = 0;
+  #endif
 }
 
 #ifdef CONFIG_FTRACE
