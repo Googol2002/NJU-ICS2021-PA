@@ -63,7 +63,7 @@ static char last_instr[RINGBUF_LENGTH];
 //state为1时恶性终止，需要手动加入一条记录
 static void print_instr_ringbuf(int state){
   #ifdef CONFIG_ITRACE_COND
-  if (!state){
+  if (state){
     strncpy(RINGBUF_ELEMENT(ringbuf_end), last_instr, RINGBUF_LENGTH);
     ringbuf_end++;
   }
