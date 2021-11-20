@@ -94,6 +94,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     }
     
     uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
+    assert(pixels);
     uint32_t *src = (uint32_t *)s->pixels;
     for (int i = 0; i < h; ++i){
       memcpy(&pixels[i * w], &src[(y + i) * s->w + x], sizeof(uint32_t) * w);
@@ -107,6 +108,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       x = 0;    y = 0;
     }
     uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
+    assert(pixels);
     uint8_t *src = (uint8_t *)s->pixels;
 
     for (int i = 0; i < h; ++i){
