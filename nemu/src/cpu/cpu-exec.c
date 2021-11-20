@@ -91,6 +91,7 @@ static void statistic() {
 }
 
 void assert_fail_msg() {
+  error_finfo();
   isa_reg_display();
   statistic();
 }

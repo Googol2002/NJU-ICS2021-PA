@@ -22,4 +22,6 @@ void stack_call(paddr_t cur, paddr_t des);
 
 void print_stack_trace();
 
+void error_finfo();
+
 #endif
