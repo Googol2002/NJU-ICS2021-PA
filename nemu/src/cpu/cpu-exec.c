@@ -57,16 +57,25 @@ static void trace_and_difftest(Decode *_this, vaddr_t dnpc){
 }
 
 #ifdef CONFIG_ITRACE_COND
+static char last_instr[RINGBUF_LENGTH];
+#endif
 
-static void print_instr_ringbuf(){
+//state为1时恶性终止，需要手动加入一条记录
+static void print_instr_ringbuf(int state){
+  #ifdef CONFIG_ITRACE_COND
+  if (!state){
+    strncpy(RINGBUF_ELEMENT(ringbuf_end), last_instr, RINGBUF_LENGTH);
+    ringbuf_end++;
+  }
+
   printf(ASNI_FMT("====== The nearest %d instructions ======\n", ASNI_FG_RED), RINGBUF_LINES);
   for(int i = ringbuf_end >= RINGBUF_LINES ? ringbuf_end : 0; 
     i < ringbuf_end + (ringbuf_end >= RINGBUF_LINES ? RINGBUF_LINES : 0);
     ++i){
     printf(ASNI_FMT("%s\n", ASNI_FG_BLACK), RINGBUF_ELEMENT(i));
   }
+  #endif
 }
-#endif
 
 #include <isa-exec.h>
 
@@ -77,6 +86,9 @@ static const void* g_exec_table[TOTAL_INSTR] = {
 
 static void fetch_decode_exec_updatepc(Decode *s) {
   fetch_decode(s, cpu.pc);
+  #ifdef CONFIG_ITRACE_COND
+    strncpy(last_instr, s->logbuf, RINGBUF_LENGTH);
+  #endif
   s->EHelper(s);
   cpu.pc = s->dnpc;
 }
@@ -93,7 +105,7 @@ static void statistic() {
 void assert_fail_msg() {
   error_finfo();
   #ifdef CONFIG_ITRACE_COND
-    print_instr_ringbuf();
+    print_instr_ringbuf(1);
   #endif
   isa_reg_display();
   statistic();
@@ -158,7 +170,7 @@ void cpu_exec(uint64_t n) {
     
     case NEMU_ABORT: 
       #ifdef CONFIG_ITRACE_COND
-        print_instr_ringbuf();
+        print_instr_ringbuf(1);
       #endif
     case NEMU_END:
       Log("nemu: %s at pc = " FMT_WORD,
