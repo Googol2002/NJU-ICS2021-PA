@@ -93,3 +93,7 @@ void print_stack_trace(){
     }
   #endif
 }
+
+// void print_info(paddr_t addr){
+//   //TODO: 添加功能
+// }
