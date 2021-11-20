@@ -14,7 +14,7 @@ typedef struct __STACK_ENTRY_{
     struct __STACK_ENTRY_ *next;
 }STACK_ENTRY;
 
-void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *app_offset);
+void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *appname);
 
 void stack_return(paddr_t cur, paddr_t des);
 

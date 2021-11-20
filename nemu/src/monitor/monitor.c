@@ -32,7 +32,7 @@ static char *diff_so_file = NULL;
 static char *img_file = NULL;
 static char *elf_file = NULL;
 static char *ramdisk_file = NULL;
-static char *app_offset = NULL;
+static char *appname = NULL;
 static int difftest_port = 1234;
 
 static long load_img() {
@@ -66,7 +66,7 @@ static int parse_args(int argc, char *argv[]) {
     {"help"     , no_argument      , NULL, 'h'},
     {"elf"      , required_argument, NULL, 'e'},
     {"ramdisk"  , required_argument, NULL, 'r'},
-    {"appoff"   , required_argument, NULL, 'a'},
+    {"appname"  , required_argument, NULL, 'a'},
     {0          , 0                , NULL,  0 },
   };
   int o;
@@ -78,7 +78,7 @@ static int parse_args(int argc, char *argv[]) {
       case 'd': diff_so_file = optarg; break;
       case 'e': elf_file = optarg; break;
       case 'r': ramdisk_file = optarg; break;
-      case 'a': app_offset = optarg; break;
+      case 'a': appname = optarg; break;
       case 1:
       img_file = optarg;
       return optind - 1;
@@ -122,8 +122,8 @@ void init_monitor(int argc, char *argv[]) {
   /* Initialize differential testing. */
   init_difftest(diff_so_file, img_size, difftest_port);
   
-  if (elf_file || (ramdisk_file && app_offset))
-    init_ftracer(elf_file, ramdisk_file, app_offset);
+  if (elf_file || (ramdisk_file && appname))
+    init_ftracer(elf_file, ramdisk_file, appname);
 
   /* Initialize the simple debugger. */
   init_sdb();

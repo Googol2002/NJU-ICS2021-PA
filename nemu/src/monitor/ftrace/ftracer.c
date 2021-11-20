@@ -19,12 +19,21 @@ static Finfo file_table[] __attribute__((used)) = {
 STACK_ENTRY header;
 STACK_ENTRY *end = &header;
 
-void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *app_offset){
+void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *appname){
   #ifdef CONFIG_FTRACE
     if(elf_file){
       init_elf(elf_file, 0);
-    }if(ramdisk_file && app_offset){
-      init_elf(ramdisk_file, atoi(app_offset));
+    }if(ramdisk_file && appname){
+      size_t offset = -1;
+      for (int i = 0; i < sizeof(file_table)/sizeof(Finfo); ++i){
+        if (strcmp(file_table[i].name, appname) == 0){
+          offset = file_table[i].disk_offset;
+          break;
+        }
+      }
+      assert(offset != -1);
+      //TOOD: fix this
+      init_elf(ramdisk_file, offset);
     }
     header.des_info = NULL;
     header.cur_info = NULL;
