@@ -7,8 +7,13 @@
 STACK_ENTRY header;
 STACK_ENTRY *end = &header;
 
-void init_ftracer(const char* elf_file){
-    init_elf(elf_file);
+void init_ftracer(const char* elf_file, const char *ramdisk_file, const char *app_offset){
+    if(elf_file){
+      init_elf(elf_file, 0);
+    }
+    if(ramdisk_file && app_offset){
+      init_elf(ramdisk_file, atoi(app_offset));
+    }
     header.des_info = NULL;
     header.cur_info = NULL;
     header.next = NULL;

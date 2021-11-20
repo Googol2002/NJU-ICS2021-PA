@@ -7,7 +7,7 @@
 // typedef Elf32_Shdr Elf_Shdr;
 // typedef Elf32_Ehdr Elf_Ehdr;
 
-static FUNC_INFO elf_funcs[256];
+static FUNC_INFO elf_funcs[1024];
 
 static void read_from_file(FILE *elf, size_t offset, size_t size, void* dest){
     fseek(elf, offset, SEEK_SET);
@@ -29,12 +29,12 @@ static void append(char* func_name, paddr_t start, size_t size){
     end++;
 }
 
-void init_elf(const char* elf_file){
+void init_elf(const char* elf_file, size_t global_offset){
     // printf("Loading from %s\n", elf_file);
     FILE *elf = fopen(elf_file, "rb");
     assert(elf != NULL);
     Elf32_Ehdr elf_header;
-    read_from_file(elf, 0, sizeof elf_header, &elf_header);
+    read_from_file(elf, global_offset + 0, sizeof elf_header, &elf_header);
     
     Elf32_Off section_header_offset = elf_header.e_shoff;
     size_t headers_entry_size = elf_header.e_shentsize;
@@ -54,7 +54,7 @@ void init_elf(const char* elf_file){
     size_t symbol_table_entry_size = 0;
     for (int i = 0; i < headers_entry_num; ++i){
         Elf32_Shdr section_entry;
-        read_from_file(elf, i * headers_entry_size + section_header_offset,
+        read_from_file(elf, global_offset + i * headers_entry_size + section_header_offset,
             headers_entry_size, &section_entry);
         switch(section_entry.sh_type){
             case SHT_SYMTAB:
@@ -79,11 +79,11 @@ void init_elf(const char* elf_file){
     assert(symbol_table_entry_size == sizeof(Elf32_Sym));
     for (int i = 0; i < symbol_table_total_size / symbol_table_entry_size; ++i){
         Elf32_Sym symbol_section_entry;
-        read_from_file(elf, i * symbol_table_entry_size + symbol_table_offset, 
+        read_from_file(elf, global_offset + i * symbol_table_entry_size + symbol_table_offset, 
             symbol_table_entry_size, &symbol_section_entry);
         switch(ELF32_ST_TYPE(symbol_section_entry.st_info)){
             case STT_FUNC:
-            get_str_from_file(elf, string_table_offset + symbol_section_entry.st_name, 
+            get_str_from_file(elf, global_offset + string_table_offset + symbol_section_entry.st_name, 
                 sizeof(function_name), function_name);
             append(function_name, symbol_section_entry.st_value, symbol_section_entry.st_size);  
             break;

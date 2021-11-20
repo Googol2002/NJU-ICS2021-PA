@@ -10,7 +10,7 @@ typedef struct __FUNC_INFO{
     size_t size;
 }FUNC_INFO;
 
-void init_elf(const char* elf_file);
+void init_elf(const char* elf_file, size_t global_offset);
 
 FUNC_INFO* check_func(paddr_t addr);
 
