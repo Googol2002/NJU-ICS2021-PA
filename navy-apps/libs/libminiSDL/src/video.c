@@ -61,7 +61,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
 }
 
 void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
-  uint32_t *pixels = dst->pixels;
+  uint32_t *pixels = (uint32_t *)dst->pixels;
   int dst_w = dst->w;
   int rect_h, rect_w, rect_x, rect_y;
 
