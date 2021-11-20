@@ -95,11 +95,10 @@ void print_stack_trace(){
   #endif
 }
 
-extern CPU_state cpu;
 void error_finfo(){
   #ifdef CONFIG_FTRACE
   vaddr_t pc = cpu.pc;
   FUNC_INFO *info = check_func(pc);
-  printf(ASNI_FMT("Some error happended at %s(%#x).", ASNI_FG_RED), info->func_name, info->start);
+  printf(ASNI_FMT("Some error happended at %s(%#x).\n", ASNI_FG_RED), info->func_name, pc);
   #endif
 }
