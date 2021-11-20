@@ -17,7 +17,7 @@ IMG ?= /home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.bin
 ELF ?= --elf=/home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.elf
 RAMDISK ?= --ramdisk=/home/shihy/PA/ics2021/navy-apps/build/ramdisk.img
 APPNAME ?= --appname=pal
-NEMU_EXEC := $(BINARY) $(ARGS) $(ELF) $(RAMDISK) $(APPOFF) $(IMG)
+NEMU_EXEC := $(BINARY) $(ARGS) $(ELF) $(RAMDISK) $(APPNAME) $(IMG)
 
 run-env: $(BINARY) $(DIFF_REF_SO)
 
