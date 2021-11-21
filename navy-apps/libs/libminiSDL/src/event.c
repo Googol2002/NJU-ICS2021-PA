@@ -18,8 +18,8 @@ struct __event_element{
 };
 typedef struct __event_element event_element;
 
-event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
-event_element *end = &event_queue;
+static event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
+static event_element *end = &event_queue;
 
 // static void sdl_append(uint8_t type, uint8_t sym){
 //   sdl_event_element *new_element = malloc(sizeof(sdl_event_element));
