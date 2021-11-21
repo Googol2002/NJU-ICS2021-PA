@@ -5,11 +5,11 @@
 #include <NDL.h>
 
 int main(){
+  printf("Hello. %d\n", sizeof(struct timeval));
   NDL_Init(0);
 
   uint32_t time;
   uint32_t msec = 500;
-  printf("Hello. %d\n", sizeof(struct timeval));
   while (1) {
     time = NDL_GetTicks();
     while(time < msec) {
