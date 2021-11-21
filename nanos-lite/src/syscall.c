@@ -68,9 +68,10 @@ struct __temp{
 
 void sys_gettimeofday(Context *c){
   struct timeval *tv = (struct timeval *)c->GPR2;
+  printf("%d\n", sizeof(*tv));
   __uint64_t time = io_read(AM_TIMER_UPTIME).us;
-  tv->tv_usec = (__uint32_t)(time % 1000000);
-  tv->tv_sec = (__uint32_t)(time / 1000000);
+  tv->tv_usec = (__suseconds_t)(time % 1000000);
+  tv->tv_sec = (__time_t)(time / 1000000);
   c->GPRx = 0;
 }
 
