@@ -76,6 +76,7 @@ void SDL_PumpEvents(void){
 
 
 int SDL_PushEvent(SDL_Event *ev) {
+  assert(0);
   return 0;
 }
 
