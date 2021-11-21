@@ -54,7 +54,7 @@ void SDL_PumpEvents(void){
   while ((ret = NDL_PollEvent(buf, sizeof(buf)), ret)){
     sscanf(buf, "%s %s", action, key);
 
-    for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
+    for (int i = 0; i < sizeof(keyname) / sizeof(keyname[0]); ++i){
       if (strcmp(key, keyname[i]) == 0){
         sym = i;
         break ;
