@@ -11,11 +11,11 @@ static const char *keyname[] = {
   _KEYS(keyname)
 };
 
-typedef struct sdl_event_element{
-  uint8_t type;
-  uint8_t sym;
-  struct sdl_event_element* next;
-} sdl_event_element;
+// typedef struct sdl_event_element{
+//   uint8_t type;
+//   uint8_t sym;
+//   struct sdl_event_element* next;
+// } sdl_event_element;
 
 // sdl_event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
 // sdl_event_element *end = &event_queue;
