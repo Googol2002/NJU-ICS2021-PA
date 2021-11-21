@@ -20,29 +20,29 @@ typedef struct sdl_event_element{
 sdl_event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
 sdl_event_element *end = &event_queue;
 
-static void sdl_append(uint8_t type, uint8_t sym){
-  sdl_event_element *new_element = malloc(sizeof(sdl_event_element));
-  new_element->type = type;
-  new_element->sym = sym;
-  new_element->next = NULL;
-  end->next = new_element;
-  end = new_element;
-}
+// static void sdl_append(uint8_t type, uint8_t sym){
+//   sdl_event_element *new_element = malloc(sizeof(sdl_event_element));
+//   new_element->type = type;
+//   new_element->sym = sym;
+//   new_element->next = NULL;
+//   end->next = new_element;
+//   end = new_element;
+// }
 
-static int sdl_pop(uint8_t *type, uint8_t *sym){
-  if (event_queue.next == NULL){
-    return 0;
-  }else {
-    sdl_event_element *buf = event_queue.next;
-    *type = buf->type;
-    *sym = buf->sym;
-    event_queue.next = buf->next;
-    free (buf);
-  }
-  return 1;
-}
+// static int sdl_pop(uint8_t *type, uint8_t *sym){
+//   if (event_queue.next == NULL){
+//     return 0;
+//   }else {
+//     sdl_event_element *buf = event_queue.next;
+//     *type = buf->type;
+//     *sym = buf->sym;
+//     event_queue.next = buf->next;
+//     free (buf);
+//   }
+//   return 1;
+// }
 
-static uint8_t sdl_key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
+// static uint8_t sdl_key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
 
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
