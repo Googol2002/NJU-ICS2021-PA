@@ -38,6 +38,9 @@ static int pop(uint8_t *type, uint8_t *sym){
     *type = buf->type;
     *sym = buf->sym;
     event_queue.next = buf->next;
+    if (buf == end){
+      end = &event_queue;
+    }
     free (buf);
   }
   return 1;
