@@ -62,13 +62,13 @@ void sys_lseek(Context *c){
 }
 
 struct __temp{
-  #ifdef __x86_64__
+ #if __SIZEOF_POINTER__ == 8
   __uint64_t sec;
   __uint64_t usec;
-  #elif __i386__
+ #elif __SIZEOF_POINTER__ == 4
   __uint32_t sec;
   __uint32_t usec;
-  #endif
+#endif
 };
 
 void sys_gettimeofday(Context *c){
