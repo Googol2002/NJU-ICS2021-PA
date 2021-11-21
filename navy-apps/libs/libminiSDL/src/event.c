@@ -125,7 +125,9 @@ int SDL_WaitEvent(SDL_Event *event) {
   uint8_t type = 0, sym = 0;
   SDL_PumpEvents();
 
-  while (!pop(&type, &sym)){}
+  while (!pop(&type, &sym)){
+    SDL_PumpEvents();
+  }
   
   event->type = type;
   event->key.keysym.sym = sym;
