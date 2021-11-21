@@ -1,8 +1,8 @@
 #include <common.h>
-#include <sys/time.h>
 #include "syscall.h"
 #include "fs.h"
 #include <proc.h>
+#include <sys/time.h>
 
 #define STRACE 1
 #undef STRACE
@@ -67,10 +67,10 @@ struct __temp{
 };
 
 void sys_gettimeofday(Context *c){
-  struct __temp *tv = (struct __temp *)c->GPR2;
+  struct timeval *tv = (struct timeval *)c->GPR2;
   __uint64_t time = io_read(AM_TIMER_UPTIME).us;
-  tv->usec = (__uint32_t)(time % 1000000);
-  tv->sec = (__uint32_t)(time / 1000000);
+  tv->tv_usec = (__uint32_t)(time % 1000000);
+  tv->tv_sec = (__uint32_t)(time / 1000000);
   c->GPRx = 0;
 }
 
