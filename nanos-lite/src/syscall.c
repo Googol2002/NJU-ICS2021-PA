@@ -62,13 +62,18 @@ void sys_lseek(Context *c){
 }
 
 struct __temp{
+  #ifdef __x86_64__
+  __uint64_t sec;
+  __uint64_t usec;
+  #elif __i386__
   __uint32_t sec;
   __uint32_t usec;
+  #endif
 };
 
 void sys_gettimeofday(Context *c){
   struct timeval *tv = (struct timeval *)c->GPR2;
-  printf("%d\n", sizeof(*tv));
+  printf("%d\n", sizeof(struct __temp));
   __uint64_t time = io_read(AM_TIMER_UPTIME).us;
   tv->tv_usec = (__suseconds_t)(time % 1000000);
   tv->tv_sec = (__time_t)(time / 1000000);
