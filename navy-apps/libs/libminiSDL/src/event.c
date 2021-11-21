@@ -17,8 +17,8 @@ typedef struct sdl_event_element{
   struct sdl_event_element* next;
 } sdl_event_element;
 
-sdl_event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
-sdl_event_element *end = &event_queue;
+// sdl_event_element event_queue = {.type = 0, .sym = 0, .next = NULL};
+// sdl_event_element *end = &event_queue;
 
 // static void sdl_append(uint8_t type, uint8_t sym){
 //   sdl_event_element *new_element = malloc(sizeof(sdl_event_element));
