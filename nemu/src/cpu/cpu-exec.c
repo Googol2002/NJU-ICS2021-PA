@@ -104,9 +104,7 @@ static void statistic() {
 
 void assert_fail_msg() {
   error_finfo();
-  #ifdef CONFIG_ITRACE_COND
-    print_instr_ringbuf(1);
-  #endif
+  print_instr_ringbuf(1);
   isa_reg_display();
   statistic();
 }
@@ -169,9 +167,7 @@ void cpu_exec(uint64_t n) {
     
     
     case NEMU_ABORT: 
-      #ifdef CONFIG_ITRACE_COND
-        print_instr_ringbuf(1);
-      #endif
+      print_instr_ringbuf(1);
     case NEMU_END:
       Log("nemu: %s at pc = " FMT_WORD,
           (nemu_state.state == NEMU_ABORT ? ASNI_FMT("ABORT", ASNI_FG_RED) :
