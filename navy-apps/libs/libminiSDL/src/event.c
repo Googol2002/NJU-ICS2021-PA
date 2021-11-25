@@ -67,10 +67,8 @@ void SDL_PumpEvents(void){
 
     if (strcmp("kd", action) == 0){
       type = SDL_KEYDOWN;
-      key_state[sym] = 1;
     }else if(strcmp("ku", action) == 0){
       type = SDL_KEYUP;
-      // key_state[sym] = 0;
     }else {
       assert(0);
     }
@@ -92,6 +90,16 @@ int SDL_PollEvent(SDL_Event *ev) {
   if (pop(&type, &sym)){
     ev->type = type;
     ev->key.keysym.sym = sym;
+
+    switch(type){
+    case SDL_KEYDOWN:
+      key_state[sym] = 1;
+      break;
+    
+    case SDL_KEYUP:
+      key_state[sym] = 0;
+      break;
+    }
   }else {
     return 0;
   }
@@ -136,6 +144,15 @@ int SDL_WaitEvent(SDL_Event *event) {
   event->type = type;
   event->key.keysym.sym = sym;
 
+  switch(type){
+    case SDL_KEYDOWN:
+      key_state[sym] = 1;
+      break;
+    
+    case SDL_KEYUP:
+      key_state[sym] = 0;
+      break;
+  }
 
   // char buf[64], action[8], key[32];
   
@@ -170,9 +187,6 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
 uint8_t* SDL_GetKeyState(int *numkeys) {
   if (numkeys)
     *numkeys = sizeof(key_state) / sizeof(key_state[0]);
-  for (int i = 0; i < sizeof(key_state) / sizeof(key_state[0]); ++i)
-    key_state[i] = 0;
-  
   SDL_PumpEvents();
   return key_state;
 }
