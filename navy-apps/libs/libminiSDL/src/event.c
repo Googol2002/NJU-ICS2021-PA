@@ -70,7 +70,7 @@ void SDL_PumpEvents(void){
       key_state[sym] = 1;
     }else if(strcmp("ku", action) == 0){
       type = SDL_KEYUP;
-      key_state[sym] = 0;
+      // key_state[sym] = 0;
     }else {
       assert(0);
     }
@@ -170,6 +170,9 @@ int SDL_PeepEvents(SDL_Event *ev, int numevents, int action, uint32_t mask) {
 uint8_t* SDL_GetKeyState(int *numkeys) {
   if (numkeys)
     *numkeys = sizeof(key_state) / sizeof(key_state[0]);
+  for (int i = 0; i < sizeof(key_state) / sizeof(key_state[0]); ++i)
+    key_state[i] = 0;
+  
   SDL_PumpEvents();
   return key_state;
 }
