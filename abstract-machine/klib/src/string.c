@@ -8,7 +8,7 @@
 size_t strlen(const char *s) {
   //panic("Not implemented");
   size_t len = 0;
-  while(s[len] != '\n'){
+  while(s[len] != '\0'){
     len++;
   }
 
