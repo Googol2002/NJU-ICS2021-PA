@@ -42,6 +42,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   if (real_length <= len){
     strcat(buf, keyname[ev.keycode]);
   }else {
+    Log("Need %d but got %d", real_length, len);
     assert(0);
     return 0;
   }
