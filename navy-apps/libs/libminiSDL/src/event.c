@@ -124,12 +124,12 @@ int SDL_PollEvent(SDL_Event *ev) {
     switch(type){
     case SDL_KEYDOWN:
       key_state[sym] = 1;
-      printf("%d Down\n", (int)sym);
+      //printf("%d Down\n", (int)sym);
       break;
     
     case SDL_KEYUP:
       key_state[sym] = 0;
-      printf("%d Up\n", (int)sym);
+      //printf("%d Up\n", (int)sym);
       break;
     }
   }else {
