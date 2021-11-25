@@ -58,11 +58,6 @@ void NDL_OpenCanvas(int *w, int *h) {
   }
 }
 
-
-int open(const char *path, int flags, ...);
-ssize_t read(int fd, void *buf, size_t count);
-ssize_t write(int fd, const void *buf, size_t count);
-
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   // FILE *graphics = fopen("/dev/fb", "w");
   // for (int i = 0; i < h; ++i){
@@ -116,9 +111,9 @@ int NDL_Init(uint32_t flags) {
   int value;
 
   //memset(info, 0, 128);
-  FILE *dispinfo = fopen("/proc/dispinfo", "r");
-  fread(info, sizeof(char), sizeof(info) / sizeof(char), dispinfo);
-
+  int dispinfo = open("/proc/dispinfo", "r");
+  read(dispinfo, info, sizeof(char));
+  close(dispinfo);
   // printf("%s \n", info);
 
   /* 获取第一个子字符串 */
