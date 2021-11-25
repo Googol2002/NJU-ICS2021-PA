@@ -51,7 +51,7 @@ static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
 void SDL_PumpEvents(void){
   char buf[64], action[8], key[32];
   
-  printf("Doing PumpEvent...\n");
+  //printf("Doing PumpEvent...\n");
   int ret;
   uint8_t type = 0, sym = 0;
   while ((ret = NDL_PollEvent(buf, sizeof(buf)), ret)){
