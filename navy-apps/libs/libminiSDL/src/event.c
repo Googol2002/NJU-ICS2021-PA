@@ -37,7 +37,6 @@ static int pop(uint8_t *type, uint8_t *sym){
     event_element *buf = event_queue.next;
     *type = buf->type;
     *sym = buf->sym;
-    printf("Pop out %d \n", (int)*sym);
     event_queue.next = buf->next;
     if (buf == end){
       end = &event_queue;
@@ -94,10 +93,12 @@ int SDL_PollEvent(SDL_Event *ev) {
     switch(type){
     case SDL_KEYDOWN:
       key_state[sym] = 1;
+      printf("%d Down\n", (int)sym);
       break;
     
     case SDL_KEYUP:
       key_state[sym] = 0;
+      printf("%d Up\n", (int)sym);
       break;
     }
   }else {
