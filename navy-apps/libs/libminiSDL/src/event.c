@@ -90,14 +90,12 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     return 0;
   }
   key_action = key_buf;
-  for (int i = 0; i < ret; i++){
-    if (key_buf[i] == ' '){
-      key_buf[i] = '\0';
-      key_key = &key_buf[i + 1]; 
-    }
-  }
-  
-  if (strcmp("kd", key_action) == 0){
+  int i = 0;
+  for (; key_buf[i] != ' '; i++){}
+  key_buf[i] = '\0';
+  key_key = &key_buf[i + 1]; 
+  //strcmp("kd", key_action) == 0
+  if (key_action[1] == 'd'){//加速！！
     *type = SDL_KEYDOWN;
   }else{
     *type = SDL_KEYUP;
@@ -106,10 +104,9 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     if (strcmp(key_key, keyname[i]) == 0){
       *sym = i;
-      break ;
+      return ret;
     }
   }
-  return ret;
 }
 
 int SDL_PollEvent(SDL_Event *ev) {
