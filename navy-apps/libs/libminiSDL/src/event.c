@@ -37,6 +37,7 @@ static int pop(uint8_t *type, uint8_t *sym){
     event_element *buf = event_queue.next;
     *type = buf->type;
     *sym = buf->sym;
+    printf("Pop out %d \n", sym);
     event_queue.next = buf->next;
     if (buf == end){
       end = &event_queue;
