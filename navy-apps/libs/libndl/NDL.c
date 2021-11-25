@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/time.h>
 #include <assert.h>
 
@@ -18,9 +19,9 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  FILE *fp = fopen("/dev/events", "r");
+  int fp = open("/dev/events", 0);
 
-  return fread(buf, sizeof(char), len, fp);
+  return read(fp, buf, sizeof(char) * len);
 }
 
 static int canvas_w, canvas_h, canvas_x = 0, canvas_y = 0;
@@ -111,8 +112,8 @@ int NDL_Init(uint32_t flags) {
   int value;
 
   //memset(info, 0, 128);
-  int dispinfo = open("/proc/dispinfo", "r");
-  read(dispinfo, info, sizeof(char));
+  int dispinfo = open("/proc/dispinfo", 0);
+  read(dispinfo, info, sizeof(info));
   close(dispinfo);
   // printf("%s \n", info);
 
