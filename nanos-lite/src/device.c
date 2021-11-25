@@ -71,9 +71,6 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
   return ret + 1;
 }
 
-#define MMIO_BASE 0xa0000000
-#define FB_ADDR (MMIO_BASE   + 0x1000000)
-
 size_t fb_write(const void *buf, size_t offset, size_t len) {
 
   // const uint32_t *src = (uint32_t *)buf;
