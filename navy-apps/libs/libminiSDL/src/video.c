@@ -86,8 +86,10 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 }
 
 static inline uint32_t translate_color(SDL_Color *color){
-  return (color->r << 16) | (color->g << 8) | color->b;
+  return (color->a << 24) | (color->r << 16) | (color->g << 8) | color->b;
 }
+
+//static uint32_t piexls_buffer[SDL_FULLSCREEN];
 
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 32){
