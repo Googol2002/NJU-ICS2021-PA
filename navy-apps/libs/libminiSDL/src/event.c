@@ -100,6 +100,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   //截断\n
   for (i = 0;  key_key[i] != '\0' && key_key[i] != '\n'; i++){}
   if (key_key[i] == '\n'){
+    printf("Do noting\n");
     key_key[i] = '\0';
   }
   //strcmp("kd", key_action) == 0
@@ -111,7 +112,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
 
   printf("%s %s\n", key_action, key_key);
 
-  for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
+  for (i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
       *sym = i;
