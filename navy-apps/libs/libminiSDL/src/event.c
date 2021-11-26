@@ -115,7 +115,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
       *sym = i;
-      //printf("%d %d\n", *type, *sym);
+      printf("%d %d\n", *type, *sym);
       return ret;
     }
   }
