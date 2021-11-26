@@ -58,7 +58,7 @@ void __am_gpu_memcpy(AM_GPU_MEMCPY_T *params) {
     *dst = *src;
   }
   char *c_src = (char *)src, *c_dst = (char *)dst;
-  for (int i = 0; i < params->size && 3; i++){
+  for (int i = 0; i < (params->size & 3); i++){
     c_dst[i] = c_src[i];
   }
 }
