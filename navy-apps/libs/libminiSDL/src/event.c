@@ -127,7 +127,7 @@ int SDL_PollEvent(SDL_Event *ev) {
 
 
   // if (pop(&type, &sym)){
-  printf("SDL_PollEvent\n");
+  // printf("SDL_PollEvent\n");
   if (read_keyinfo(&type, &sym)){
     ev->type = type;
     ev->key.keysym.sym = sym;
