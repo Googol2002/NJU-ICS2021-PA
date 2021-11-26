@@ -85,7 +85,7 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 }
 
-static uint32_t translate_color(SDL_Color *color){
+static inline uint32_t translate_color(SDL_Color *color){
   return (color->r << 16) | (color->g << 8) | color->b;
 }
 
