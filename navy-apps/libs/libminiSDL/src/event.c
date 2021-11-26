@@ -90,7 +90,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   if (!ret){
     return 0;
   }
-  printf("%s\n", key_buf);
+  //printf("%s\n", key_buf);
   key_action = key_buf;
   int i;
   for (i = 0; key_buf[i] != ' '; i++){}
@@ -109,12 +109,13 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     *type = SDL_KEYUP;
   }
 
-  printf("%s %s\n", key_action, key_key);
+  //printf("%s %s\n", key_action, key_key);
 
   for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
       *sym = i;
+      printf("%d %d\n", *type, *sym);
       return ret;
     }
   }
