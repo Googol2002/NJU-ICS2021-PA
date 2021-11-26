@@ -85,6 +85,10 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 
 }
 
+static uint32_t translate_color(SDL_Color *color){
+  return (color->r << 16) | (color->g << 8) | color->b;
+}
+
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
   if (s->format->BitsPerPixel == 32){
     if (w == 0 && h == 0 && x ==0 && y == 0){
@@ -107,13 +111,15 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
       w = s->w; h = s->h;
       x = 0;    y = 0;
     }
+
     uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
     assert(pixels);
     uint8_t *src = (uint8_t *)s->pixels;
 
     for (int i = 0; i < h; ++i){
       for (int j = 0; j < w; ++j){
-        pixels[i * w + j] = s->format->palette->colors[src[(y + i) * s->w + x + j]].val;
+        pixels[i * w + j] = translate_color(&s->format->palette->colors[src[(y + i) * s->w + x + j]]);
+        //pixels[i * w + j] = s->format->palette->colors[src[(y + i) * s->w + x + j]].val;
       }
     }
     NDL_DrawRect(pixels, x, y, w, h);
