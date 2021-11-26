@@ -1,4 +1,5 @@
 #include <sdl-file.h>
+#include <assert.h>
 
 SDL_RWops* SDL_RWFromFile(const char *filename, const char *mode) {
   assert(0);

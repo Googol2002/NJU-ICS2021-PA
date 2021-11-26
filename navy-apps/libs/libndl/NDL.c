@@ -19,7 +19,7 @@ uint32_t NDL_GetTicks() {
 }
 
 int NDL_PollEvent(char *buf, int len) {
-  int fp = open("/dev/events", 0);
+  int fp = open("/dev/events", O_RDONLY);
 
   return read(fp, buf, sizeof(char) * len);
 }
@@ -66,13 +66,13 @@ void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
   //   fwrite(pixels + w * i, w * sizeof(uint32_t), 1, graphics);
   // }
   // fclose(graphics);
-
-  int graphics = open("/dev/fb", 0);
+  int graphics = open("/dev/fb", O_RDWR);
+  
   for (int i = 0; i < h; ++i){
     lseek(graphics, ((canvas_y + y + i) * screen_w + (canvas_x + x)) * sizeof(uint32_t), SEEK_SET);
-    write(graphics, pixels + w * i, w * sizeof(uint32_t));
+    ssize_t s = write(graphics, pixels + w * i, w * sizeof(uint32_t));
   }
-  close(graphics);
+  //close(graphics);
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

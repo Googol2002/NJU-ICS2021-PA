@@ -48,33 +48,34 @@ static int pop(uint8_t *type, uint8_t *sym){
 
 static uint8_t key_state[sizeof(keyname) / sizeof(keyname[0])] = {0};
 
-void SDL_PumpEvents(void){
-  char buf[64], action[8], key[32];
+// void SDL_PumpEvents(void){
+//   assert(0);
+//   char buf[64], action[8], key[32];
   
-  //printf("Doing PumpEvent...\n");
-  int ret;
-  uint8_t type = 0, sym = 0;
-  while ((ret = NDL_PollEvent(buf, sizeof(buf)), ret)){
-    sscanf(buf, "%s %s", action, key);
+//   //printf("Doing PumpEvent...\n");
+//   int ret;
+//   uint8_t type = 0, sym = 0;
+//   while ((ret = NDL_PollEvent(buf, sizeof(buf)), ret)){
+//     sscanf(buf, "%s %s", action, key);
 
-    for (int i = 0; i < sizeof(keyname) / sizeof(keyname[0]); ++i){
-      if (strcmp(key, keyname[i]) == 0){
-        sym = i;
-        break ;
-      }
-    }
+//     for (int i = 0; i < sizeof(keyname) / sizeof(keyname[0]); ++i){
+//       if (strcmp(key, keyname[i]) == 0){
+//         sym = i;
+//         break ;
+//       }
+//     }
 
-    if (strcmp("kd", action) == 0){
-      type = SDL_KEYDOWN;
-    }else if(strcmp("ku", action) == 0){
-      type = SDL_KEYUP;
-    }else {
-      assert(0);
-    }
+//     if (strcmp("kd", action) == 0){
+//       type = SDL_KEYDOWN;
+//     }else if(strcmp("ku", action) == 0){
+//       type = SDL_KEYUP;
+//     }else {
+//       assert(0);
+//     }
 
-    append(type, sym);
-  }
-}
+//     append(type, sym);
+//   }
+// }
 
 
 int SDL_PushEvent(SDL_Event *ev) {
@@ -89,17 +90,26 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   if (!ret){
     return 0;
   }
+  
   key_action = key_buf;
-  int i = 0;
-  for (; key_buf[i] != ' '; i++){}
+  int i;
+  for (i = 0; key_buf[i] != ' '; i++){}
   key_buf[i] = '\0';
   key_key = &key_buf[i + 1]; 
+  
+  //截断\n
+  for (i = 0; key_key[i] != '\n' && key_key[i] != '\0'; i++){}
+  if (key_key[i] == '\n'){
+    key_key[i] = '\0';
+  }
   //strcmp("kd", key_action) == 0
   if (key_action[1] == 'd'){//加速！！
     *type = SDL_KEYDOWN;
   }else{
     *type = SDL_KEYUP;
   }
+
+  // printf("%s %s\n", key_action, key_key);
 
   for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     //剪枝掉很多
