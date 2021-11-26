@@ -39,8 +39,8 @@ void builtin_sh_run() {
   while (1) {
     SDL_Event ev;
     if (SDL_PollEvent(&ev)) {
+      printf("env sym: %d", (int)ev.key.keysym.sym);
       if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
-        printf("env sym: %d", (int)ev.key.keysym.sym);
         const char *res = term->keypress(handle_key(&ev));
         if (res) {
           sh_handle_cmd(res);
