@@ -109,7 +109,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     *type = SDL_KEYUP;
   }
 
-  // printf("%s %s\n", key_action, key_key);
+  printf("%s %s\n", key_action, key_key);
 
   for (int i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     //剪枝掉很多
