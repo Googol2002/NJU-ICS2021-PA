@@ -38,11 +38,11 @@ void builtin_sh_run() {
   setenv("PATH", "/bin", 0);
   while (1) {
     SDL_Event ev;
-    // printf("Event\n");
     if (SDL_PollEvent(&ev)) {
       printf("env sym: %d \n", (int)ev.type);
       if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
         const char *res = term->keypress(handle_key(&ev));
+        printf("Event %s\n", res);
         if (res) {
           sh_handle_cmd(res);
           sh_prompt();
