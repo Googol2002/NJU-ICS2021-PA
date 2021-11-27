@@ -38,7 +38,9 @@ void builtin_sh_run() {
   setenv("PATH", "/bin", 0);
   while (1) {
     SDL_Event ev;
-    if (SDL_PollEvent(&ev)) {
+    int ret = SDL_PollEvent(&ev);
+    printf("%d\n", ret);
+    if (ret) {
       if (ev.type == SDL_KEYUP || ev.type == SDL_KEYDOWN) {
         const char *res = term->keypress(handle_key(&ev));
         if (res) {
