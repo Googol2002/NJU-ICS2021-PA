@@ -269,6 +269,7 @@ const char *Terminal::keypress(char ch) {
   if (mode == Mode::raw) {
     input[0] = ch;
     input[1] = '\0';
+    printf("term.cpp env sym: %s \n", input);
     return input;
   } else if (mode == Mode::cook) {
     const char *ret = nullptr;
