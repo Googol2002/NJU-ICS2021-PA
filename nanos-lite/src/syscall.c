@@ -61,15 +61,15 @@ void sys_lseek(Context *c){
   c->GPRx = ret;
 }
 
-struct __temp{
- #if __SIZEOF_POINTER__ == 8
-  __uint64_t sec;
-  __uint64_t usec;
- #elif __SIZEOF_POINTER__ == 4
-  __uint32_t sec;
-  __uint32_t usec;
-#endif
-};
+// struct __temp{
+//  #if __SIZEOF_POINTER__ == 8
+//   __uint64_t sec;
+//   __uint64_t usec;
+//  #elif __SIZEOF_POINTER__ == 4
+//   __uint32_t sec;
+//   __uint32_t usec;
+// #endif
+// };
 
 void sys_gettimeofday(Context *c){
   struct timeval *tv = (struct timeval *)c->GPR2;
