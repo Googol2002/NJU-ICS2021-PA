@@ -109,8 +109,6 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
     *type = SDL_KEYUP;
   }
 
-  printf("%s %s end\n", key_action, key_key);
-
   for (i = 0; i < sizeof(keyname) / sizeof(char *); ++i){
     //剪枝掉很多
     if (key_key[0] == keyname[i][0] && strcmp(key_key, keyname[i]) == 0){
