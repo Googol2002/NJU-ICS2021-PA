@@ -8,7 +8,7 @@ void do_syscall(Context *c);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case EVENT_YIELD:
-      printf("EVENT_YIELD\n");
+      // printf("EVENT_YIELD\n");
       return schedule(c); //存起来了现在的，返回了另一个
 
     case EVENT_SYSCALL:
