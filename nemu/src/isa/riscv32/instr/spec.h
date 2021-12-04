@@ -34,8 +34,8 @@ def_EHelper(csrrw) {
 
 def_EHelper(ecall) {
   IFDEF(CONFIG_ETRACE, Log("etrace: ecall"));
-  Log("PRIV: %d", s->isa.instr.i.funct3);
-  isa_raise_intr(Machine_Software_Interrupt, s->pc);
+  //Log("PRIV: %d", s->isa.instr.i.funct3);
+  isa_raise_intr(User_Software_Interrupt, s->pc);
   rtl_mv(s, &s->dnpc, &(csr.mtvec));
 }
 
