@@ -102,6 +102,7 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   if (key_key[i] == '\n'){
     key_key[i] = '\0';
   }
+  
   //strcmp("kd", key_action) == 0
   if (key_action[1] == 'd'){//加速！！
     *type = SDL_KEYDOWN;

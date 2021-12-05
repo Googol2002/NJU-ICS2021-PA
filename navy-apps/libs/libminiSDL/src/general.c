@@ -19,6 +19,7 @@ int SDL_SetError(const char* fmt, ...) {
 }
 
 int SDL_ShowCursor(int toggle) {
+  assert(0);
   return 0;
 }
 

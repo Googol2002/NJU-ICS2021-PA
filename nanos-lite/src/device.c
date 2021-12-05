@@ -30,26 +30,27 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
   
-  int real_length = 4;
+  //int real_length = 4;
   char *tag = ev.keydown ? "kd " : "ku ";
-  if (real_length <= len){
-    strcpy(buf, tag);
-  }else {
-    assert(0);
-    return 0;
-  }
-  real_length += strlen(keyname[ev.keycode]);
+  //if (real_length <= len){
+  strcpy(buf, tag);
+  // }else {
+  //   assert(0);
+  //   return 0;
+  // }
   
-  if (real_length<= len){
-    strcat(buf, keyname[ev.keycode]);
-  }else {
-    Log("Need %d for %s%s but got %d", strlen(keyname[ev.keycode]), buf, keyname[ev.keycode], len);
-    assert(0);
-    return 0;
-  }
+  //real_length += strlen(keyname[ev.keycode]);
+  
+  //if (real_length<= len){
+  strcat(buf, keyname[ev.keycode]);
+  // }else {
+  //   Log("Need %d for %s%s but got %d", strlen(keyname[ev.keycode]), (char *)buf, keyname[ev.keycode], len);
+  //   assert(0);
+  //   return 0;
+  // }
   Log("Got  (kbd): %s (%d) %s\n", keyname[ev.keycode], ev.keycode, ev.keydown ? "DOWN" : "UP");
   
-  return real_length;
+  return 1;
 }
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
