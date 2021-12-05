@@ -50,6 +50,10 @@ Context* schedule(Context *prev) {
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
   printf("execve\n");
+  printf("filename:%s\n", filename);
+  for (int i = 0; argv[i]; ++i){
+    printf("arg:%s\n", argv[i]);
+  }
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
   yield();
