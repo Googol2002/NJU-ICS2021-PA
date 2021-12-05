@@ -83,7 +83,7 @@ static size_t ceil_4_bytes(size_t size){
   return size;
 }
 
-void context_uload(PCB *pcb, const char *filename, char *const argv[], int argc, char *const envp[], int envc){
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   uintptr_t entry = loader(pcb, filename);
 
   Area karea;
@@ -92,6 +92,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], int argc,
 
   Context* context = ucontext(NULL, karea, (void *)entry);
   pcb->cp = context;
+
+  int envc, argc;
+  for (envc = 0; envp[envc] != NULL; ++envc){}
+  for (argc = 0; argv[argc] != NULL; ++argc){}
 
   char *envp_ustack[envc];
   char *brk = (char *)heap.end;
