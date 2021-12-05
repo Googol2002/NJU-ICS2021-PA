@@ -38,12 +38,12 @@ static void sh_handle_cmd(const char *cmd) {
   /* 继续获取其他的子字符串 */
   if (token != NULL){
     app_name = token;
-    token = strtok(NULL, token);
+    token = strtok(NULL, split);
   }
 
   while( token != NULL ) {
     argv[argc++] = token;
-    token = strtok(NULL, token);
+    token = strtok(NULL, split);
   }
   argv[argc] = NULL;
 
