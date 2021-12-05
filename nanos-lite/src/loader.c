@@ -102,8 +102,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     for (; argv[argc] != NULL; ++argc){}
 
   char *envp_ustack[envc];
-  char *brk = (char *)new_page(NR_PAGE);
+  //char *brk = (char *)new_page(NR_PAGE);
+  char *brk = (char *)heap.end;
   
+
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
     brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
