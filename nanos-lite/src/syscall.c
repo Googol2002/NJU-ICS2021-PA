@@ -19,10 +19,15 @@ void sys_exit(Context *c){
   c->GPRx = 0;
 }
 
+int execve(const char *filename, char *const argv[], char *const envp[]);
+
 void sys_execve(Context *c){
   const char *fname = (const char *)c->GPR2;
-  naive_uload(NULL, fname);
-  c->GPRx = 0;
+  char **argv = (char **)c->GPR3;
+  char **envp = (char **)c->GPR4;
+  c->GPRx = execve(fname, argv, envp);
+  //naive_uload(NULL, fname);
+  //c->GPRx = 0;
 }
 
 void sys_write(Context *c){

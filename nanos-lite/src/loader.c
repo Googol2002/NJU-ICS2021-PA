@@ -83,6 +83,8 @@ static size_t ceil_4_bytes(size_t size){
   return size;
 }
 
+#define NR_PAGE 8
+
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   uintptr_t entry = loader(pcb, filename);
 
@@ -100,7 +102,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     for (; argv[argc] != NULL; ++argc){}
 
   char *envp_ustack[envc];
-  char *brk = (char *)heap.end;
+  char *brk = (char *)new_page(NR_PAGE);
   
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
