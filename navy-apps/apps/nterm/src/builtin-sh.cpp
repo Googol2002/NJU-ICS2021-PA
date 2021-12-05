@@ -23,12 +23,31 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  char exe_path[64];
-  strcpy(exe_path, cmd);
-  exe_path[strlen(exe_path) - 1] = '\0';//把'\n'搞掉
+  char command[128];
+  strcpy(command, cmd);
+  command[strlen(command) - 1] = '\0';//把'\n'搞掉
 
-  printf("%s\n", exe_path);
-  execvp(exe_path, NULL);
+  const char split[2] = " ";
+  char *token, *app_name;
+  char *argv[16];
+  int argc = 0;
+
+  /* 获取第一个子字符串 */
+  token = strtok(command, split);
+  
+  /* 继续获取其他的子字符串 */
+  if (token != NULL){
+    app_name = token;
+    token = strtok(NULL, token);
+  }
+
+  while( token != NULL ) {
+    argv[argc++] = token;
+    token = strtok(NULL, token);
+  }
+  argv[argc] = NULL;
+
+  execvp(app_name, argv);
 }
 
 void builtin_sh_run() {
