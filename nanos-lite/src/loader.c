@@ -92,6 +92,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
 
+  printf("loader: entry: %x", entry);
   Context* context = ucontext(NULL, karea, (void *)entry);
   pcb->cp = context;
 
