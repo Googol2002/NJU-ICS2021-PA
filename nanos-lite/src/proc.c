@@ -26,7 +26,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
   char *argv[] = {"/bin/exec-test", "0", NULL};
-  context_uload(&pcb[1], "/bin/menu", argv, NULL);
+  context_uload(&pcb[1], "/bin/nterm", argv, NULL);
   // context_uload(&pcb[1], "/bin/pal", argv, NULL);
 
   switch_boot_pcb();
