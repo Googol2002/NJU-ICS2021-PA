@@ -21,11 +21,11 @@ void hello_fun(void *arg) {
 
 void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
-void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
-
+void context_uload(PCB *pcb, const char *filename, char *const argv[], int argc, char *const envp[], int envc);
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
-  context_uload(&pcb[1], "/bin/pal", NULL, NULL);
+  char *args[] = {"--skip"};
+  context_uload(&pcb[1], "/bin/pal", args, 1, NULL, 0);
 
   switch_boot_pcb();
   // Log("Initializing processes...");

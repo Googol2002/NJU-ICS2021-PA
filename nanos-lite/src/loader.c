@@ -77,7 +77,13 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(karea, entry, arg);
 }
 
-void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
+static size_t ceil_4_bytes(size_t size){
+  if (size & 0x3)
+    return (size & (~0x3)) + 0x4;
+  return size;
+}
+
+void context_uload(PCB *pcb, const char *filename, char *const argv[], int argc, char *const envp[], int envc){
   uintptr_t entry = loader(pcb, filename);
 
   Area karea;
@@ -85,6 +91,45 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   karea.end = &pcb->cp + STACK_SIZE;
 
   Context* context = ucontext(NULL, karea, (void *)entry);
-  context->GPRx = (intptr_t)heap.end;
   pcb->cp = context;
+
+  char *envp_ustack[envc];
+  char *brk = (char *)heap.end;
+  
+  // 拷贝字符区
+  for (int i = 0; i < envc; ++i){
+    brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
+    envp_ustack[i] = brk;
+    strcpy(brk, envp[i]);
+  }
+
+  char *argv_ustack[envc];
+  for (int i = 0; i < argc; ++i){
+    brk -= (ceil_4_bytes(strlen(argv[i]) + 1)); // 分配大小
+    argv_ustack[i] = brk;
+    strcpy(brk, argv[i]);
+  }
+  
+  intptr_t *ptr_brk = (intptr_t *)(brk);
+  
+  // 分配envp空间
+  ptr_brk -= 1;
+  *ptr_brk = 0;
+  ptr_brk -= envc;
+  for (int i = 0; i < envc; ++i){
+    ptr_brk[i] = (intptr_t)(envp_ustack[i]);
+  }
+
+  // 分配argv空间
+  ptr_brk -= 1;
+  *ptr_brk = 0;
+  ptr_brk -= argc;
+  for (int i = 0; i < argc; ++i){
+    ptr_brk[i] = (intptr_t)(argv_ustack[i]);
+  }
+
+  ptr_brk -= 1;
+  *ptr_brk = argc;
+
+  context->GPRx = (intptr_t)ptr_brk;
 }
