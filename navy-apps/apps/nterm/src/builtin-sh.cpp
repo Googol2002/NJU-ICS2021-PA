@@ -47,6 +47,10 @@ static void sh_handle_cmd(const char *cmd) {
   }
   argv[argc] = NULL;
 
+  printf("app_name:%s\n", app_name);
+  for (int i = 0; argv[i]; ++i){
+    printf("arg:%s\n", argv[i]);
+  }
   execvp(app_name, argv);
 }
 
