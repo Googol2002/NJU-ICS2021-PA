@@ -98,11 +98,11 @@ static int inline read_keyinfo(uint8_t *type, uint8_t *sym){
   key_key = &key_buf[i + 1]; 
   
   //截断\n
-  // for (i = 0;  key_key[i] != '\0' && key_key[i] != '\n'; i++){}
-  // if (key_key[i] == '\n'){
-  //   key_key[i] = '\0';
-  // }
-
+  for (i = 0;  key_key[i] != '\0' && key_key[i] != '\n'; i++){}
+  if (key_key[i] == '\n'){
+    key_key[i] = '\0';
+  }
+  
   //strcmp("kd", key_action) == 0
   if (key_action[1] == 'd'){//加速！！
     *type = SDL_KEYDOWN;
