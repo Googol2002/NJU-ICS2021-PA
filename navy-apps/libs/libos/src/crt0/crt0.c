@@ -8,6 +8,7 @@ void call_main(uintptr_t *args) {
   uintptr_t argc = *args;
   char **argv = (char **)(args + 1);
 
+  printf("argv: %s", *argv);
   for (args += 1; args; ++args){}
   char **envp = (char **)(args + 1);
 

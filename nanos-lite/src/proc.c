@@ -24,8 +24,8 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], int argc, char *const envp[], int envc);
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
-  char *args[] = {"--skip"};
-  context_uload(&pcb[1], "/bin/pal", args, 1, NULL, 0);
+  char *argv[] = {"--skip"};
+  context_uload(&pcb[1], "/bin/pal", argv, 1, NULL, 0);
 
   switch_boot_pcb();
   // Log("Initializing processes...");
