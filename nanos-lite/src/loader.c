@@ -93,9 +93,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Context* context = ucontext(NULL, karea, (void *)entry);
   pcb->cp = context;
 
-  int envc, argc;
-  for (envc = 0; envp[envc] != NULL; ++envc){}
-  for (argc = 0; argv[argc] != NULL; ++argc){}
+  int envc = 0, argc = 0;
+  if (envp)
+    for (; envp[envc] != NULL; ++envc){}
+  if (argv)
+    for (; argv[argc] != NULL; ++argc){}
 
   char *envp_ustack[envc];
   char *brk = (char *)heap.end;
