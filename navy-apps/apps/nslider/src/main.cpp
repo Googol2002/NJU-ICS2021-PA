@@ -52,8 +52,7 @@ int main() {
 
   printf("我在执行!\n");
   render();
-  printf("我在执行!\n");
-  
+
   while (1) {
     SDL_Event e;
     SDL_WaitEvent(&e);
