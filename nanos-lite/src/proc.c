@@ -48,9 +48,8 @@ Context* schedule(Context *prev) {
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
-  printf("启动 %s ...\n", filename);
-
   context_uload(&pcb[1], filename, argv, envp);
+  printf("Loaded %s ...\n", filename);
   switch_boot_pcb();
   yield();
   return 0;
