@@ -20,7 +20,6 @@ struct BitmapHeader {
 } __attribute__((packed));
 
 void* BMP_Load(const char *filename, int *width, int *height) {
-  printf("我在执行!\n");
   FILE *fp = fopen(filename, "r");
   if (!fp) return NULL;
 
@@ -49,5 +48,6 @@ void* BMP_Load(const char *filename, int *width, int *height) {
   fclose(fp);
   if (width) *width = w;
   if (height) *height = h;
+  printf("我在执行!\n");
   return pixels;
 }
