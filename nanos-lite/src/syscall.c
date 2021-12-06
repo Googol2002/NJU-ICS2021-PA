@@ -18,7 +18,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]);
 void sys_exit(Context *c){
   //naive_uload(NULL, "/bin/nterm");
   //c->GPRx = 0;
-  c->GPRx = execve("/bin/true", NULL, NULL);
+  c->GPRx = execve("/bin/menu", NULL, NULL);
 }
 
 
