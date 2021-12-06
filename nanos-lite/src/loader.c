@@ -112,7 +112,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   //     printf("env:%s\n", envp[i]);
   //   }
   // }
-  printf("I'm OK, %d, %x\n", argc, &envp);
+  printf("I'm OK, %d, %x\n", argc, envp);
 
   char *envp_ustack[envc];
   char *brk = (char *)new_page(NR_PAGE);
