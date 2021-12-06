@@ -49,14 +49,14 @@ Context* schedule(Context *prev) {
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
-  printf("execve\n");
-  printf("filename:%s\n", filename);
-  printf("%x\n", envp);
-  if (envp){
-    for (int i = 0; envp[i]; ++i){
-      printf("env:%x\n", envp[i]);
-    }
-  }
+  // printf("execve\n");
+  // printf("filename:%s\n", filename);
+  // printf("%x\n", envp);
+  // if (envp){
+  //   for (int i = 0; envp[i]; ++i){
+  //     printf("env:%x\n", envp[i]);
+  //   }
+  // }
   context_uload(&pcb[1], filename, argv, envp);
   
   switch_boot_pcb();

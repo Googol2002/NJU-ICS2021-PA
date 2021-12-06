@@ -86,21 +86,6 @@ static size_t ceil_4_bytes(size_t size){
 #define NR_PAGE 8
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
-  
-  if (envp){
-    for (int i = 0; envp[i]; ++i){
-      printf("env:%x\n", envp[i]);
-    }
-  }
-  uintptr_t entry = loader(pcb, filename);
-
-  Area karea;
-  karea.start = &pcb->cp;
-  karea.end = &pcb->cp + STACK_SIZE;
-
-  Context* context = ucontext(NULL, karea, (void *)entry);
-  pcb->cp = context;
-
   int envc = 0, argc = 0;
   if (envp){
     for (; envp[envc]; ++envc){}
@@ -108,12 +93,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   if (argv){
     for (; argv[argc]; ++argc){}
   }
-  if (argv){
-    for (int i = 0; argv[i]; ++i){
-      printf("arg:%s\n", argv[i]);
-    }
-  }
-  printf("I'm OK, %d, %x\n", argc, envp);
+  // if (argv){
+  //   for (int i = 0; argv[i]; ++i){
+  //     printf("arg:%s\n", argv[i]);
+  //   }
+  // }
+  // printf("I'm OK, %d, %x\n", argc, envp);
 
   char *envp_ustack[envc];
   char *brk = (char *)new_page(NR_PAGE);
@@ -152,6 +137,15 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   ptr_brk -= 1;
   *ptr_brk = argc;
+  
+  uintptr_t entry = loader(pcb, filename);
+
+  Area karea;
+  karea.start = &pcb->cp;
+  karea.end = &pcb->cp + STACK_SIZE;
+
+  Context* context = ucontext(NULL, karea, (void *)entry);
+  pcb->cp = context;
 
   context->GPRx = (intptr_t)ptr_brk;
 }
