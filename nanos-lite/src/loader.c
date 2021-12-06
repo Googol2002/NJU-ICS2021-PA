@@ -102,6 +102,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   if (argv){
     for (; argv[argc]; ++argc){}
   }
+  if (argv){
+    for (int i = 0; argv[i]; ++i){
+      printf("arg:%s\n", argv[i]);
+    }
+  }
+  if (envp){
+    for (int i = 0; envp[i]; ++i){
+      printf("env:%s\n", envp[i]);
+    }
+  }
   printf("I'm OK, %d, %d\n", envc, argc);
 
   char *envp_ustack[envc];
