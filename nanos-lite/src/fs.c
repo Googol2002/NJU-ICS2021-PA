@@ -86,6 +86,7 @@ size_t fs_read(int fd, void *buf, size_t len){
     info->open_offset += real_len;
   }
 
+  printf("我在执行!\n");
   return real_len;
 }
 
