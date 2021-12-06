@@ -69,7 +69,7 @@ void stack_return(paddr_t cur, paddr_t des){
   #endif
 }
 
-#ifdef CONFIG_FTRACE
+#ifdef CONFIG_FTRACE_COMPLETELY
     static char *action_name[] = {"Call", "Ret"};
 #endif
 
@@ -83,7 +83,7 @@ void stack_return(paddr_t cur, paddr_t des){
 // }
 
 void print_stack_trace(){
-  #ifdef CONFIG_FTRACE
+  #ifdef CONFIG_FTRACE_COMPLETELY
     printf("====== " ASNI_FMT("Call Stack", ASNI_FG_BLUE) " ======\n");
     for (STACK_ENTRY* cur = &header; cur != end; cur = cur->next){
         STACK_ENTRY* r = cur->next;

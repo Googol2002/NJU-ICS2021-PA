@@ -154,6 +154,11 @@ config FTRACE
   bool "Enable function tracer"
   default y
 
+  config FTRACE_COMPLETELY
+  depends on FTRACE
+  bool "Enable function tracer completely"
+  default y
+
 config DTRACE
   depends on TRACE
   bool "Enable device tracer"
