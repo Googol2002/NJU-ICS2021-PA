@@ -96,15 +96,17 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = context;
 
   int envc = 0, argc = 0;
-  if (envp)
-    for (; envp[envc] != NULL; ++envc){}
-  if (argv)
-    for (; argv[argc] != NULL; ++argc){}
+  if (envp){
+    for (; envp[envc]; ++envc){}
+  }
+  if (argv){
+    for (; argv[argc]; ++argc){}
+  }
+  printf("I'm OK, %d, %d\n", envc, argc);
 
   char *envp_ustack[envc];
   char *brk = (char *)new_page(NR_PAGE);
   
-  printf("I'm OK, %d, %d\n", envc, argc);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
     brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
