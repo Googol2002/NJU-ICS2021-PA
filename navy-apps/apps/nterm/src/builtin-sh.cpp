@@ -28,7 +28,7 @@ static void sh_handle_cmd(const char *cmd) {
   command[strlen(command) - 1] = '\0';//把'\n'搞掉
 
   const char split[2] = " ";
-  char *token, *app_name;
+  char *token;
   char *argv[16];
   int argc = 0;
 
@@ -36,18 +36,13 @@ static void sh_handle_cmd(const char *cmd) {
   token = strtok(command, split);
   
   /* 继续获取其他的子字符串 */
-  if (token != NULL){
-    app_name = token;
-    token = strtok(NULL, split);
-  }
-
   while( token != NULL ) {
     argv[argc++] = token;
     token = strtok(NULL, split);
   }
   argv[argc] = NULL;
 
-  execvp(app_name, argv);
+  execvp(argv[0], argv);
 }
 
 void builtin_sh_run() {
