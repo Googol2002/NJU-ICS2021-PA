@@ -4,6 +4,7 @@
 #include <setjmp.h>
 #include <assert.h>
 #include <sys/time.h>
+#include <errno.h>
 #include "syscall.h"
 
 // helper macros
@@ -56,7 +57,8 @@ void _exit(int status) {
 }
 
 int _open(const char *path, int flags, mode_t mode) {
-  return _syscall_(SYS_open, (intptr_t)path, flags, mode);
+  int ret = _syscall_(SYS_open, (intptr_t)path, flags, mode);
+  return ret;
 }
 
 int _write(int fd, void *buf, size_t count) {
@@ -101,6 +103,8 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
 
 int _execve(const char *fname, char * const argv[], char *const envp[]) {
   int ret = _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
+  if (ret == -1)
+    errno = ENOENT;
   return ret;
 }
 
