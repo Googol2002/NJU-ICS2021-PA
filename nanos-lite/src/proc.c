@@ -1,4 +1,5 @@
 #include <proc.h>
+#include <fs.h>
 
 #define MAX_NR_PROC 4
 
@@ -49,6 +50,9 @@ Context* schedule(Context *prev) {
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
+  if (fs_open(filename, 0, 0) == -1){// 文件不存在
+    return -1;
+  }
   printf("Loading from %s ...\n", filename);
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
