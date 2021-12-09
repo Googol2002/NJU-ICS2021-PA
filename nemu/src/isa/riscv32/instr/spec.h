@@ -17,6 +17,9 @@ rtlreg_t* decode_csr_no(int csr_no){
         case 0x342: 
             return &(csr.mcause);
 
+        case 0x180:
+            return &(csr.satp);
+
         default:
             assert(0);
     }
