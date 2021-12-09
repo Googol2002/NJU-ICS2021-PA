@@ -39,7 +39,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
     }
   }
 
-  printf("I'm here\n");
   set_satp(kas.ptr);
   vme_enable = 1;
 
@@ -73,20 +72,20 @@ void __am_switch(Context *c) {
 #define VA_OFFSET(x) ((uintptr_t)x & 0x00000FFFu)
 
 #define PTE_PPN_MASK (0xFFFFFC00u)
-#define PTE_PPN(x) (((uintptr_t)x &  0xFFFFFC00u) >> 10)
+#define PTE_PPN(x) (((uintptr_t)x & PTE_PPN_MASK) >> 10)
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *page_table_entry = as->ptr + VA_VPN_1(va) * 4;
 
   if ((*page_table_entry & PTE_V) == 0){ // 说明二级表未分配
-    *page_table_entry |= (PTE_PPN_MASK & (uintptr_t)pgalloc_usr(PGSIZE));
+    *page_table_entry |= (PTE_PPN_MASK & ((uintptr_t)pgalloc_usr(PGSIZE) >> 2));
     *page_table_entry |= PTE_V;
   }
   
   // 找到二级表中的表项
   PTE *leaf_page_table_entry = (PTE *)(PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4);
   // 设置PPN
-  *leaf_page_table_entry |= (PTE_PPN_MASK & (uintptr_t)pa);
+  *leaf_page_table_entry |= (PTE_PPN_MASK & ((uintptr_t)pa >> 2));
   *leaf_page_table_entry |= PTE_V;
 }
 
