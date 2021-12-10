@@ -31,8 +31,6 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   kas.ptr = pgalloc_f(PGSIZE);
   
-
-  
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
     void *va = segments[i].start;
@@ -83,7 +81,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   if (!(*page_table_entry & PTE_V)){ // 说明二级表未分配
     void *alloced_page = pgalloc_usr(PGSIZE);
     *page_table_entry = (*page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)alloced_page >> 2));
-    *page_table_entry = (*page_table_entry | PTE_V | PTE_R | PTE_W | PTE_X);
+    *page_table_entry = (*page_table_entry | PTE_V);
     // printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
     assert((PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4) == (uintptr_t)alloced_page);
   }
