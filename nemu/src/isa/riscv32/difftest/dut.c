@@ -18,6 +18,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
   if (ref_r->pc == pc){
     return true;
   }else {
+    error_finfo();
     Log("PC expected %x but got %x", ref_r->pc, pc);
     return false;
   }
