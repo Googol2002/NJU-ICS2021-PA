@@ -78,17 +78,20 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *page_table_entry = as->ptr + VA_VPN_1(va) * 4;
 
   if (!(*page_table_entry & PTE_V)){ // 说明二级表未分配
-    *page_table_entry = (*page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)pgalloc_usr(PGSIZE) >> 2));
+    void *alloced_page = pgalloc_usr(PGSIZE);
+    *page_table_entry = (*page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)alloced_page >> 2));
     *page_table_entry = *page_table_entry | PTE_V;
-    printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
+    // printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
+    assert((PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4) == (uintptr_t)alloced_page);
   }
   
-  printf("设置二级表项\t虚拟地址:%p\n", va);
+  // printf("设置二级表项\t虚拟地址:%p\n", va);
   // 找到二级表中的表项
   PTE *leaf_page_table_entry = (PTE *)(PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4);
   // 设置PPN
   *leaf_page_table_entry = (*leaf_page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)pa >> 2));
   *leaf_page_table_entry = *leaf_page_table_entry | PTE_V;
+  assert(PTE_PPN(*leaf_page_table_entry) * 4096 + VA_OFFSET(va) == (uintptr_t)pa);
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
