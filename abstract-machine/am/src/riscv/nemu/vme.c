@@ -31,7 +31,7 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 
   kas.ptr = pgalloc_f(PGSIZE);
   
-  set_satp(kas.ptr);
+
   
   int i;
   for (i = 0; i < LENGTH(segments); i ++) {
@@ -41,8 +41,8 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
     }
   }
 
-//  set_satp(kas.ptr);
-  vme_enable = 1;
+  set_satp(kas.ptr);
+  // vme_enable = 1;
 
   return true;
 }
@@ -78,7 +78,7 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *page_table_entry = as->ptr + VA_VPN_1(va) * 4;
-  assert((uintptr_t)as->ptr + VA_VPN_1(va) * 4 == get_satp() + VA_VPN_1(va) * 4);
+  // assert((uintptr_t)as->ptr + VA_VPN_1(va) * 4 == get_satp() + VA_VPN_1(va) * 4);
 
   if (!(*page_table_entry & PTE_V)){ // 说明二级表未分配
     void *alloced_page = pgalloc_usr(PGSIZE);
