@@ -83,7 +83,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
   }
   
-  printf("设置二级表项\t虚拟地址:%p\n", page_table_entry, va);
+  printf("设置二级表项\t虚拟地址:%p\n", va);
   // 找到二级表中的表项
   PTE *leaf_page_table_entry = (PTE *)(PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4);
   // 设置PPN
