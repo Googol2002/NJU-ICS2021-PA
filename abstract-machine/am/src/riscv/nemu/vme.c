@@ -82,7 +82,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     void *alloced_page = pgalloc_usr(PGSIZE);
     *page_table_entry = (*page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)alloced_page >> 2));
     *page_table_entry = (*page_table_entry | PTE_V);
-    // printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
+    printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
     assert((PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4) == (uintptr_t)alloced_page);
   }
   
