@@ -8,6 +8,8 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
    */
   csr.mepc    = epc;
   csr.mcause  = NO;
+  // 11b-M 01b-S 00b-U
+  csr.mstatus.m.MPP = 3;
   //TODO: 缺少一些操作
   return 0;
 }
