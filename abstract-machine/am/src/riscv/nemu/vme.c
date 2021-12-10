@@ -78,6 +78,7 @@ void __am_switch(Context *c) {
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *page_table_entry = as->ptr + VA_VPN_1(va) * 4;
+  printf("%p\t%p\n", as->ptr, get_satp() + VA_VPN_1(va) * 4);
   assert((uintptr_t)as->ptr == get_satp() + VA_VPN_1(va) * 4);
 
   if (!(*page_table_entry & PTE_V)){ // 说明二级表未分配
