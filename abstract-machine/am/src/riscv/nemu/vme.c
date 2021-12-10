@@ -80,7 +80,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   if (!(*page_table_entry & PTE_V)){ // 说明二级表未分配
     *page_table_entry = (*page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)pgalloc_usr(PGSIZE) >> 2));
     *page_table_entry = *page_table_entry | PTE_V;
-    printf("二级表未分配，二级表项地址:%#x\n", page_table_entry);
+    printf("二级表未分配，二级表项地址:%p\n", page_table_entry);
   }
   
   // 找到二级表中的表项
