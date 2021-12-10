@@ -11,6 +11,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
     if (ref_r->gpr[i]._32 != cpu.gpr[i]._32){
       error_finfo();
       Log("对于[%s]寄存器, expceted %x, but got %x.", regs[i], ref_r->gpr[i]._32, cpu.gpr[i]._32);
+      Log("PC expected %x but got %x", ref_r->pc, pc);
       return false;
     }
   }
