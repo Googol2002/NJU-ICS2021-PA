@@ -116,6 +116,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
 
+
+  printf("Loading... %p\n", alloced_page);
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
@@ -150,7 +152,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
 
-  printf("Loading...\n");
   ptr_brk -= 1;
   *ptr_brk = argc;
   
