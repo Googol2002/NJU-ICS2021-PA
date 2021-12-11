@@ -18,7 +18,7 @@ extern riscv32_CSR_state csr;
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   paddr_t page_table_entry_addr = (csr.satp << 12) + VA_VPN_1(vaddr) * 4;
   PTE page_table_entry = paddr_read(page_table_entry_addr, 4);
-  if (!(page_table_entry & PTE_V)){
+  if ((page_table_entry & PTE_V) == 0){
     printf("page_table_entry not valid, vaddr: %#x", vaddr);
   }
   assert(page_table_entry & PTE_V);
