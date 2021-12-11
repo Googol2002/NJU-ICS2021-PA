@@ -115,7 +115,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     // TODO: 这里prot参数不规范
     map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
-
+  
+  printf("Loading\n");
   char *brk = (char *)(as->area.end - 4);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
@@ -152,7 +153,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = argc;
   
-  printf("Loading\n");
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
   Area karea;
