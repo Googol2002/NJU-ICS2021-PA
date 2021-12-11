@@ -116,7 +116,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
 
-  char *brk = (char *)(as->area.end - 4);
+  char *brk = (char *)(alloced_page - 4);
   printf("Loading %x\n", brk);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
@@ -159,7 +159,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
 
-  Context* context = ucontext(NULL, karea, (void *)entry);
+  Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
 
   context->GPRx = (intptr_t)ptr_brk;

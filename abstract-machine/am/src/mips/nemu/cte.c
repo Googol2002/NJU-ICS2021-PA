@@ -7,7 +7,6 @@ static Context* (*user_handler)(Event, Context*) = NULL;
 static inline bool get_CU0(Context *c) { return (c->status >> 28) & 0x1; }
 
 Context* __am_irq_handle(Context *c) {
-  __am_get_cur_as(c);
 
   if (user_handler) {
     Event ev = {0};
@@ -20,7 +19,6 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
   }
 
-  __am_switch(c);
   return c;
 }
 
