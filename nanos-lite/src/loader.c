@@ -150,7 +150,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = 0;
   printf("Loading... %x %d\n", ptr_brk, argc);
-  ptr_brk = ptr_brk - (uint32_t)argc;
+  ptr_brk = ptr_brk - 1;
   printf("Loading... %x\n", ptr_brk);
   for (int i = 0; i < argc; ++i){
     printf("Loading... %x\n", &ptr_brk[i]);
