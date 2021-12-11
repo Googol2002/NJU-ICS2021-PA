@@ -141,12 +141,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
 
-  printf("Loading...\n");
   // 分配argv空间
   ptr_brk -= 1;
   *ptr_brk = 0;
   ptr_brk -= argc;
   for (int i = 0; i < argc; ++i){
+    printf("Loading...\n");
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
 
