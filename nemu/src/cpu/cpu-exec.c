@@ -174,6 +174,9 @@ void cpu_exec(uint64_t n) {
            (nemu_state.halt_ret == 0 ? ASNI_FMT("HIT GOOD TRAP", ASNI_FG_GREEN) :
             ASNI_FMT("HIT BAD TRAP", ASNI_FG_RED))),
           nemu_state.halt_pc);
+      if (nemu_state.halt_ret == 10001){
+        print_instr_ringbuf(10001);
+      }
       // fall through
     case NEMU_QUIT: statistic();
   }
