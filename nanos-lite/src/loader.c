@@ -141,7 +141,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for (int i = 0; i < envc; ++i){
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
-
+  halt(10001);
   //assert((uint32_t)ptr_brk != 0xDD1FE0);
   printf("Loading... %x\n", ptr_brk);
 
