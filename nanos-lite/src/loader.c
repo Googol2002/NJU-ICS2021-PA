@@ -141,6 +141,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
 
+  assert((uint32_t)ptr_brk != 0xDD1FE0);
   printf("Loading... %x\n", ptr_brk);
 
   // 分配argv空间
