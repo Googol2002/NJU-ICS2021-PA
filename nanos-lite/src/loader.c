@@ -34,6 +34,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     assert(0); //filename指向文件不存在
   }
   
+  AddrSpace *as = &pcb->as;
+  void *alloced_page = new_page(1);
+  // TODO: 这里prot参数不规范
+  // as->area.start 0x40000000
+  map(as, as->area.start, alloced_page, 0);
+  
   Elf_Ehdr elf_header;
   read(fd, &elf_header, 0, sizeof(elf_header));
   //根据小端法 0x7F E L F
@@ -87,19 +93,31 @@ static size_t ceil_4_bytes(size_t size){
 }
 
 #define NR_PAGE 8
+#define PAGESIZE 4096
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   int envc = 0, argc = 0;
+
+  AddrSpace *as = &pcb->as;
+  protect(as);
+  
   if (envp){
     for (; envp[envc]; ++envc){}
   }
   if (argv){
     for (; argv[argc]; ++argc){}
   }
-
   char *envp_ustack[envc];
-  char *brk = (char *)new_page(NR_PAGE);
-  
+
+  void *alloced_page = new_page(NR_PAGE);
+  int counter = 0;
+  //给用户栈做了分配和映射
+  for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
+    // TODO: 这里prot参数不规范
+    map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
+  }
+
+  char *brk = (char *)(as->area.end - 4);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
     brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
