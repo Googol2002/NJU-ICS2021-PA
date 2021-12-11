@@ -135,7 +135,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   
   intptr_t *ptr_brk = (intptr_t *)(brk);
   
-  printf("Loading... %p\n", alloced_page);
+  printf("Loading... %p %x\n", alloced_page, &ptr_brk);
 
   // 分配envp空间
   ptr_brk -= 1;
@@ -145,7 +145,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
 
-  printf("Loading... %x %x\n", ptr_brk, &ptr_brk);
+  printf("Loading... %x\n", ptr_brk);
 
   // 分配argv空间
   ptr_brk -= 1;
