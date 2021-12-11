@@ -96,7 +96,7 @@ static size_t ceil_4_bytes(size_t size){
 #define PAGESIZE 4096
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
-  register int envc = 0, argc = 0;
+  int envc = 0, argc = 0;
   AddrSpace *as = &pcb->as;
   protect(as);
   
@@ -151,6 +151,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = 0;
   printf("Loading... %x %d\n", ptr_brk, argc);
   ptr_brk = ptr_brk - argc;
+  assert(0);
   printf("Loading... %x\n", ptr_brk);
   for (int i = 0; i < argc; ++i){
     printf("Loading... %x\n", &ptr_brk[i]);
