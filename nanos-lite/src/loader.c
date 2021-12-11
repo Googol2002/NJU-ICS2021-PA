@@ -97,7 +97,6 @@ static size_t ceil_4_bytes(size_t size){
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   int envc = 0, argc = 0;
-  printf("Loading\n");
   AddrSpace *as = &pcb->as;
   protect(as);
   
@@ -153,6 +152,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = argc;
   
+  printf("Loading\n");
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
   Area karea;
