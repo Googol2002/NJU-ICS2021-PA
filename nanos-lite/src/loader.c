@@ -124,6 +124,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(brk, envp[i]);
   }
 
+  printf("Loading...\n");
   char *argv_ustack[envc];
   for (int i = 0; i < argc; ++i){
     brk -= (ceil_4_bytes(strlen(argv[i]) + 1)); // 分配大小
@@ -153,7 +154,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = argc;
   
   //这条操作会把参数的内存空间扬了，要放在最后
-  printf("Loading...\n");
   uintptr_t entry = loader(pcb, filename);
   Area karea;
   karea.start = &pcb->cp;
