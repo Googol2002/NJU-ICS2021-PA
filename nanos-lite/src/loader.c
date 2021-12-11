@@ -132,6 +132,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   
   intptr_t *ptr_brk = (intptr_t *)(brk);
+  printf("Loading... %x\n", ptr_brk);
 
   // 分配envp空间
   ptr_brk -= 1;
