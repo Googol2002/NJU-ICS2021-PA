@@ -115,9 +115,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     // TODO: 这里prot参数不规范
     map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
-  
-  printf("Loading\n");
+
   char *brk = (char *)(as->area.end - 4);
+  printf("Loading %x\n", brk);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
     brk -= (ceil_4_bytes(strlen(envp[i]) + 1)); // 分配大小
