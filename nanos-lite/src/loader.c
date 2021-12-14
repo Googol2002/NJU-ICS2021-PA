@@ -117,6 +117,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *envp_ustack[envc];
 
   void *alloced_page = new_page(NR_PAGE);
+
+  //这段代码有古怪，一动就会出问题，莫动
+
   // printf("%x \n", alloced_page);
   // int counter = 1;
   // // 给用户栈做了分配和映射
@@ -179,7 +182,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = argc;
   
-  printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
+  //printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
   Area karea;
