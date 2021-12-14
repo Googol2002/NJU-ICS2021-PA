@@ -65,7 +65,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     switch (section_entry.p_type) {
     case PT_LOAD:
       // virt_addr = (void *)section_entry.p_vaddr; 
-      virt_addr = (void *)alloced_page; // 这里是把0x40000000加载到他对应的实际地址
+      virt_addr = (void *)alloced_page_start; // 这里是把0x40000000加载到他对应的实际地址
       read(fd, virt_addr, section_entry.p_offset, section_entry.p_filesz);
       memset(virt_addr + section_entry.p_filesz, 0, 
         section_entry.p_memsz - section_entry.p_filesz);
