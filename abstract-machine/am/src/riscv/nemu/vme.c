@@ -75,6 +75,9 @@ void __am_switch(Context *c) {
 #define PTE_PPN(x) (((uintptr_t)x & PTE_PPN_MASK) >> 10)
 
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  va = (void *)(((uintptr_t)va) & (~0xfff));
+  pa = (void *)(((uintptr_t)pa) & (~0xfff));
+
   PTE *page_table_entry = as->ptr + VA_VPN_1(va) * 4;
   // assert((uintptr_t)as->ptr + VA_VPN_1(va) * 4 == get_satp() + VA_VPN_1(va) * 4);
 

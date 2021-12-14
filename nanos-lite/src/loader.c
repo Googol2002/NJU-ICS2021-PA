@@ -116,7 +116,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
     // TODO: 这里prot参数不规范
     //printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE - 4, page - 4);
-    map(as, (void *)(((uint32_t)as->area.end - counter * PAGESIZE - 4) & (~0xfff)), (void *)(((uint32_t)page - 4) & (~0xfff)), 0); 
+    map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
   // map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
   // map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
