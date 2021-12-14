@@ -114,6 +114,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   //给用户栈做了分配和映射
   for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
     // TODO: 这里prot参数不规范
+    printf("%x \n", as->area.end - counter * PAGESIZE - 4);
     map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
   }
 
