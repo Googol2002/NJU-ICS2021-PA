@@ -172,6 +172,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = argc;
   
+  printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
   Area karea;
@@ -181,6 +182,5 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
   
-  printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
   context->GPRx = (intptr_t)ptr_brk;
 }
