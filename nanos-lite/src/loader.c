@@ -119,6 +119,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     map(as, as->area.end - counter * PAGESIZE, page, 0); 
   }
   // map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
+  printf("va: %x pa: %x\n", as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE);
   // map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
   // map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
   // map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
@@ -126,6 +127,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
   // map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
   // map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
+  printf("va: %x pa: %x\n", as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE);
   
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
