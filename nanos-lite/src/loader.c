@@ -110,12 +110,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   void *alloced_page = new_page(NR_PAGE);
   printf("%x \n", alloced_page);
-  int counter = 0;
+  //int counter = 0;
   //给用户栈做了分配和映射
-  for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
-    // TODO: 这里prot参数不规范
-    map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
-  }
+  // for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
+  //   // TODO: 这里prot参数不规范
+  //   map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
+  // }
 
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
@@ -142,7 +142,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for (int i = 0; i < envc; ++i){
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
-  halt(10001);
+  //halt(10001);
   //assert((uint32_t)ptr_brk != 0xDD1FE0);
   printf("Loading... %x\n", ptr_brk);
 
@@ -150,7 +150,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
-  assert((uint32_t)ptr_brk != 0xDD1FDC);
+ // assert((uint32_t)ptr_brk != 0xDD1FDC);
   //halt(10001);
   //ptr_brk = (intptr_t *)((int32_t)ptr_brk - sizeof(intptr_t *) * argc);
   
