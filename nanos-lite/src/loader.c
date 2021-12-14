@@ -38,6 +38,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   void *alloced_page = new_page(1);
   // TODO: 这里prot参数不规范
   // as->area.start 0x40000000
+  printf("va: %x, pa: %x\n", as->area.start, alloced_page);
   map(as, as->area.start, alloced_page, 0);
   
   Elf_Ehdr elf_header;
@@ -126,7 +127,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
   map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
   
-
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
   for (int i = 0; i < envc; ++i){
