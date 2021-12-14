@@ -164,7 +164,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   //halt(10001);
   //ptr_brk = (intptr_t *)((int32_t)ptr_brk - sizeof(intptr_t *) * argc);
   
-  printf("Loading... %x\n", ptr_brk);
   for (int i = 0; i < argc; ++i){
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
@@ -180,6 +179,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
-
+  
+  printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
   context->GPRx = (intptr_t)ptr_brk;
 }
