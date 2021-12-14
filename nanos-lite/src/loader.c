@@ -24,9 +24,9 @@ static void read(int fd, void *buf, size_t offset, size_t len){
   fs_read(fd, buf, len);
 }
 
-// static void write(int fd, const void *buf, size_t offset, size_t len){
 
-// }
+#define NR_PAGE 8
+#define PAGESIZE 4096
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
@@ -37,8 +37,16 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   AddrSpace *as = &pcb->as;
   // TODO: 这里prot参数不规范
   // as->area.start 0x40000000
-  void *alloced_page = new_page(1);
-  map(as, as->area.start, alloced_page, 0);
+  void *alloced_page = new_page(8);
+  void *alloced_page_start = alloced_page - PAGESIZE * 8;
+  map(as, as->area.start, alloced_page_start, 0);
+  map(as, as->area.start + 1 * PAGESIZE, alloced_page_start + 1 * PAGESIZE, 0);
+  map(as, as->area.start + 2 * PAGESIZE, alloced_page_start + 2 * PAGESIZE, 0);
+  map(as, as->area.start + 3 * PAGESIZE, alloced_page_start + 3 * PAGESIZE, 0);
+  map(as, as->area.start + 4 * PAGESIZE, alloced_page_start + 4 * PAGESIZE, 0);
+  map(as, as->area.start + 5 * PAGESIZE, alloced_page_start + 5 * PAGESIZE, 0);
+  map(as, as->area.start + 6 * PAGESIZE, alloced_page_start + 6 * PAGESIZE, 0);
+  map(as, as->area.start + 7 * PAGESIZE, alloced_page_start + 7 * PAGESIZE, 0);
   
   Elf_Ehdr elf_header;
   read(fd, &elf_header, 0, sizeof(elf_header));
@@ -93,8 +101,6 @@ static size_t ceil_4_bytes(size_t size){
   return size;
 }
 
-#define NR_PAGE 8
-#define PAGESIZE 4096
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   int envc = 0, argc = 0;
