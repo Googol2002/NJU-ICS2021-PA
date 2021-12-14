@@ -35,10 +35,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
   
   AddrSpace *as = &pcb->as;
-  void *alloced_page = new_page(1);
   // TODO: 这里prot参数不规范
   // as->area.start 0x40000000
-  printf("va: %x, pa: %x\n", as->area.start, alloced_page);
+  void *alloced_page = new_page(1);
   map(as, as->area.start, alloced_page, 0);
   
   Elf_Ehdr elf_header;
@@ -58,6 +57,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     switch (section_entry.p_type) {
     case PT_LOAD:
       virt_addr = (void *)section_entry.p_vaddr; 
+      //virt_addr = (void *)alloced_page; // 这里是把0x40000000加载到他对应的实际地址
       read(fd, virt_addr, section_entry.p_offset, section_entry.p_filesz);
       memset(virt_addr + section_entry.p_filesz, 0, 
         section_entry.p_memsz - section_entry.p_filesz);
@@ -111,21 +111,21 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   void *alloced_page = new_page(NR_PAGE);
   printf("%x \n", alloced_page);
-  // int counter = 0;
-  //给用户栈做了分配和映射
-  // for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
-  //   // TODO: 这里prot参数不规范
-  //   printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE - 4, page - 4);
-  //   map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
-  // }
-  map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
-  map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
-  map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
-  map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
-  map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
-  map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
-  map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
-  map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
+  int counter = 0;
+  // 给用户栈做了分配和映射
+  for (void *page = alloced_page; page > alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
+    // TODO: 这里prot参数不规范
+    printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE - 4, page - 4);
+    map(as, as->area.end - counter * PAGESIZE - 4, page - 4, 0); 
+  }
+  // map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
+  // map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
+  // map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
+  // map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
+  // map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
+  // map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
+  // map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
+  // map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
   
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
