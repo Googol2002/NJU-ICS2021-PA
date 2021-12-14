@@ -36,6 +36,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   
   AddrSpace *as = &pcb->as;
   void *alloced_page = new_page(1);
+  printf("%x \n", alloced_page);
   // TODO: 这里prot参数不规范
   // as->area.start 0x40000000
   map(as, as->area.start, alloced_page, 0);
