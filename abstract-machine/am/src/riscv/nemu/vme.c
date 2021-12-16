@@ -88,11 +88,11 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     // printf("二级表未分配\t二级表项地址:%p\t虚拟地址:%p\n", page_table_entry, va);
     assert(((PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4) & ~0xFFFFFF) == ((uintptr_t)alloced_page& ~0xFFFFFF));
   }
-  if ((uintptr_t)va <= 0x40005000){
-    printf("设置二级表项\t虚拟地址:%p\t实际地址:%p\n", va, pa);
-  }
   // 找到二级表中的表项
   PTE *leaf_page_table_entry = (PTE *)(PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4);
+  if ((uintptr_t)va <= 0x40005000){
+    printf("设置二级表项\t虚拟地址:%p\t实际地址:%p\t表项:%p\n", va, pa, leaf_page_table_entry);
+  }
   // 设置PPN
   *leaf_page_table_entry = (*leaf_page_table_entry & ~PTE_PPN_MASK) | (PTE_PPN_MASK & ((uintptr_t)pa >> 2));
   *leaf_page_table_entry = (*leaf_page_table_entry | PTE_V | PTE_R | PTE_W | PTE_X);
