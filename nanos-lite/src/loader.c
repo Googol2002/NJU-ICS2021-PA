@@ -140,14 +140,15 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("va: %x pa: %x\n", as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE);
 
   // printf("va: %x pa: %x\n", as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE);
-  // map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
-  // map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
-  // map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
-  // map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
-  // map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
-  // map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
-  // map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
-  // map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
+  
+  map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
+  map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
+  map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
+  map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
+  map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
+  map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
+  map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
+  map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
   
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
