@@ -29,7 +29,8 @@ static void read(int fd, void *buf, size_t offset, size_t len){
 #define PAGESIZE 4096
 
 static void * alloc_section_space(AddrSpace *as, uintptr_t vaddr, size_t p_memsz){
-  size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
+  //size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
+  size_t page_n = 8;
   void *page_end = new_page(page_n);
   void *page_start = page_end - page_n * PAGESIZE;
 
