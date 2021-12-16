@@ -3,6 +3,7 @@
 #include "fs.h"
 #include <proc.h>
 #include <sys/time.h>
+#include <stdint.h>
 
 #define STRACE 1
 #undef STRACE
@@ -49,8 +50,10 @@ void sys_read(Context *c){
   c->GPRx = ret;
 }
 
+int mm_brk(uintptr_t brk);
 void sys_brk(Context *c){
-  c->GPRx = 0;
+  uintptr_t addr = (uintptr_t)(c->GPR2);
+  c->GPRx = mm_brk(addr);
 }
 
 void sys_open(Context *c){
