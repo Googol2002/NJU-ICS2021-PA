@@ -33,6 +33,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
   void *page_end = new_page(page_n);
   void *page_start = page_end - page_n * PAGESIZE;
 
+  printf("大小%x\n", p_memsz);
   for (int i = 0; i < page_n; ++i){
     // TODO: 这里prot参数不规范
     printf("%x, %x\n", vaddr + i * PAGESIZE, page_start + i * PAGESIZE);
