@@ -126,17 +126,17 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *alloced_page = new_page(NR_PAGE) + NR_PAGE * 4096; //得到栈底
 
   //这段代码有古怪，一动就会出问题，莫动
-  //这个问题应该已经被修正了，TMD，真cao dan
+  //这个问题确实已经被修正了，TMD，真cao dan
   // 2021/12/16
 
   // printf("%x \n", alloced_page);
-  int counter = 1;
-  // 给用户栈做了分配和映射
-  for (void *page = alloced_page - PAGESIZE; page >= alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
-    // TODO: 这里prot参数不规范
-    printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE, page);
-    map(as, as->area.end - counter * PAGESIZE, page, 0); 
-  }
+  // int counter = 1;
+  // // 给用户栈做了分配和映射
+  // for (void *page = alloced_page - PAGESIZE; page >= alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
+  //   // TODO: 这里prot参数不规范
+  //   printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE, page);
+  //   map(as, as->area.end - counter * PAGESIZE, page, 0); 
+  // }
   // printf("va: %x pa: %x\n", as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE);
 
   // printf("va: %x pa: %x\n", as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE);
