@@ -78,9 +78,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset(phys_addr + section_entry.p_filesz, 0, 
         section_entry.p_memsz - section_entry.p_filesz);
       
-      if (section_entry.p_filesz < section_entry.p_memsz){// 应该是.bss节
-        current->max_brk = section_entry.p_vaddr + section_entry.p_memsz;
-      }
+      // if (section_entry.p_filesz < section_entry.p_memsz){// 应该是.bss节
+      //   current->max_brk = section_entry.p_vaddr + section_entry.p_memsz;
+      // }
       
       break;
     
