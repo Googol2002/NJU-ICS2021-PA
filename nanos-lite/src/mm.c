@@ -33,6 +33,7 @@ int mm_brk(uintptr_t brk) {
   uintptr_t brk_pn = brk >> 12;
 
   if (brk_pn > max_page_pn){
+    printf("申请内存\n");
     void *allocted_page =  new_page(brk_pn - max_page_pn);
     for (int i = 0; i < brk_pn - max_page_pn; ++i){
       //TODO: prot 有问题
