@@ -90,9 +90,9 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   }
   // 找到二级表中的表项
   PTE *leaf_page_table_entry = (PTE *)(PTE_PPN(*page_table_entry) * 4096 + VA_VPN_0(va) * 4);
-  if ((uintptr_t)va <= 0x40100000){
-    printf("设置二级表项\t虚拟地址:%p\t实际地址:%p\t表项:%p\n", va, pa, leaf_page_table_entry);
-  }
+  // if ((uintptr_t)va <= 0x40100000){
+  //   printf("设置二级表项\t虚拟地址:%p\t实际地址:%p\t表项:%p\n", va, pa, leaf_page_table_entry);
+  // }
   // 设置PPN
   *leaf_page_table_entry = (PTE_PPN_MASK & ((uintptr_t)pa >> 2)) | (PTE_V | PTE_R | PTE_W | PTE_X);
   //assert(PTE_PPN(*leaf_page_table_entry) * 4096 + VA_OFFSET(va) == (uintptr_t)pa);

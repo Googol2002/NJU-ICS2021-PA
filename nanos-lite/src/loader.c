@@ -31,7 +31,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
  __attribute__ ((__used__)) static void * alloc_section_space(AddrSpace *as, uintptr_t vaddr, size_t p_memsz){
   size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
   void *page_start = new_page(page_n);
-  void *page_end =  page_start + page_n * PAGESIZE;
+  void *page_end = page_start + page_n * PAGESIZE;
 
   printf("Page_start %x page_end %x\n", page_start, page_end);
   
@@ -139,6 +139,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   void *alloced_page = new_page(NR_PAGE) + NR_PAGE * 4096; //得到栈底
 
   //这段代码有古怪，一动就会出问题，莫动
+  //这个问题应该已经被修正了，TMD，真cao dan
+  // 2021/12/16
 
   // printf("%x \n", alloced_page);
   // int counter = 1;
