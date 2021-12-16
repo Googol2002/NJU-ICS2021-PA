@@ -130,24 +130,24 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // 2021/12/16
 
   // printf("%x \n", alloced_page);
-  // int counter = 1;
-  // // 给用户栈做了分配和映射
-  // for (void *page = alloced_page - PAGESIZE; page >= alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
-  //   // TODO: 这里prot参数不规范
-  //   printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE, page);
-  //   map(as, as->area.end - counter * PAGESIZE, page, 0); 
-  // }
+  int counter = 1;
+  // 给用户栈做了分配和映射
+  for (void *page = alloced_page - PAGESIZE; page >= alloced_page - PAGESIZE * NR_PAGE; page -= PAGESIZE, ++counter){
+    // TODO: 这里prot参数不规范
+    printf("va: %x pa: %x\n", as->area.end - counter * PAGESIZE, page);
+    map(as, as->area.end - counter * PAGESIZE, page, 0); 
+  }
   // printf("va: %x pa: %x\n", as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE);
 
   // printf("va: %x pa: %x\n", as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE);
-  map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
-  map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
-  map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
-  map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
-  map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
-  map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
-  map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
-  map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
+  // map(as, as->area.end - 8 * PAGESIZE, alloced_page - 8 * PAGESIZE, 0); 
+  // map(as, as->area.end - 7 * PAGESIZE, alloced_page - 7 * PAGESIZE, 0);
+  // map(as, as->area.end - 6 * PAGESIZE, alloced_page - 6 * PAGESIZE, 0); 
+  // map(as, as->area.end - 5 * PAGESIZE, alloced_page - 5 * PAGESIZE, 0);
+  // map(as, as->area.end - 4 * PAGESIZE, alloced_page - 4 * PAGESIZE, 0); 
+  // map(as, as->area.end - 3 * PAGESIZE, alloced_page - 3 * PAGESIZE, 0);
+  // map(as, as->area.end - 2 * PAGESIZE, alloced_page - 2 * PAGESIZE, 0); 
+  // map(as, as->area.end - 1 * PAGESIZE, alloced_page - 1 * PAGESIZE, 0); 
   
   char *brk = (char *)(alloced_page - 4);
   // 拷贝字符区
