@@ -52,9 +52,9 @@ void sys_read(Context *c){
 
 int mm_brk(uintptr_t brk);
 void sys_brk(Context *c){
-  // uintptr_t addr = (uintptr_t)(c->GPR2);
-  // c->GPRx = mm_brk(addr);
-  c->GPRx = 0;
+  uintptr_t addr = (uintptr_t)(c->GPR2);
+  c->GPRx = mm_brk(addr);
+  // c->GPRx = 0;
 }
 
 void sys_open(Context *c){
