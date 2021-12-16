@@ -1,8 +1,11 @@
 #include <unistd.h>
 #include <stdio.h>
 
+extern char end;
+
 int main() {
   write(1, "Hello World!\n", 13);
+  printf("With end = %x", &end);
   int i = 2;
   volatile int j = 0;
   while (1) {
