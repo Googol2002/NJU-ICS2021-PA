@@ -39,7 +39,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
     map(as, (void *)(vaddr + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 0);
   }
 
-  printf("Page_start %x\n", page_start);
+  printf("Page_start %x page_end %x\n", page_start, page_end);
   return page_start;
 }
 
