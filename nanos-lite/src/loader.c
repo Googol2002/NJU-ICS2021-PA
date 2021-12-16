@@ -35,6 +35,7 @@ static void * alloc_section_space(AddrSpace *as, uintptr_t vaddr, size_t p_memsz
 
   for (int i = 0; i < page_n; ++i){
     // TODO: 这里prot参数不规范
+    printf("%x, %x\n", vaddr + i * PAGESIZE, page_start + i * PAGESIZE);
     map(as, (void *)(vaddr + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 0);
   }
 
