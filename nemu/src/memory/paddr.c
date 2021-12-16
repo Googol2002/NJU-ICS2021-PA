@@ -39,7 +39,6 @@ void init_mem() {
 
 word_t paddr_read(paddr_t addr, int len) {
   #ifdef CONFIG_MTRACE
-    if (addr == 0x806F1010)
     Log(" Read  from memory at %#.8x for %d bytes.", addr, len);
   #endif
   if (likely(in_pmem(addr))) return pmem_read(addr, len);
@@ -50,11 +49,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
-    if (addr == 0x806F1010)
     Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
-    if (addr == 0x806F1010 && data == 8){
-      panic();
-    }
   #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   MUXDEF(CONFIG_DEVICE, mmio_write(addr, len, data),
