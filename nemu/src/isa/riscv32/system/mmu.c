@@ -12,7 +12,7 @@
 
 #define PTE_V 0x01
 
-typedef word_t PTE;
+typedef uint32_t PTE;
 extern riscv32_CSR_state csr;
 
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {

@@ -51,16 +51,16 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   AddrSpace *as = &pcb->as;
   // TODO: 这里prot参数不规范
   // as->area.start 0x40000000
-  void *alloced_page = new_page(8);
-  void *alloced_page_start = alloced_page - PAGESIZE * 8;
-  map(as, as->area.start, alloced_page_start, 0);
-  map(as, as->area.start + 1 * PAGESIZE, alloced_page_start + 1 * PAGESIZE, 0);
-  map(as, as->area.start + 2 * PAGESIZE, alloced_page_start + 2 * PAGESIZE, 0);
-  map(as, as->area.start + 3 * PAGESIZE, alloced_page_start + 3 * PAGESIZE, 0);
-  map(as, as->area.start + 4 * PAGESIZE, alloced_page_start + 4 * PAGESIZE, 0);
-  map(as, as->area.start + 5 * PAGESIZE, alloced_page_start + 5 * PAGESIZE, 0);
-  map(as, as->area.start + 6 * PAGESIZE, alloced_page_start + 6 * PAGESIZE, 0);
-  map(as, as->area.start + 7 * PAGESIZE, alloced_page_start + 7 * PAGESIZE, 0);
+  // void *alloced_page = new_page(8);
+  // void *alloced_page_start = alloced_page - PAGESIZE * 8;
+  // map(as, as->area.start, alloced_page_start, 0);
+  // map(as, as->area.start + 1 * PAGESIZE, alloced_page_start + 1 * PAGESIZE, 0);
+  // map(as, as->area.start + 2 * PAGESIZE, alloced_page_start + 2 * PAGESIZE, 0);
+  // map(as, as->area.start + 3 * PAGESIZE, alloced_page_start + 3 * PAGESIZE, 0);
+  // map(as, as->area.start + 4 * PAGESIZE, alloced_page_start + 4 * PAGESIZE, 0);
+  // map(as, as->area.start + 5 * PAGESIZE, alloced_page_start + 5 * PAGESIZE, 0);
+  // map(as, as->area.start + 6 * PAGESIZE, alloced_page_start + 6 * PAGESIZE, 0);
+  // map(as, as->area.start + 7 * PAGESIZE, alloced_page_start + 7 * PAGESIZE, 0);
   
   Elf_Ehdr elf_header;
   read(fd, &elf_header, 0, sizeof(elf_header));
@@ -76,13 +76,13 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     read(fd, &section_entry, 
       i * headers_entry_size + program_header_offset, sizeof(elf_header));
     void *phys_addr;
-    //uintptr_t virt_addr;
+    uintptr_t virt_addr;
     switch (section_entry.p_type) {
     case PT_LOAD:
       //virt_addr = (void *)section_entry.p_vaddr; 
-      phys_addr = (void *)alloced_page_start + (section_entry.p_vaddr - 0x40000000); // 这里是把0x40000000加载到他对应的实际地址
-      // virt_addr = section_entry.p_vaddr;
-      // phys_addr = alloc_section_space(as, virt_addr, section_entry.p_memsz);
+      // phys_addr = (void *)alloced_page_start + (section_entry.p_vaddr - 0x40000000); // 这里是把0x40000000加载到他对应的实际地址
+      virt_addr = section_entry.p_vaddr;
+      phys_addr = alloc_section_space(as, virt_addr, section_entry.p_memsz);
 
       printf("Load to %x with %x\n", phys_addr, section_entry.p_vaddr);
       read(fd, phys_addr, section_entry.p_offset, section_entry.p_filesz);
