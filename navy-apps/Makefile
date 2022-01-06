@@ -169,6 +169,7 @@ $(CLEAN_ALL):
 APPS = nslider menu nterm bmp busybox
 #TESTS = dummy hello file-test timer-test
 TESTS = dummy bmp-test file-test timer-test exec-test hello
+VME = 1
 
 fsimg: $(addprefix apps/, $(APPS)) $(addprefix tests/, $(TESTS))
 	-for t in $^; do $(MAKE) -s -C $(NAVY_HOME)/$$t install; done
