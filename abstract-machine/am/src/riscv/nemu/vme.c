@@ -100,7 +100,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *context = kstack.end - sizeof(Context);
-  context->mstatus = 0x1800;
+  context->mstatus = 0x0;//MPP设置为U模式
   context->mepc    = (uintptr_t)entry;
   context->pdir    = as->ptr;
   
