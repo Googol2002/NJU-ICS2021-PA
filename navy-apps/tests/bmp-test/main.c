@@ -9,8 +9,8 @@ int main() {
   //printf("Doing bmp-test...\n");
   NDL_Init(0);
   int w, h;
-  assert(0);
   void *bmp = BMP_Load("/share/pictures/test.bmp", &w, &h);
+  assert(0);
   assert(bmp);
   NDL_OpenCanvas(&w, &h);
   NDL_DrawRect(bmp, 0, 0, w, h);
