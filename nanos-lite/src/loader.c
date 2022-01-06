@@ -29,14 +29,16 @@ static void read(int fd, void *buf, size_t offset, size_t len){
 #define PAGESIZE 4096
 
  __attribute__ ((__used__)) static void * alloc_section_space(AddrSpace *as, uintptr_t vaddr, size_t p_memsz){
-  size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
+  //size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
+  size_t page_n = ((vaddr + p_memsz) >> 12) - (vaddr >> 12) + 1;
   void *page_start = new_page(page_n);
 
   printf("Loaded Segment from [%x to %x)\n", vaddr, vaddr + p_memsz);
+  printf("Mapped Segment from [%x to %x)\n", vaddr, vaddr + p_memsz);
   
   for (int i = 0; i < page_n; ++i){
     // TODO: 这里prot参数不规范
-    map(as, (void *)(vaddr + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 1);
+    map(as, (void *)((vaddr & ~0xfff) + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 1);
   }
 
   return page_start;
