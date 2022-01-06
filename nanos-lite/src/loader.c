@@ -177,6 +177,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
   
+  printf("%p\n", ptr_brk);
   // printf("%p\t%p\n", alloced_page, ptr_brk);
   //printf("%x\n", ptr_brk);
   //assert((intptr_t)ptr_brk == 0xDD5FDC);
@@ -198,7 +199,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
 
-  printf("%p\n", ptr_brk);
 
   //context->GPRx = (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end;
   context->GPRx = (intptr_t)(ptr_brk);
