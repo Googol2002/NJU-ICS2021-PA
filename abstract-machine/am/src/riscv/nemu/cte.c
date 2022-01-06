@@ -4,6 +4,7 @@
 #include <arch/riscv32-nemu.h>
 
 #define Machine_Software_Interrupt (11)
+#define User_Software_Interrupt (8)
 
 
 static Context* (*user_handler)(Event, Context*) = NULL;
@@ -19,6 +20,7 @@ Context* __am_irq_handle(Context *c) {
     
     switch (c->mcause) {
       case Machine_Software_Interrupt:
+      case User_Software_Interrupt:
         // printf("c->GPR1 = %d \n", c->GPR1);
         if (c->GPR1 == -1){ // 特指-1
           ev.event = EVENT_YIELD;
