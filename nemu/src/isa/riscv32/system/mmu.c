@@ -31,11 +31,11 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   //   Log("leaf_page_table_entry not valid, vaddr: %#x, pte_entry: %#x", vaddr, leaf_page_table_entry_addr);
   // }
   Assert(leaf_page_table_entry & PTE_V, "leaf_page_table_entry not valid, vaddr: %#x, pte_entry: %#x", vaddr, leaf_page_table_entry_addr);
-  // if (type == 0){//读
-  //   paddr_write(leaf_page_table_entry_addr, leaf_page_table_entry | PTE_A, 4);
-  // }else if (type == 1){//写
-  //   paddr_write(leaf_page_table_entry_addr, leaf_page_table_entry | PTE_D, 4);
-  // }
+  if (type == 0){//读
+    paddr_write(leaf_page_table_entry_addr, 4, leaf_page_table_entry | PTE_A);
+  }else if (type == 1){//写
+    paddr_write(leaf_page_table_entry_addr, 4, leaf_page_table_entry | PTE_D);
+  }
   paddr_t pa = PTE_PPN(leaf_page_table_entry) * 4096 + VA_OFFSET(vaddr);
   // assert(pa == vaddr);
 
