@@ -9,8 +9,11 @@
 #define SYS_yield 1
 extern int _syscall_(int, uintptr_t, uintptr_t, uintptr_t);
 
+extern char end;
+
 int main() {
   int *array = malloc(100 * sizeof(int));
+  printf("end: %p", &end);
   for (int i = 0; i < 100; ++i){
     printf("%p\n", &(array[i]));
   }
