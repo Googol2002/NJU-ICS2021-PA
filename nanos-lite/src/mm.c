@@ -39,7 +39,7 @@ int mm_brk(uintptr_t brk) {
     for (int i = 0; i < brk_pn - max_page_pn + 1; ++i){
       //TODO: prot 有问题
       map(&current->as, (void *)(max_page_end + i * 0xfff),
-       (void *)(allocted_page + i * 0xfff), 0);
+       (void *)(allocted_page + i * 0xfff), 1);
     }
   }
 

@@ -94,13 +94,13 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   //   printf("设置二级表项\t虚拟地址:%p\t实际地址:%p\t表项:%p\n", va, pa, leaf_page_table_entry);
   // }
   // 设置PPN
-  *leaf_page_table_entry = (PTE_PPN_MASK & ((uintptr_t)pa >> 2)) | (PTE_V | PTE_R | PTE_W | PTE_X);
+  *leaf_page_table_entry = (PTE_PPN_MASK & ((uintptr_t)pa >> 2)) | (PTE_V | PTE_R | PTE_W | PTE_X) | (prot ? PTE_U : 0);
   //assert(PTE_PPN(*leaf_page_table_entry) * 4096 + VA_OFFSET(va) == (uintptr_t)pa);
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *context = kstack.end - sizeof(Context);
-  context->mstatus = 0x0;//MPP设置为U模式
+  context->mstatus = 0xC0000;//MPP设置为U模式，MXR=1，SUM=1
   context->mepc    = (uintptr_t)entry;
   context->pdir    = as->ptr;
   
