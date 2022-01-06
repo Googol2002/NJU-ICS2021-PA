@@ -9,17 +9,16 @@ int vsprintf(char *out, const char *fmt, va_list ap);
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
 
 int printf(const char *fmt, ...) {
-  // char buffer[4096];
-  // va_list arg;
-  // va_start (arg, fmt);
+  char buffer[4096];
+  va_list arg;
+  va_start (arg, fmt);
   
-  // int done = vsprintf(buffer, fmt, arg);
+  int done = vsprintf(buffer, fmt, arg);
 
-  // putstr(buffer);
+  putstr(buffer);
 
-  // va_end(arg);
-  // return done;
-  return 1;
+  va_end(arg);
+  return done;
 }
 
 static char HEX_CHARACTERS[] = "0123456789ABCDEF";
