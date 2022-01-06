@@ -179,6 +179,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   
   //printf("%x\n", ptr_brk);
   printf("%x\t%x\n", alloced_page, ptr_brk);
+  assert((intptr_t)ptr_brk == 0xDD5FDC);
   for (int i = 0; i < argc; ++i){
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
