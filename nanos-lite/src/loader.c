@@ -78,7 +78,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       read(fd, phys_addr + (virt_addr & 0xfff), section_entry.p_offset, section_entry.p_filesz);
       //同样做一个偏移
       printf("%x, %x", section_entry.p_memsz, section_entry.p_filesz);
-      memset(phys_addr + section_entry.p_filesz, 0, 
+      memset(phys_addr + (virt_addr & 0xfff) + section_entry.p_filesz, 0, 
         section_entry.p_memsz - section_entry.p_filesz);
       
       if (section_entry.p_filesz < section_entry.p_memsz){// 应该是.bss节
