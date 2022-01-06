@@ -40,7 +40,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
     map(as, (void *)((vaddr & ~0xfff) + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 1);
   }
 
-  return page_start;
+  return page_start + (vaddr & 0xfff);
 }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
