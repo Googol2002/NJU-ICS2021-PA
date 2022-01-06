@@ -34,7 +34,6 @@ static void read(int fd, void *buf, size_t offset, size_t len){
   void *page_start = new_page(page_n);
 
   printf("Loaded Segment from [%x to %x)\n", vaddr, vaddr + p_memsz);
-  printf("Mapped Segment from [%x to %x)\n", vaddr, vaddr + p_memsz);
   
   for (int i = 0; i < page_n; ++i){
     // TODO: 这里prot参数不规范
