@@ -31,18 +31,17 @@ extern int _syscall_(int, uintptr_t, uintptr_t, uintptr_t);
 extern char end;
 
 int main() {
-  NDL_Init(0);
-  int w1, h1;
-  const char *filename = "/share/pictures/test.bmp";
-  int *width = &w1; 
-  int *height = &h1;
+  // NDL_Init(0);
+  // int w1, h1;
+  // const char *filename = "/share/pictures/test.bmp";
+  // int *width = &w1; 
+  // int *height = &h1;
 
-  FILE *fp = fopen(filename, "r");
+  // FILE *fp = fopen(filename, "r");
 
-  struct BitmapHeader hdr;
-  assert(sizeof(hdr) == 54);
-  assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));
-
+  // struct BitmapHeader hdr;
+  // assert(sizeof(hdr) == 54);
+  // assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));
   // if (hdr.bitcount != 24) return NULL;
   // if (hdr.compression != 0) return NULL;
   // int w = hdr.width;
