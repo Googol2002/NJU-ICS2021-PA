@@ -177,7 +177,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
   
-  printf("SB\n");
+  printf("%p\n", ptr_brk);
   for (int i = 0; i < argc; ++i){
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
