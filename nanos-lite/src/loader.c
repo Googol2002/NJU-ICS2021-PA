@@ -171,6 +171,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for (int i = 0; i < envc; ++i){
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
+  printf("%x\t%x\n", alloced_page, ptr_brk);
 
   // 分配argv空间
   ptr_brk -= 1;
@@ -178,8 +179,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk = ptr_brk - argc;
   
   //printf("%x\n", ptr_brk);
-  printf("%x\t%x\n", alloced_page, ptr_brk);
-  assert((intptr_t)ptr_brk == 0xDD5FDC);
+  //assert((intptr_t)ptr_brk == 0xDD5FDC);
   for (int i = 0; i < argc; ++i){
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
   }
