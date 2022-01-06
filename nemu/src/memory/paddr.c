@@ -56,7 +56,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
-    Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
+    // Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
   #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   MUXDEF(CONFIG_DEVICE, mmio_write(addr, len, data),
