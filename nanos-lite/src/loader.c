@@ -183,16 +183,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for (int i = 0; i < envc; ++i){
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
-  //halt(10001);
-  //assert((uint32_t)ptr_brk != 0xDD1FE0);
 
   // 分配argv空间
   ptr_brk -= 1;
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
- // assert((uint32_t)ptr_brk != 0xDD1FDC);
-  //halt(10001);
-  //ptr_brk = (intptr_t *)((int32_t)ptr_brk - sizeof(intptr_t *) * argc);
   
   for (int i = 0; i < argc; ++i){
     ptr_brk[i] = (intptr_t)(argv_ustack[i]);
@@ -200,8 +195,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   ptr_brk -= 1;
   *ptr_brk = argc;
-  
-  //printf("Loading... %x with %d\n", ptr_brk, *ptr_brk);
+ 
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
   Area karea;
