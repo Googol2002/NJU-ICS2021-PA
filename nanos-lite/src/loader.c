@@ -31,9 +31,8 @@ static void read(int fd, void *buf, size_t offset, size_t len){
  __attribute__ ((__used__)) static void * alloc_section_space(AddrSpace *as, uintptr_t vaddr, size_t p_memsz){
   size_t page_n = p_memsz % PAGESIZE == 0 ? p_memsz / 4096 : (p_memsz / 4096 + 1);
   void *page_start = new_page(page_n);
-  // void *page_end = page_start + page_n * PAGESIZE;
 
-  // printf("Page_start %x page_end %x\n", page_start, page_end);
+  printf("Loaded Segment from [%x to %x)\n", vaddr, vaddr + p_memsz);
   
   for (int i = 0; i < page_n; ++i){
     // TODO: 这里prot参数不规范
