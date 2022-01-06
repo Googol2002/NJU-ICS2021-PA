@@ -37,13 +37,15 @@ void init_mem() {
       (paddr_t)CONFIG_MBASE, (paddr_t)CONFIG_MBASE + CONFIG_MSIZE);
 }
 
+void error_finfo();
+
 word_t paddr_read(paddr_t addr, int len) {
   #ifdef CONFIG_MTRACE
     if (likely(in_pmem(addr))){
       word_t w = pmem_read(addr, len);
       if (w == 0xDD5FDC){
         Log(" Read  from memory at %#.8x for %d bytes for %x.", addr, len, w);
-        Assert(w != 0xDD5FDC, "Tmd");
+        error_finfo();
       }
     }
   #endif
@@ -58,7 +60,7 @@ void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
     if (data == 0xDD5FDC){
       Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
-      //Assert(data != 0xDD5FDC, "Tmd");
+      error_finfo();
     }
   #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
