@@ -40,7 +40,7 @@ static void read(int fd, void *buf, size_t offset, size_t len){
     map(as, (void *)((vaddr & ~0xfff) + i * PAGESIZE), (void *)(page_start + i * PAGESIZE), 1);
   }
 
-  return page_start + (vaddr & 0xfff);
+  return page_start;
 }
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
@@ -74,7 +74,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       phys_addr = alloc_section_space(as, virt_addr, section_entry.p_memsz);
 
       // printf("Load to %x with offset %x\n", phys_addr, section_entry.p_offset);
-      read(fd, phys_addr, section_entry.p_offset, section_entry.p_filesz);
+      //做一个偏移
+      read(fd, phys_addr + (virt_addr & 0xfff), section_entry.p_offset, section_entry.p_filesz);
+      //同样做一个偏移
+      printf("%x, %x", section_entry.p_memsz, section_entry.p_filesz);
       memset(phys_addr + section_entry.p_filesz, 0, 
         section_entry.p_memsz - section_entry.p_filesz);
       
