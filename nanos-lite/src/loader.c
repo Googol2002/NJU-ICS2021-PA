@@ -172,6 +172,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     ptr_brk[i] = (intptr_t)(envp_ustack[i]);
   }
 
+  printf("SB\n");
+  printf("AAAAAA: %d\n", (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end);
+
   // 分配argv空间
   ptr_brk -= 1;
   *ptr_brk = 0;
@@ -184,8 +187,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = argc;
   
-  printf("SB\n");
-  printf("AAAAAA: %d\n", (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end);
+  
 
   //这条操作会把参数的内存空间扬了，要放在最后
   uintptr_t entry = loader(pcb, filename);
