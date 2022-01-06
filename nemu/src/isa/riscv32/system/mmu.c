@@ -18,17 +18,17 @@ extern riscv32_CSR_state csr;
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   paddr_t page_table_entry_addr = (csr.satp << 12) + VA_VPN_1(vaddr) * 4;
   PTE page_table_entry = paddr_read(page_table_entry_addr, 4);
-  if ((page_table_entry & PTE_V) == 0){
-    Log("page_table_entry not valid, vaddr: %#x", vaddr);
-  }
-  assert(page_table_entry & PTE_V);
+  // if ((page_table_entry & PTE_V) == 0){
+  //   Log("page_table_entry not valid, vaddr: %#x", vaddr);
+  // }
+  Assert(page_table_entry & PTE_V, "page_table_entry not valid, vaddr: %#x", vaddr);
 
   paddr_t leaf_page_table_entry_addr = PTE_PPN(page_table_entry) * 4096 + VA_VPN_0(vaddr) * 4;
   PTE leaf_page_table_entry = paddr_read(leaf_page_table_entry_addr, 4);
-  if ((leaf_page_table_entry & PTE_V) == 0){
-    Log("leaf_page_table_entry not valid, vaddr: %#x, pte_entry: %#x", vaddr, leaf_page_table_entry_addr);
-  }
-  assert(leaf_page_table_entry & PTE_V);
+  // if ((leaf_page_table_entry & PTE_V) == 0){
+  //   Log("leaf_page_table_entry not valid, vaddr: %#x, pte_entry: %#x", vaddr, leaf_page_table_entry_addr);
+  // }
+  Assert(leaf_page_table_entry & PTE_V, "leaf_page_table_entry not valid, vaddr: %#x, pte_entry: %#x", vaddr, leaf_page_table_entry_addr);
 
   paddr_t pa = PTE_PPN(leaf_page_table_entry) * 4096 + VA_OFFSET(vaddr);
   // assert(pa == vaddr);
