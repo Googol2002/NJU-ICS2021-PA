@@ -43,7 +43,7 @@ word_t paddr_read(paddr_t addr, int len) {
       word_t w = pmem_read(addr, len);
       if (w == 0xDD5FDC){
         Log(" Read  from memory at %#.8x for %d bytes for %x.", addr, len, w);
-        Assert(w == 0xDD5FDC, "Tmd");
+        Assert(w != 0xDD5FDC, "Tmd");
       }
     }
   #endif
@@ -56,8 +56,10 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
-    if (data == 0xDD5FDC)
+    if (data == 0xDD5FDC){
       Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
+      Assert(data != 0xDD5FDC, "Tmd");
+    }
   #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   MUXDEF(CONFIG_DEVICE, mmio_write(addr, len, data),
