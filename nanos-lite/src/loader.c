@@ -132,7 +132,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   char *envp_ustack[envc];
 
-  void *alloced_page = new_page(NR_PAGE) + NR_PAGE * 4096; //得到栈底
+  void *alloced_page = new_page(NR_PAGE) + NR_PAGE * 4096; //得到栈顶
 
   //这段代码有古怪，一动就会出问题，莫动
   //这个问题确实已经被修正了，TMD，真cao dan
@@ -176,7 +176,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
-  assert((uint32_t)ptr_brk != 0xDD5FDC);
+  
   printf("%p\n", ptr_brk);
   printf("%p\t%p\n", alloced_page, ptr_brk);
   //printf("%x\n", ptr_brk);

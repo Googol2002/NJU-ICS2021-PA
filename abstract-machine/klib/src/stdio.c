@@ -101,7 +101,6 @@ int vsnprintf(char *out, size_t n, const char *fmt, va_list ap) {
 
       case 'p':
         pointer = va_arg(ap, uint32_t);
-        assert(pointer != 0xDD5FDC);
         for (len = 0; pointer ; pointer /= 16, ++len)
           buffer[len] = HEX_CHARACTERS[pointer % 16];//逆序的
         for (int k = 0; k < BIT_WIDE_HEX - len; ++k)
