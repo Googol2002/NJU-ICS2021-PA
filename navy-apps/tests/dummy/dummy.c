@@ -17,9 +17,7 @@ extern char end;
 int main() {
   NDL_Init(0);
   int w, h;
-  
-  FILE *fp = fopen("/share/pictures/test.bmp", "r");
-  if (!fp) return NULL;
+  void *bmp = BMP_Load("/share/pictures/test.bmp", &w, &h);
 
   printf("Hi, I'm dummy!\n");
   return _syscall_(SYS_yield, 0, 0, 0);
