@@ -38,17 +38,16 @@ int main() {
   int *height = &h1;
 
   FILE *fp = fopen(filename, "r");
-  if (!fp) return NULL;
 
   struct BitmapHeader hdr;
   assert(sizeof(hdr) == 54);
-  assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));
+  // assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));
 
-  if (hdr.bitcount != 24) return NULL;
-  if (hdr.compression != 0) return NULL;
-  int w = hdr.width;
-  int h = hdr.height;
-  uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
+  // if (hdr.bitcount != 24) return NULL;
+  // if (hdr.compression != 0) return NULL;
+  // int w = hdr.width;
+  // int h = hdr.height;
+  // uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
 
   printf("Hi, I'm dummy!\n");
   return _syscall_(SYS_yield, 0, 0, 0);
