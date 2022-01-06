@@ -28,19 +28,23 @@ void free_page(void *p) {
 extern PCB *current;
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk) {
-  uintptr_t max_page_start = (current->max_brk & ~0xfff); 
-  uintptr_t max_page_pn = max_page_start >> 12;
-  uintptr_t brk_pn = brk >> 12;
+  uintptr_t max_page_end = current->max_brk; 
+  uintptr_t max_page_pn = (max_page_end >> 12) - 1;
+  uintptr_t brk_pn = brk >> 12;//12
 
-  if (brk_pn > max_page_pn){
-    printf("申请内存\n");
-    void *allocted_page =  new_page(brk_pn - max_page_pn);
-    for (int i = 0; i < brk_pn - max_page_pn; ++i){
+  //[page_start, page_end) 所以，应该是大于等于就重新分配
+  if (brk >= max_page_end){
+    printf("申请内存\n");//分配从[max_page_pn, brk_pn]的所有页
+    void *allocted_page =  new_page(brk_pn - max_page_pn + 1);//需要申请的新的页数
+    for (int i = 0; i < brk_pn - max_page_pn + 1; ++i){
       //TODO: prot 有问题
-      map(&current->as, (void *)(max_page_start + (i + 1) * 4096),
-       (void *)(allocted_page + i * 4096), 0);
+      map(&current->as, (void *)(max_page_end + i * 0xfff),
+       (void *)(allocted_page + i * 0xfff), 0);
     }
   }
+
+  current->max_brk = (brk_pn + 1) << 12;
+  assert(current->max_brk > brk);
   return 0;
 }
 
