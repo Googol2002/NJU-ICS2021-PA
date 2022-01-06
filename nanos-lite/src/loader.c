@@ -176,7 +176,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   ptr_brk -= 1;
   *ptr_brk = 0;
   ptr_brk = ptr_brk - argc;
-  printf("%x\t%x\n", alloced_page, 11);
+  printf("%x\t%x\n", alloced_page, ptr_brk);
   
   //printf("%x\n", ptr_brk);
   //assert((intptr_t)ptr_brk == 0xDD5FDC);
