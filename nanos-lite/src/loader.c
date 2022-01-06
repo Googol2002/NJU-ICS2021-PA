@@ -194,6 +194,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = context;
   //printf("SB\n");
   //printf("AAAAAA: %d\n", (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end);
-  context->GPRx = (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end;
-  //context->GPRx = (intptr_t)(ptr_brk);
+  //context->GPRx = (intptr_t)ptr_brk - (intptr_t)alloced_page + (intptr_t)as->area.end;
+  context->GPRx = (intptr_t)(ptr_brk);
 }
