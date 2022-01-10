@@ -24,7 +24,7 @@ void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 
-#define PROG_PATH "/bin/dummy"
+#define PROG_PATH "/bin/nslider"
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
   char *argv[] = {PROG_PATH, NULL};
