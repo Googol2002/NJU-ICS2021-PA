@@ -41,10 +41,11 @@ int mm_brk(uintptr_t brk) {
       map(&current->as, (void *)(max_page_end + i * 0xfff),
        (void *)(allocted_page + i * 0xfff), 1);
     }
+
+    current->max_brk = (brk_pn + 1) << 12;
+    assert(current->max_brk > brk);
   }
 
-  current->max_brk = (brk_pn + 1) << 12;
-  assert(current->max_brk > brk);
   return 0;
 }
 
