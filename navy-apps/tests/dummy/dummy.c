@@ -31,6 +31,11 @@ extern int _syscall_(int, uintptr_t, uintptr_t, uintptr_t);
 extern char end;
 
 int main() {
+  int *big_array = malloc(1024 * 16 * sizeof(int));
+  for (int i = 0; i < 1024 * 16 * sizeof(int); ++i){
+    big_array[i] = i;
+  }
+
   // NDL_Init(0);
   // int w1, h1;
   // const char *filename = "/share/pictures/test.bmp";
