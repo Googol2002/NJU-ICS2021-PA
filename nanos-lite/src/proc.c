@@ -51,7 +51,11 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   }
   printf("Loading from %s ...\n", filename);
   context_uload(&pcb[1], filename, argv, envp);
-  switch_boot_pcb();
+  switch_boot_pcb();  
+  
+  //set_satp(pcb[1].cp->pdir);
+  printf("PCB[0] pdir: %p\n", pcb[0].cp->pdir);
+  
   yield();
   return 0;
 }
