@@ -126,6 +126,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int envc = 0, argc = 0;
   AddrSpace *as = &pcb->as;
   protect(as);
+  printf("新分配ptr=%p\n", as->ptr);
   
   if (envp){
     for (; envp[envc]; ++envc){}
