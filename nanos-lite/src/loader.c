@@ -113,6 +113,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   karea.end = &pcb->cp + STACK_SIZE;
 
   pcb->cp = kcontext(karea, entry, arg);
+  printf("kcontext地址为:%p\n", pcb->cp);
 }
 
 static size_t ceil_4_bytes(size_t size){
