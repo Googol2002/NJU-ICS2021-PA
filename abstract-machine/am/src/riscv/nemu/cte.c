@@ -37,7 +37,7 @@ Context* __am_irq_handle(Context *c) {
     c->mepc += 4;
   }
 
-  printf("__am_irq_handle尚未出错 %p\n", &c->pdir);
+  printf("__am_irq_handle c->pdir地址频繁更改 %p %p\n", &c->pdir, c);
   __am_switch(c);
   return c;
 }
