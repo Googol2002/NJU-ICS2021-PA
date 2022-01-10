@@ -83,9 +83,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       if (section_entry.p_filesz < section_entry.p_memsz){// 应该是.bss节
         printf("Setting .bss end %x\n", section_entry.p_vaddr + section_entry.p_memsz);
         //做一个向上的4kb取整数
-        // pcb->max_brk = (section_entry.p_vaddr + section_entry.p_memsz) % 0xfff == 0 ?
-        //   section_entry.p_vaddr + section_entry.p_memsz : //已经对齐
-        //   ((section_entry.p_vaddr + section_entry.p_memsz) & ~0xfff) + 0xfff; //向上对齐
         pcb->max_brk = ROUNDUP(section_entry.p_vaddr + section_entry.p_memsz, 0xfff);
       }
       

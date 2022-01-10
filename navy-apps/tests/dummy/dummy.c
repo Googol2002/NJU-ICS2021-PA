@@ -32,7 +32,7 @@ extern char end;
 
 int main() {
   int *big_array = malloc(1024 * 16 * sizeof(int));
-  for (int i = 0; i < 1024 * 16 * sizeof(int); ++i){
+  for (int i = 0; i < 1024 * 16; ++i){
     big_array[i] = i;
   }
 
