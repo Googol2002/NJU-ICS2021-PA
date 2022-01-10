@@ -32,6 +32,8 @@ Context* __am_irq_handle(Context *c) {
       default: ev.event = EVENT_ERROR; break;
     }
 
+    printf("__am_irq_handle尚未出错\n");
+
     c = user_handler(ev, c);
     assert(c != NULL);
     c->mepc += 4;
