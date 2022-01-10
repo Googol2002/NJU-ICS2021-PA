@@ -16,7 +16,7 @@ override ARGS += $(ARGS_DIFF)
 IMG ?= /home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.bin
 ELF ?= --elf=/home/shihy/PA/ics2021/nanos-lite/build/nanos-lite-riscv32-nemu.elf
 RAMDISK ?= --ramdisk=/home/shihy/PA/ics2021/navy-apps/build/ramdisk.img
-APPNAME ?= --appname=/bin/dummy
+APPNAME ?= --appname=/bin/nslider
 NEMU_EXEC := $(BINARY) $(ARGS) $(ELF) $(RAMDISK) $(APPNAME) $(IMG)
 
 run-env: $(BINARY) $(DIFF_REF_SO)
