@@ -13,6 +13,7 @@ void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
 
 Context* __am_irq_handle(Context *c) { 
+  printf("__am_irq_handle c->pdir内容地址修改前 %p %p %p\n", c->pdir, &c->pdir, c);
   __am_get_cur_as(c);
   
   if (user_handler) {
@@ -37,9 +38,8 @@ Context* __am_irq_handle(Context *c) {
     c->mepc += 4;
   }
 
-  printf("__am_irq_handle c->pdir内容地址修改前 %p %p %p\n", c->pdir, &c->pdir, c);
-  __am_switch(c);
   printf("__am_irq_handle c->pdir内容地址修改后 %p %p %p\n", c->pdir, &c->pdir, c);
+  __am_switch(c);
   return c;
 }
 
