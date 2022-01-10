@@ -54,7 +54,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   switch_boot_pcb();  
   
   //set_satp(pcb[1].cp->pdir);
-  pcb[0].cp->pdir = pcb[1].cp->pdir;
+  //pcb[0].cp->pdir = pcb[1].cp->pdir;
   printf("PCB[0] pdir: %p cp: %p\n", pcb[0].cp->pdir, pcb[0].cp);
 
   yield();
