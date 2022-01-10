@@ -37,8 +37,8 @@ Context* __am_irq_handle(Context *c) {
     c->mepc += 4;
   }
 
-  __am_switch(c);
   printf("__am_irq_handle尚未出错\n");
+  __am_switch(c);
   return c;
 }
 
