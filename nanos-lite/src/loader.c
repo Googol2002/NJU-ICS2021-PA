@@ -125,7 +125,6 @@ static size_t ceil_4_bytes(size_t size){
 
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   int envc = 0, argc = 0;
-  memset(pcb, 0, sizeof(PCB));
   AddrSpace *as = &pcb->as;
   protect(as);
   printf("新分配ptr=%p\n", as->ptr);
