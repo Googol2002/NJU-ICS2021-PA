@@ -31,28 +31,6 @@ extern int _syscall_(int, uintptr_t, uintptr_t, uintptr_t);
 extern char end;
 
 int main() {
-  // int *big_array = malloc(1024 * 16 * sizeof(int));
-  // for (int i = 0; i < 1024 * 16; ++i){
-  //   big_array[i] = i;
-  // }
-
-  // NDL_Init(0);
-  // int w1, h1;
-  // const char *filename = "/share/pictures/test.bmp";
-  // int *width = &w1; 
-  // int *height = &h1;
-
-  // FILE *fp = fopen(filename, "r");
-
-  // struct BitmapHeader hdr;
-  // assert(sizeof(hdr) == 54);
-  // assert(1 == fread(&hdr, sizeof(struct BitmapHeader), 1, fp));
-  // if (hdr.bitcount != 24) return NULL;
-  // if (hdr.compression != 0) return NULL;
-  // int w = hdr.width;
-  // int h = hdr.height;
-  // uint32_t *pixels = malloc(w * h * sizeof(uint32_t));
-
   printf("Hi, I'm dummy!\n");
   return _syscall_(SYS_yield, 0, 0, 0);
 }
