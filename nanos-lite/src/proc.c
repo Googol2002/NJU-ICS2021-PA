@@ -56,7 +56,8 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   switch_boot_pcb();  
   
   //set_satp(pcb[1].cp->pdir);
-  
+  //pcb[0].cp->pdir = NULL;
+  memset(&pcb[0], 0, sizeof(pcb[0]));
   context_kload(&pcb[0], hello_fun, "ONE");
   pcb_boot.cp->pdir = NULL;
   printf("PCB[0] pdir: %p cp: %p\n", pcb[0].cp->pdir, pcb[0].cp);
