@@ -194,14 +194,14 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = argc;
   
   //这条操作会把参数的内存空间扬了，要放在最后
-  uintptr_t entry = loader(pcb + sizeof(Context), filename);
+  uintptr_t entry = loader(pcb, filename);
   Area karea;
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
 
-  memset(pcb, 0, sizeof(PCB));
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
+  memset(pcb, 0, sizeof(PCB) - sizeof(Context));
 
   printf("Alloced Page Addr: %p\t PTR_BRK_ADDR: %p\n", alloced_page, ptr_brk);
 
