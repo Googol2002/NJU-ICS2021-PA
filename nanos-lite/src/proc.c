@@ -47,6 +47,11 @@ Context* schedule(Context *prev) {
   return current->cp;
 }
 
+static inline void set_satp(void *pdir) {
+  uintptr_t mode = 1ul << (__riscv_xlen - 1);
+  asm volatile("csrw satp, %0" : : "r"(mode | ((uintptr_t)pdir >> 12)));
+}
+
 int execve(const char *filename, char *const argv[], char *const envp[]){
   if (fs_open(filename, 0, 0) == -1){// 文件不存在
     return -1;
@@ -55,10 +60,9 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();  
   
-  //set_satp(pcb[1].cp->pdir);
   pcb[0].cp->pdir = NULL;
-  //context_kload(&pcb[0], hello_fun, "ONE");
-  pcb_boot.cp->pdir = NULL;
+  //pcb_boot.cp->pdir = NULL;
+  set_satp(pcb[1].cp->pdir);
   printf("PCB[0] pdir: %p cp: %p\n", pcb[0].cp->pdir, pcb[0].cp);
 
   yield();
