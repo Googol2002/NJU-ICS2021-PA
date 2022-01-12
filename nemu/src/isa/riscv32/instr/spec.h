@@ -37,15 +37,16 @@ def_EHelper(csrrw) {
 
 def_EHelper(ecall) {
   IFDEF(CONFIG_ETRACE, Log("etrace: ecall"));
+  word_t dnpc = 0;
   //Log("PRIV: %d", s->isa.instr.i.funct3);
   if (csr.mstatus.m.MPP == 3){
-    isa_raise_intr(Machine_Software_Interrupt, s->pc);
+    dnpc = isa_raise_intr(Machine_Software_Interrupt, s->pc);
   }else if (csr.mstatus.m.MPP == 0){
-    isa_raise_intr(User_Software_Interrupt, s->pc);
+    dnpc = isa_raise_intr(User_Software_Interrupt, s->pc);
   }else {
     assert(0);
   }
-  rtl_mv(s, &s->dnpc, &(csr.mtvec));
+  rtl_mv(s, &s->dnpc, &(dnpc));
 }
 
 def_EHelper(mret) {

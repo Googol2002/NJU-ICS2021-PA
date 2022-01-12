@@ -10,7 +10,7 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   // 真的需要吗？
   // csr.mstatus.m.MPP = 3;
   //TODO: 缺少一些操作
-  return 0;
+  return csr.mtvec;
 }
 
 word_t isa_query_intr() {
