@@ -14,7 +14,7 @@ void __am_switch(Context *c);
 
 Context* __am_irq_handle(Context *c) { 
   __am_get_cur_as(c);
-  printf("__am_irq_handle c->pdir内容地址修改前 %p %p\n", c->pdir, c);
+  printf("__am_irq_handle c->pdir内容地址修改前 %p %p，所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
     Event ev = {0};
     
