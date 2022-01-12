@@ -43,6 +43,8 @@ static void read(int fd, void *buf, size_t offset, size_t len){
   return page_start;
 }
 
+#define MAX(a, b)((a) > (b) ? (a) : (b))
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   if (fd == -1){ 
@@ -82,10 +84,10 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       
       if (section_entry.p_filesz < section_entry.p_memsz){// 应该是.bss节
         //做一个向上的4kb取整数
-        if (pcb->max_brk == 0){
+        // if (pcb->max_brk == 0){
           printf("Setting .bss end %x\n", section_entry.p_vaddr + section_entry.p_memsz);
-          pcb->max_brk = ROUNDUP(section_entry.p_vaddr + section_entry.p_memsz, 0xfff);
-        }
+          pcb->max_brk = MAX(pcb->max_brk, ROUNDUP(section_entry.p_vaddr + section_entry.p_memsz, 0xfff));
+        // }
       }
       
       break;
