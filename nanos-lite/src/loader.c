@@ -86,6 +86,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         //做一个向上的4kb取整数
         // if (pcb->max_brk == 0){
         printf("Setting .bss end %x\n", section_entry.p_vaddr + section_entry.p_memsz);
+        // 我们虽然用max_brk记录了最高达到的位置，但是在新的PCB中，我们并未在页表目录中更新这些信息，oH，所以就会失效啦。
+        // 于是我们就做了一些权衡。
         //pcb->max_brk = MAX(pcb->max_brk, ROUNDUP(section_entry.p_vaddr + section_entry.p_memsz, 0xfff));
         //TODO: Trade-off
         pcb->max_brk = ROUNDUP(section_entry.p_vaddr + section_entry.p_memsz, 0xfff);
