@@ -199,6 +199,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
 
+  memset(pcb, 0, sizeof(PCB));
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
 
