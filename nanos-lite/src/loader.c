@@ -194,7 +194,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   *ptr_brk = argc;
   
   //这条操作会把参数的内存空间扬了，要放在最后
-  uintptr_t entry = loader(pcb, filename);
+  uintptr_t entry = loader(pcb + sizeof(Context), filename);
   Area karea;
   karea.start = &pcb->cp;
   karea.end = &pcb->cp + STACK_SIZE;
