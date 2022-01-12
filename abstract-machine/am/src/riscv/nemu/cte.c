@@ -39,7 +39,7 @@ Context* __am_irq_handle(Context *c) {
   }
 
   printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &a);
-  __am_switch(c);
+  //__am_switch(c);
   return c;
 }
 
