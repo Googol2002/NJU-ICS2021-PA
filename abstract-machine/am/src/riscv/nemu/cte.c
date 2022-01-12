@@ -37,7 +37,7 @@ Context* __am_irq_handle(Context *c) {
     c->mepc += 4;
   }
 
-  printf("__am_irq_handle c->pdir内容地址修改后 %p %p\n", c->pdir, c);
+  printf("__am_irq_handle c->pdir内容地址修改后 %p %p，所在栈帧:%p\n", c->pdir, c, &c);
   __am_switch(c);
   return c;
 }
