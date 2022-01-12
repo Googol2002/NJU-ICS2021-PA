@@ -62,7 +62,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   
   pcb[0].cp->pdir = NULL;
   //TODO: 这是一种trade-off
-  set_satp(pcb[1].cp->pdir);
+  //set_satp(pcb[1].cp->pdir);
   printf("PCB[0] pdir: %p cp: %p\n", pcb[0].cp->pdir, pcb[0].cp);
 
   yield();
