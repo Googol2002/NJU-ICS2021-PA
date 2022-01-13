@@ -14,6 +14,8 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   //TODO: 缺少一些操作
   csr.mstatus.m.MPIE = csr.mstatus.m.MIE;
   csr.mstatus.m.MIE  = 0;
+  IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 0"));
+
 
   return csr.mtvec;
 }
