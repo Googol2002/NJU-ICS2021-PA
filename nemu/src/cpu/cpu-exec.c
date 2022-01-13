@@ -159,11 +159,11 @@ void cpu_exec(uint64_t n) {
     if (nemu_state.state != NEMU_RUNNING) break;
     IFDEF(CONFIG_DEVICE, device_update());
     //为了中断
-    // word_t intr = isa_query_intr();
-    // if (s.snpc == s.dnpc && intr != INTR_EMPTY) {
-    //   IFDEF(CONFIG_ETRACE, Log("etrace: interupt"));
-    //   cpu.pc = isa_raise_intr(intr, cpu.pc);
-    // }
+    word_t intr = isa_query_intr();
+    if (s.snpc == s.dnpc && intr != INTR_EMPTY) {
+      IFDEF(CONFIG_ETRACE, Log("etrace: interupt"));
+      cpu.pc = isa_raise_intr(intr, cpu.pc);
+    }
   }
 
   uint64_t timer_end = get_time();
