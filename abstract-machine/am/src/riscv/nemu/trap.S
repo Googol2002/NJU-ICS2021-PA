@@ -38,7 +38,7 @@ __am_asm_trap:
 
   csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
   bnez sp, save_context    // (2) take the branch if we trapped from user
-  csrrs sp, mscratch, sp   // (3) if we trapped from kernel, 恢复之前的状态
+  csrrw sp, mscratch, sp   // (3) if we trapped from kernel, 恢复之前的状态
 
 //进入内核栈
   save_context:
