@@ -71,8 +71,8 @@ __am_asm_trap:
   bnez t4, restore_contexts
 //c->np == USER
   addi t4, sp, CONTEXT_SIZE
-  csrw mscratch, t4
-  
+  //csrw mscratch, t4
+
 restore_contexts:
 
   LOAD t1, OFFSET_STATUS(sp)
