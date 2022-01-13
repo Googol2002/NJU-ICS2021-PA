@@ -2,6 +2,5 @@
 
 extern CPU_state cpu;
 void dev_raise_intr() {
-    Log("dev_raise_intr");
     cpu.INTR = true;
 }
