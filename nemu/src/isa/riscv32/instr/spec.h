@@ -58,9 +58,9 @@ def_EHelper(mret) {
   csr.mstatus.m.MIE = csr.mstatus.m.MPIE;
   csr.mstatus.m.MPIE= 1;
   if (csr.mstatus.m.MIE){
-    Log("置为有效");
+    IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 1"));
   }else {
-    Log("置为无效");
+    IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 0"));
   }
 }
 
