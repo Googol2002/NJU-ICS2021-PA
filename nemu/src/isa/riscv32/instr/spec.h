@@ -29,6 +29,9 @@ rtlreg_t* decode_csr_no(int csr_no){
 }
 
 def_EHelper(csrrw) {
+  if (id_src2->imm == 0x340){
+    IFDEF(CONFIG_ETRACE, Log("etrace: csrrw mscratch %x", *dsrc1));
+  }
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
   rtl_mv(s, ddest, s0);
@@ -59,15 +62,14 @@ def_EHelper(mret) {
 
   csr.mstatus.m.MIE = csr.mstatus.m.MPIE;
   csr.mstatus.m.MPIE= 1;
-  if (csr.mstatus.m.MIE){
-    IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 1"));
-  }else {
-    IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 0"));
-  }
+  // if (csr.mstatus.m.MIE){
+  //   IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 1"));
+  // }else {
+  //   IFDEF(CONFIG_ETRACE, Log("etrace: MIE = 0"));
+  // }
 }
 
 def_EHelper(csrrs) {
-  //IFDEF(CONFIG_ETRACE, Log("etrace: csrrs"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_or(s, decode_csr_no(id_src2->imm), dsrc1, s0);
   rtl_mv(s, ddest, s0);
