@@ -6,6 +6,7 @@ struct Context {
   uintptr_t gpr[32];
   uintptr_t mcause, mstatus, mepc;
   void *pdir;
+  uintptr_t np;
 };
 
 // "a7", "a0", "a1", "a2", "a0"
