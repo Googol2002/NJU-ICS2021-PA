@@ -110,7 +110,7 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   context->mepc    = (uintptr_t)entry;
   context->pdir    = as->ptr;
   //为了real VME
-  context->np      = 0;
+  context->np      = 0;//USER
   //在loader中设置sp
 
   return context;

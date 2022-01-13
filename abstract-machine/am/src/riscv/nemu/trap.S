@@ -75,6 +75,7 @@ __am_asm_trap:
 //判断c->np == USER
   LOAD t0, OFFSET_NP(sp)
   bnez t0, the_end
+//c->np == USER
   addi t0, sp, CONTEXT_SIZE
   csrw mscratch, t0 
 

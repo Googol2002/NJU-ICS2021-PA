@@ -7,6 +7,8 @@
 #define User_Software_Interrupt (8)
 #define IRQ_TIMER 0x80000007
 
+#define KERNEL 3
+#define USER 0
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 
@@ -15,14 +17,10 @@ void __am_switch(Context *c);
 
 Context* __am_irq_handle(Context *c) {
   uintptr_t mscratch;
-  uintptr_t priv;
+  uintptr_t kas = 0;
   asm volatile("csrr %0, mscratch" : "=r"(mscratch));
-  if (mscratch == 0){
-    priv = 3;
-  }else {
-    priv = 0;
-  }
-  asm volatile("csrw mscratch, %0" : : "r"(priv));
+  c->np = (mscratch == 0 ? KERNEL : USER);
+  asm volatile("csrw mscratch, %0" : : "r"(kas));
 
   __am_get_cur_as(c);
   printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
