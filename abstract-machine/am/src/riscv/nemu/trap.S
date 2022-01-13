@@ -26,7 +26,8 @@ f(30) f(31)
 #define OFFSET_CAUSE  (32 * XLEN)
 #define OFFSET_STATUS (33 * XLEN)
 #define OFFSET_EPC    (34 * XLEN)
-#define OFFSET_NP     (35 * XLEN)
+//中间有一个pdir没有地址
+#define OFFSET_NP     (36 * XLEN)
 
 .align 3
 .globl __am_asm_trap
@@ -71,7 +72,7 @@ __am_asm_trap:
   bnez t4, restore_contexts
 //c->np == USER
   addi t4, sp, CONTEXT_SIZE
-  //csrw mscratch, t4
+  csrw mscratch, t4
 
 restore_contexts:
 
