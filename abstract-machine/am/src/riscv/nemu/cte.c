@@ -29,6 +29,7 @@ Context* __am_irq_handle(Context *c) {
         }else {
           ev.event = EVENT_SYSCALL;
         }
+        c->mepc += 4;
         break;
 
       case IRQ_TIMER:
@@ -40,7 +41,6 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
-    c->mepc += 4;
   }
 
   //printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &a);
