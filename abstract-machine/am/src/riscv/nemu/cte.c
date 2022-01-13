@@ -22,7 +22,9 @@ Context* __am_irq_handle(Context *c) {
   c->np = (mscratch == 0 ? KERNEL : USER);
   asm volatile("csrw mscratch, %0" : : "r"(kas));
 
-  assert((uintptr_t)&c > 0x80000000);
+  if ((uintptr_t)&c > 0x80000000){
+    kas = *((uintptr_t *)-1);
+  }
   __am_get_cur_as(c);
   printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
