@@ -209,6 +209,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   Context* context = ucontext(as, karea, (void *)entry);
   pcb->cp = context;
 
+  printf("UContext Allocted at %p\n", context);
   printf("Alloced Page Addr: %p\t PTR_BRK_ADDR: %p\n", alloced_page, ptr_brk);
 
   ptr_brk -= 1;
