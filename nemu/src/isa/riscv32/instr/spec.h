@@ -30,7 +30,7 @@ rtlreg_t* decode_csr_no(int csr_no){
 
 def_EHelper(csrrw) {
   if (id_src2->imm == 0x340){
-    IFDEF(CONFIG_ETRACE, Log("etrace: csrrw mscratch %x", *dsrc1));
+    IFDEF(CONFIG_ETRACE, Log("etrace: csrrw mscratch %x %x", *dsrc1, *s0));
   }
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
