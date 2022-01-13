@@ -20,6 +20,7 @@ Context* __am_irq_handle(Context *c) {
   uintptr_t kas = 0;
   asm volatile("csrr %0, mscratch" : "=r"(mscratch));
   c->np = (mscratch == 0 ? KERNEL : USER);
+  printf("设置c->为%d\n", c->np);
   asm volatile("csrw mscratch, %0" : : "r"(kas));
 
   if ((uintptr_t)&c < 0x80000000){
