@@ -33,8 +33,8 @@ f(30) f(31)
 __am_asm_trap:
 //还在用户栈底
   addi sp, sp, -XLEN
-  STORE t0, (sp)
-  mv t0, sp
+  STORE t4, (sp)
+  mv t4, sp
 
   csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
   bnez sp, save_context    // (2) take the branch if we trapped from user
@@ -44,7 +44,8 @@ __am_asm_trap:
   save_context:
   addi sp, sp, -CONTEXT_SIZE
 
-  STORE t0, OFFSET_SP(sp)
+  STORE t4, OFFSET_SP(sp)
+
   MAP(REGS, PUSH)
 
   csrr t0, mcause
@@ -73,18 +74,18 @@ __am_asm_trap:
   MAP(REGS, POP)
 
 //判断c->np == USER
-  LOAD t0, OFFSET_NP(sp)
-  bnez t0, the_end
+  LOAD t4, OFFSET_NP(sp)
+  bnez t4, the_end
 //c->np == USER
-  addi t0, sp, CONTEXT_SIZE
-  csrw mscratch, t0 
+  addi t4, sp, CONTEXT_SIZE
+  csrw mscratch, t4
 
 the_end:
-  LOAD t0, OFFSET_SP(sp)
+  LOAD t4, OFFSET_SP(sp)
   addi sp, sp, CONTEXT_SIZE
 //回到了用户栈
-  mv sp, t0
-  LOAD t0, (sp)
+  mv sp, t4
+  LOAD t4, (sp)
   addi sp, sp, XLEN
   
   mret
