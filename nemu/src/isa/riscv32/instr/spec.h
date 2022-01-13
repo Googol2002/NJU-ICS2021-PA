@@ -59,6 +59,8 @@ def_EHelper(mret) {
   csr.mstatus.m.MPIE= 1;
   if (csr.mstatus.m.MIE){
     Log("置为有效");
+  }else {
+    Log("置为无效");
   }
 }
 
