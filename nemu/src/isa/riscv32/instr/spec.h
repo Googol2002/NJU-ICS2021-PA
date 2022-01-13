@@ -26,7 +26,6 @@ rtlreg_t* decode_csr_no(int csr_no){
 }
 
 def_EHelper(csrrw) {
-  //IFDEF(CONFIG_ETRACE, Log("etrace: cssrw"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
   rtl_mv(s, ddest, s0);
