@@ -14,7 +14,18 @@ void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
 
 Context* __am_irq_handle(Context *c) {
-  //int a = 0;
+  uintptr_t mscratch;
+  uintptr_t priv;
+  asm volatile("csrr %0, mscratch" : "=r"(mscratch));
+  if (mscratch == 0){
+    priv = 3;
+  }else {
+    priv = 0;
+  }
+  asm volatile("csrw mscratch, %0" : : "r"(priv));
+
+
+
   __am_get_cur_as(c);
   //printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   if (user_handler) {
@@ -61,11 +72,18 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 }
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
-  Context *context = kstack.end - sizeof(Context);
+  //-4是为了缓存一个t0，为了Real VME
+  uintptr_t *t0_buf = kstack.end - 4;
+  *t0_buf = 0;
+
+  Context *context = kstack.end - sizeof(Context) - 4;
   context->mstatus = 0x1800 | 0x80;
   context->mepc    = (uintptr_t)entry;
   context->gpr[10] = (uintptr_t)arg;
   context->pdir    = NULL;
+  //为了Real VME
+  context->np      = 3;
+  context->gpr[2]  = (uintptr_t)kstack.end - 4;
   //TODO: 还需要添加一些
   return context;
 }

@@ -42,6 +42,7 @@ typedef struct { // 自行添加，但并不知道是否会引起问题
   } mstatus;
   rtlreg_t mcause; 
   rtlreg_t satp;
+  rtlreg_t mscratch;
 } riscv32_CSR_state;
 
 // decode

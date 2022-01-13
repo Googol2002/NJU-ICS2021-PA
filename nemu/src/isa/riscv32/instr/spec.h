@@ -11,6 +11,9 @@ rtlreg_t* decode_csr_no(int csr_no){
         case 0x305:
             return &(csr.mtvec);
 
+        case 0x340:
+            return &(csr.mscratch);
+
         case 0x341:
             return &(csr.mepc);
 

@@ -211,6 +211,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   printf("Alloced Page Addr: %p\t PTR_BRK_ADDR: %p\n", alloced_page, ptr_brk);
 
-  context->GPRx = (uintptr_t)ptr_brk - (uintptr_t)alloced_page + (uintptr_t)as->area.end;
+  ptr_brk -= 1;
+  *ptr_brk = 0;//为了t0_buffer
+  //设置了sp
+  context->gpr[2]  = (uintptr_t)ptr_brk - (uintptr_t)alloced_page + (uintptr_t)as->area.end;
+
+  //似乎不需要这个了，但我还不想动
+  context->GPRx = (uintptr_t)ptr_brk - (uintptr_t)alloced_page + (uintptr_t)as->area.end + 4;
   //context->GPRx = (intptr_t)(ptr_brk);
 }

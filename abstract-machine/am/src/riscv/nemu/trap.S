@@ -31,8 +31,20 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
+//还在用户栈底
+  addi sp, sp, -XLEN
+  STORE t0, (sp)
+  mv t0, sp
+
+  csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
+  bnez sp, save_context    // (2) take the branch if we trapped from user
+  csrrw sp, mscratch, sp   // (3) if we trapped from kernel, 恢复之前的状态
+
+//进入内核栈
+  save_context:
   addi sp, sp, -CONTEXT_SIZE
 
+  STORE t0, OFFSET_SP(sp)
   MAP(REGS, PUSH)
 
   csrr t0, mcause
@@ -51,6 +63,7 @@ __am_asm_trap:
   mv a0, sp
   jal __am_irq_handle
   mv sp, a0
+//切换到新的内核栈空间
 
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
@@ -59,5 +72,18 @@ __am_asm_trap:
 
   MAP(REGS, POP)
 
+//判断c->np == USER
+  LOAD t0, OFFSET_NP(sp)
+  bnez t0, the_end
+  addi t0, sp, CONTEXT_SIZE
+  csrw mscratch, t0 
+
+the_end:
+  LOAD t0, OFFSET_SP(sp)
   addi sp, sp, CONTEXT_SIZE
+//回到了用户栈
+  mv sp, t0
+  LOAD t0, (sp)
+  addi sp, sp, XLEN
+  
   mret

@@ -109,6 +109,9 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   context->mstatus = 0xC0000 | 0x80;//MPP设置为U模式，MXR=1，SUM=1
   context->mepc    = (uintptr_t)entry;
   context->pdir    = as->ptr;
+  //为了real VME
+  context->np      = 0;
+  //在loader中设置sp
 
   return context;
 }
