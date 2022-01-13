@@ -26,7 +26,7 @@ rtlreg_t* decode_csr_no(int csr_no){
 }
 
 def_EHelper(csrrw) {
-  IFDEF(CONFIG_ETRACE, Log("etrace: cssrw"));
+  //IFDEF(CONFIG_ETRACE, Log("etrace: cssrw"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_mv(s, decode_csr_no(id_src2->imm), dsrc1);
   rtl_mv(s, ddest, s0);
@@ -65,7 +65,7 @@ def_EHelper(mret) {
 }
 
 def_EHelper(csrrs) {
-  IFDEF(CONFIG_ETRACE, Log("etrace: csrrs"));
+  //IFDEF(CONFIG_ETRACE, Log("etrace: csrrs"));
   rtl_mv(s, s0, decode_csr_no(id_src2->imm));
   rtl_or(s, decode_csr_no(id_src2->imm), dsrc1, s0);
   rtl_mv(s, ddest, s0);
