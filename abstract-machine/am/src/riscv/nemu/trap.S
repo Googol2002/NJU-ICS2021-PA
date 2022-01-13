@@ -66,6 +66,15 @@ __am_asm_trap:
   mv sp, a0
 //切换到新的内核栈空间
 
+//判断c->np == USER
+  LOAD t4, OFFSET_NP(sp)
+  bnez t4, restore_contexts
+//c->np == USER
+  addi t4, sp, CONTEXT_SIZE
+  csrw mscratch, t4
+  
+restore_contexts:
+
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
@@ -73,14 +82,6 @@ __am_asm_trap:
 
   MAP(REGS, POP)
 
-//判断c->np == USER
-  LOAD t4, OFFSET_NP(sp)
-  bnez t4, the_end
-//c->np == USER
-  addi t4, sp, CONTEXT_SIZE
-  csrw mscratch, t4
-
-the_end:
   LOAD t4, OFFSET_SP(sp)
   addi sp, sp, CONTEXT_SIZE
 //回到了用户栈
