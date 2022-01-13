@@ -20,7 +20,6 @@ Context* __am_irq_handle(Context *c) {
   uintptr_t kas = 0;
   asm volatile("csrr %0, mscratch" : "=r"(mscratch));
   c->np = (mscratch == 0 ? KERNEL : USER);
-  printf("设置c->为%d\n", c->np);
   asm volatile("csrw mscratch, %0" : : "r"(kas));
 
   if ((uintptr_t)&c < 0x80000000){
@@ -28,6 +27,7 @@ Context* __am_irq_handle(Context *c) {
   }
   __am_get_cur_as(c);
   printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  printf("设置c->np为%d\n", c->np);
   if (user_handler) {
     Event ev = {0};
     
