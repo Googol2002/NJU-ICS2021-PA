@@ -5,6 +5,7 @@
 
 #define Machine_Software_Interrupt (11)
 #define User_Software_Interrupt (8)
+#define IRQ_TIMER 0x80000007
 
 
 static Context* (*user_handler)(Event, Context*) = NULL;
@@ -28,6 +29,10 @@ Context* __am_irq_handle(Context *c) {
         }else {
           ev.event = EVENT_SYSCALL;
         }
+        break;
+
+      case IRQ_TIMER:
+        ev.event = EVENT_IRQ_TIMER;
         break;
 
       default: ev.event = EVENT_ERROR; break;

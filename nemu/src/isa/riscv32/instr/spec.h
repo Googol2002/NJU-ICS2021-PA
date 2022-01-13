@@ -54,6 +54,9 @@ def_EHelper(mret) {
   //在__am_irq_handle中处理
   //rtl_addi(s, s0, &(csr.mepc), 4);
   rtl_mv(s, &s->dnpc, &(csr.mepc));
+  
+  csr.mstatus.m.MIE = csr.mstatus.m.MPIE;
+  csr.mstatus.m.MPIE= 1;
 }
 
 def_EHelper(csrrs) {

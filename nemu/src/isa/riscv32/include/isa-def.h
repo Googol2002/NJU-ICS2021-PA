@@ -7,8 +7,8 @@ typedef struct {
   struct {
     rtlreg_t _32;
   } gpr[32];
-
   vaddr_t pc;
+  bool INTR;
 } riscv32_CPU_state;
 
 typedef struct { // 自行添加，但并不知道是否会引起问题
