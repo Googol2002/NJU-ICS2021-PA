@@ -25,7 +25,7 @@ void fetch_decode(Decode *s, vaddr_t pc);
 
 #ifdef CONFIG_ITRACE_COND
 
-#define RINGBUF_LINES 64
+#define RINGBUF_LINES 128
 #define RINGBUF_LENGTH 128
 char instr_ringbuf[RINGBUF_LINES][RINGBUF_LENGTH];
 long ringbuf_end = 0;
