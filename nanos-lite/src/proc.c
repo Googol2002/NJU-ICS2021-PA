@@ -7,10 +7,25 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
-int program_index = 3;
+int program_index = 1;
 
 void switch_boot_pcb() {
   current = &pcb_boot;
+}
+
+void switch_program_index(int new_index){
+  if (new_index == program_index)
+    return ;
+
+  switch_boot_pcb();  
+  
+  program_index = new_index;
+  pcb[0].cp->pdir = NULL;
+  //TODO: 这是一种trade-off
+  //set_satp(pcb[1].cp->pdir);
+  printf("Switch to PCB[%d]\n", new_index);
+
+  yield();
 }
 
 void hello_fun(void *arg) {
@@ -27,8 +42,8 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 
 #define PROG_PATH1 "/bin/menu"
-#define PROG_PATH2 "/bin/timer-test"
-#define PROG_PATH3 "/bin/hello"
+#define PROG_PATH2 "/bin/nslider"
+#define PROG_PATH3 "/bin/menu"
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
   char *argv1[] = {PROG_PATH1, NULL};

@@ -26,12 +26,31 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
   return len;
 }
 
+void switch_program_index(int new_index);
+
 //offset被忽视
 size_t events_read(void *buf, size_t offset, size_t len) {
   //yield();
   AM_INPUT_KEYBRD_T ev = io_read(AM_INPUT_KEYBRD);
   if (ev.keycode == AM_KEY_NONE) return 0;
   
+  switch (ev.keycode){
+  case AM_KEY_F1:
+    switch_program_index(1);
+    return 0;
+
+  case AM_KEY_F2:
+    switch_program_index(2);
+    return 0;
+
+  case AM_KEY_F3:
+    switch_program_index(3);
+    return 0;
+  
+  default:
+    break;
+  }
+
   //int real_length = 4;
   char *tag = ev.keydown ? "kd " : "ku ";
   //if (real_length <= len){
