@@ -64,7 +64,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
     return -1;
   }
   printf("Loading from %s ...\n", filename);
-  context_uload(&pcb[1], filename, argv, envp);
+  context_uload(&pcb[program_index], filename, argv, envp);
   switch_boot_pcb();  
   
   pcb[0].cp->pdir = NULL;
