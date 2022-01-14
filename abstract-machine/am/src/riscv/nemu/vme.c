@@ -60,7 +60,7 @@ void unprotect(AddrSpace *as) {
 
 void __am_get_cur_as(Context *c) {
   if (c->pdir != NULL){ //自行添加
-    //printf("在__am_get_cur_as中设置为由%p，地址为%p，更改为，", c->pdir, &c->pdir);
+    printf("在__am_get_cur_as中设置为由%p，地址为%p，更改为，", c->pdir, &c->pdir);
     c->pdir = (vme_enable ? (void *)get_satp() : NULL);
     //printf("%p\n", c->pdir);
   }
