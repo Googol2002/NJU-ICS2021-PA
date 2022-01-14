@@ -43,7 +43,7 @@ word_t paddr_read(paddr_t addr, int len) {
   #ifdef CONFIG_MTRACE
     if (likely(in_pmem(addr))){
       word_t w = pmem_read(addr, len);
-      if (addr == 0x806ADFFC){
+      if (addr == 0x806BDFF8){
         Log(" Read  from memory at %#.8x for %d bytes for %x.", addr, len, w);
         error_finfo();
       }
@@ -58,7 +58,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
-    if (addr == 0x806ADFFC){
+    if (addr == 0x806BDFF8){
       Log("Write %x to memory at %#.8x for %d bytes.", data, addr, len);
       error_finfo();
     }
