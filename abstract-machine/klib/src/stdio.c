@@ -9,7 +9,7 @@ int vsprintf(char *out, const char *fmt, va_list ap);
 int vsnprintf(char *out, size_t n, const char *fmt, va_list ap);
 
 int printf(const char *fmt, ...) {
-  char buffer[4096];
+  char buffer[256];
   va_list arg;
   va_start (arg, fmt);
   
