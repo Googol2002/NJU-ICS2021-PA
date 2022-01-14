@@ -7,6 +7,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
+int program_index = 1;
 
 
 void switch_boot_pcb() {
@@ -26,11 +27,17 @@ void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 
-#define PROG_PATH "/bin/menu"
+#define PROG_PATH1 "/bin/menu"
+#define PROG_PATH2 "/bin/timer"
+#define PROG_PATH3 "/bin/hello"
 void init_proc() {
   context_kload(&pcb[0], hello_fun, "ONE");
-  char *argv[] = {PROG_PATH, NULL};
-  context_uload(&pcb[1], PROG_PATH, argv, NULL);
+  char *argv1[] = {PROG_PATH1, NULL};
+  char *argv2[] = {PROG_PATH2, NULL};
+  char *argv3[] = {PROG_PATH3, NULL};
+  context_uload(&pcb[1], PROG_PATH1, argv1, NULL);
+  context_uload(&pcb[2], PROG_PATH2, argv2, NULL);
+  context_uload(&pcb[3], PROG_PATH3, argv3, NULL);
   // context_uload(&pcb[1], "/bin/pal", argv, NULL);
 
   switch_boot_pcb();
@@ -41,7 +48,7 @@ Context* schedule(Context *prev) {
   current->cp = prev;
 
   // always select pcb[0] as the new process
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[program_index] : &pcb[0]);
 
   // then return the new context
   return current->cp;
