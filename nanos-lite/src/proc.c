@@ -7,8 +7,7 @@ static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
 
-int program_index = 3;
-
+int program_index = 1;
 
 void switch_boot_pcb() {
   current = &pcb_boot;
