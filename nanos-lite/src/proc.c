@@ -48,7 +48,7 @@ Context* schedule(Context *prev) {
 
   // always select pcb[0] as the new process
   current = (current == &pcb[0] ? &pcb[program_index] : &pcb[0]);
-  printf("schedule c->pdir内容地址修改后 页表项:%p\t上下文地址%p\n", current->cp->pdir, &current->cp);
+  printf("schedule c->pdir内容地址修改后 页表项:%p\t页表项地址%p\n", current->cp->pdir, &current->cp->pdir);
   // then return the new context
   return current->cp;
 }
