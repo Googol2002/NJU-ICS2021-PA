@@ -26,7 +26,7 @@ Context* __am_irq_handle(Context *c) {
     halt(10001);
   }
   __am_get_cur_as(c);
-  printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  //printf("__am_irq_handle c->pdir内容地址修改前 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   //printf("设置c->np为%d\n", c->np);
   if (user_handler) {
     Event ev = {0};
@@ -54,7 +54,7 @@ Context* __am_irq_handle(Context *c) {
     assert(c != NULL);
   }
 
-  printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
+  //printf("__am_irq_handle c->pdir内容地址修改后 页表项:%p\t上下文地址%p\t所在栈帧:%p\n", c->pdir, c, &c);
   __am_switch(c);
   //printf("c->np为%d\n", c->np);
   return c;
