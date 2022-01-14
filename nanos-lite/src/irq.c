@@ -16,7 +16,7 @@ static Context* do_event(Event e, Context* c) {
       break;
 
     case EVENT_IRQ_TIMER:
-      Log("EVENT_IRQ_TIMER happening but doing nothing...");
+      //Log("EVENT_IRQ_TIMER happening...");
       //break;
       return schedule(c);
 
